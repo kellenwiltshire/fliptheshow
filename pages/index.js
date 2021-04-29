@@ -1,17 +1,25 @@
+import { useEffect } from 'react';
+
 export default function Home({ items }) {
 	console.log(items);
+
+	const sortTable = (e) => {
+		e.preventDefault();
+		console.log(e.target.textContent);
+	};
+
 	return (
 		<div>
-			<table>
+			<table id='myTable2'>
 				<tr>
-					<th>Name</th>
-					<th>Overall</th>
-					<th>Series</th>
-					<th>Best Buy</th>
-					<th>Best Sell</th>
-					<th>Profit</th>
-					<th>Sales/Minute</th>
-					<th>Profit/Minute</th>
+					<th onClick={sortTable}>Name</th>
+					<th onClick={sortTable}>Overall</th>
+					<th onClick={sortTable}>Series</th>
+					<th onClick={sortTable}>Best Buy</th>
+					<th onClick={sortTable}>Best Sell</th>
+					<th onClick={sortTable}>Profit</th>
+					{/* <th>Sales/Minute</th>
+					<th>Profit/Minute</th> */}
 				</tr>
 				{items.map((item) => {
 					const profit = item.best_sell_price - item.best_buy_price;
@@ -21,14 +29,14 @@ export default function Home({ items }) {
 					const profitPerMin = (profit / salesPerMin).toFixed(2); */
 					}
 					return (
-						<tr>
+						<tr key={item.item.uuid}>
 							<td>{item.listing_name}</td>
 							<td>{item.item.ovr}</td>
 							<td>{item.item.series}</td>
 							<td>{item.best_buy_price}</td>
 							<td>{item.best_sell_price}</td>
-							{/* <td>{profit}</td>
-							<td>{salesPerMin}</td>
+							<td>{profit}</td>
+							{/* <td>{salesPerMin}</td>
 							<td>{profitPerMin}</td> */}
 						</tr>
 					);
@@ -39,6 +47,8 @@ export default function Home({ items }) {
 }
 
 export async function getStaticProps(props) {
+	console.time('timer');
+
 	const getItemData = async (items) => {
 		let fullItems = [];
 
@@ -69,7 +79,9 @@ export async function getStaticProps(props) {
 	let initialItems = [];
 	initialItems = await recursiveGetData();
 
-	const items = await getItemData(initialItems);
+	// const items = await getItemData(initialItems);
+	const items = initialItems;
+	console.timeEnd('timer');
 	return {
 		props: { items },
 		revalidate: 1,
