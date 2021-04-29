@@ -1,16 +1,58 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Home({ items }) {
-	console.log(items);
+	const [initItems, setInitItems] = useState(items);
+	const [sortedItems, setSortedItems] = useState(items);
+	const [sort, setSort] = useState('');
+	const [sortSwitch, setSortSwitch] = useState(false);
 
 	const sortTable = (e) => {
 		e.preventDefault();
 		console.log(e.target.textContent);
+		setSort(e.target.textContent);
+		let newItems = sortedItems;
+		//! Sort By Name
+		if (e.target.textContent === 'Name') {
+			newItems = newItems.sort((a, b) => {
+				const aLower = a.listing_name.toLowerCase();
+				const bLower = b.listing_name.toLowerCase();
+				if (aLower < bLower) {
+					return -1;
+				} else if (aLower > bLower) {
+					return 1;
+				} else {
+					return 0;
+				}
+			});
+		} else if (e.target.textContent === 'Overall') {
+			newItems = newItems.sort((a, b) => {
+				return a.item.ovr - b.item.ovr;
+			});
+		} else if (e.target.textContent === 'Series') {
+			newItems = newItems.sort((a, b) => {
+				const aLower = a.item.series.toLowerCase();
+				const bLower = b.item.series.toLowerCase();
+				if (aLower < bLower) {
+					return -1;
+				} else if (aLower > bLower) {
+					return 1;
+				} else {
+					return 0;
+				}
+			});
+		}
+		if (sortSwitch) {
+			newItems.reverse();
+			setSortSwitch(!sortSwitch);
+		} else {
+			setSortSwitch(!sortSwitch);
+		}
+		setSortedItems(newItems);
 	};
 
 	return (
 		<div>
-			<table id='myTable2'>
+			<table>
 				<tr>
 					<th onClick={sortTable}>Name</th>
 					<th onClick={sortTable}>Overall</th>
@@ -21,7 +63,7 @@ export default function Home({ items }) {
 					{/* <th>Sales/Minute</th>
 					<th>Profit/Minute</th> */}
 				</tr>
-				{items.map((item) => {
+				{sortedItems.map((item) => {
 					const profit = item.best_sell_price - item.best_buy_price;
 					{
 						/* const completedOrders = getCompletedOrders(item.item.uuid);
