@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function Home({ items }) {
-	const [initItems, setInitItems] = useState(items);
 	const [sortedItems, setSortedItems] = useState(items);
 	const [sort, setSort] = useState('');
 	const [sortSwitch, setSortSwitch] = useState(false);
 
+	console.log(items);
+
 	const sortTable = (e) => {
 		e.preventDefault();
-		console.log(e.target.textContent);
 		setSort(e.target.textContent);
 		let newItems = sortedItems;
 		//! Sort By Name
@@ -40,6 +41,20 @@ export default function Home({ items }) {
 					return 0;
 				}
 			});
+		} else if (e.target.textContent === 'Best Buy') {
+			newItems = newItems.sort((a, b) => {
+				return a.best_buy_price - b.best_buy_price;
+			});
+		} else if (e.target.textContent === 'Best Sell') {
+			newItems = newItems.sort((a, b) => {
+				return a.best_sell_price - b.best_sell_price;
+			});
+		} else if (e.target.textContent === 'Profit') {
+			newItems = newItems.sort((a, b) => {
+				const aProfit = a.best_sell_price - a.best_buy_price;
+				const bProfit = b.best_sell_price - b.best_buy_price;
+				return aProfit - bProfit;
+			});
 		}
 		if (sortSwitch) {
 			newItems.reverse();
@@ -51,17 +66,51 @@ export default function Home({ items }) {
 	};
 
 	return (
-		<div>
-			<table>
+		<div className='lg:w-2/3 w-full mx-auto overflow-auto'>
+			<table className='table-auto w-full text-left whitespace-no-wrap border-2 border-gray-100'>
 				<tr>
-					<th onClick={sortTable}>Name</th>
-					<th onClick={sortTable}>Overall</th>
-					<th onClick={sortTable}>Series</th>
-					<th onClick={sortTable}>Best Buy</th>
-					<th onClick={sortTable}>Best Sell</th>
-					<th onClick={sortTable}>Profit</th>
-					{/* <th>Sales/Minute</th>
-					<th>Profit/Minute</th> */}
+					<th
+						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+						onClick={sortTable}
+					>
+						Name
+					</th>
+					<th
+						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+						onClick={sortTable}
+					>
+						Overall
+					</th>
+					<th
+						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+						onClick={sortTable}
+					>
+						Series
+					</th>
+					<th
+						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+						onClick={sortTable}
+					>
+						Best Buy
+					</th>
+					<th
+						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+						onClick={sortTable}
+					>
+						Best Sell
+					</th>
+					<th
+						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+						onClick={sortTable}
+					>
+						Profit
+					</th>
+					<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'>
+						Sales/Minute
+					</th>
+					<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'>
+						Profit/Minute
+					</th>
 				</tr>
 				{sortedItems.map((item) => {
 					const profit = item.best_sell_price - item.best_buy_price;
@@ -72,14 +121,31 @@ export default function Home({ items }) {
 					}
 					return (
 						<tr key={item.item.uuid}>
-							<td>{item.listing_name}</td>
-							<td>{item.item.ovr}</td>
-							<td>{item.item.series}</td>
-							<td>{item.best_buy_price}</td>
-							<td>{item.best_sell_price}</td>
-							<td>{profit}</td>
-							{/* <td>{salesPerMin}</td>
-							<td>{profitPerMin}</td> */}
+							<td className='border-t-2 border-gray-200 px-4 py-3'>
+								<Link
+									href={{
+										pathname: '/players/[player]',
+										query: { player: item.item.uuid },
+									}}
+								>
+									<a>{item.listing_name}</a>
+								</Link>
+							</td>
+							<td className='border-t-2 border-gray-200 px-4 py-3'>
+								{item.item.ovr}
+							</td>
+							<td className='border-t-2 border-gray-200 px-4 py-3'>
+								{item.item.series}
+							</td>
+							<td className='border-t-2 border-gray-200 px-4 py-3'>
+								{item.best_buy_price}
+							</td>
+							<td className='border-t-2 border-gray-200 px-4 py-3'>
+								{item.best_sell_price}
+							</td>
+							<td className='border-t-2 border-gray-200 px-4 py-3'>{profit}</td>
+							{/* <td className='border-t-2 border-gray-200 px-4 py-3'>{salesPerMin}</td>
+							<td className='border-t-2 border-gray-200 px-4 py-3'>{profitPerMin}</td> */}
 						</tr>
 					);
 				})}
@@ -95,11 +161,12 @@ export async function getStaticProps(props) {
 		let fullItems = [];
 
 		for (let i = 0; i < items.length; i++) {
+			console.log(items.length, i);
 			const itemID = items[i].item.uuid;
 			const res = await fetch(
 				`https://mlb21.theshow.com/apis/listing.json?uuid=${itemID}`,
 			);
-			const data = res.json();
+			const data = await res.json();
 			items[i].completed_orders = data.completed_orders;
 			fullItems.push(items[i]);
 		}
