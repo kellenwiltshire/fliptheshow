@@ -160,16 +160,25 @@ export async function getStaticProps(props) {
 	const getItemData = async (items) => {
 		let fullItems = [];
 
-		for (let i = 0; i < items.length; i++) {
-			console.log(items.length, i);
-			const itemID = items[i].item.uuid;
-			const res = await fetch(
-				`https://mlb21.theshow.com/apis/listing.json?uuid=${itemID}`,
-			);
-			const data = await res.json();
-			items[i].completed_orders = data.completed_orders;
-			fullItems.push(items[i]);
-		}
+		const itemID = items[0].item.uuid;
+		const res = await fetch(
+			`https://mlb21.theshow.com/apis/listing.json?uuid=${itemID}`,
+		);
+		const data = await res.json();
+		console.log(data);
+		items[0].completed_orders = data.completed_orders;
+		fullItems.push(items);
+
+		// for (let i = 0; i < items.length; i++) {
+		// 	console.log(items.length, i);
+		// 	const itemID = items[i].item.uuid;
+		// 	const res = await fetch(
+		// 		`https://mlb21.theshow.com/apis/listing.json?uuid=${itemID}`,
+		// 	);
+		// 	const data = await res.json();
+		// 	items[i].completed_orders = data.completed_orders;
+		// 	fullItems.push(items[i]);
+		// }
 		return fullItems;
 	};
 	const recursiveGetData = async (page = 1) => {
