@@ -12,6 +12,10 @@ export default function Home({ items }) {
 	const [minBuyPrice, setMinBuyPrice] = useState(0);
 	const [maxBuyPrice, setMaxBuyPrice] = useState(500000);
 	const [rarity, setRarity] = useState('');
+	const [series, setSeries] = useState('');
+	const [team, setTeam] = useState('');
+	const [minOvr, setMinOvr] = useState(0);
+	const [maxOvr, setMaxOvr] = useState(100);
 
 	const displayCurrentTime = () => {
 		const date = new Date();
@@ -187,6 +191,17 @@ export default function Home({ items }) {
 		}
 	};
 
+	const resetFilters = (e) => {
+		e.preventDefault();
+		setMaxBuyPrice(500000);
+		setMinBuyPrice(0);
+		setMaxSellPrice(500000);
+		setMinSellPrice(0);
+		setRarity('');
+		document.getElementById('inputForm').reset();
+		setSortedItems(items);
+	};
+
 	useEffect(() => {
 		determineNumOrdersPerHours();
 	}, []);
@@ -198,44 +213,91 @@ export default function Home({ items }) {
 				item.best_buy_price >= minBuyPrice &&
 				item.best_buy_price <= maxBuyPrice &&
 				item.best_sell_price >= minSellPrice &&
-				item.best_sell_price <= maxSellPrice
+				item.best_sell_price <= maxSellPrice &&
+				item.item.ovr >= minOvr &&
+				item.item.ovr <= maxOvr
 			);
 		});
 		filteredList = filteredList.filter((item) => {
 			if (rarity === '') {
 				return item;
-			} else if (rarity === 'Diamond') {
-				return item.item.rarity === 'Diamond';
-			} else if (rarity === 'Gold') {
-				return item.item.rarity === 'Gold';
-			} else if (rarity === 'Silver') {
-				return item.item.rarity === 'Silver';
-			} else if (rarity === 'Bronze') {
-				return item.item.rarity === 'Bronze';
-			} else if (rarity === 'Common') {
-				return item.item.rarity === 'Common';
+			} else {
+				return item.item.rarity === rarity;
+			}
+		});
+		filteredList = filteredList.filter((item) => {
+			if (series === '') {
+				return item;
+			} else {
+				return item.item.series === series;
+			}
+		});
+		filteredList = filteredList.filter((item) => {
+			if (team === '') {
+				return item;
+			} else {
+				return item.item.team === team;
 			}
 		});
 		setSortedItems(filteredList);
 		setFilteredItems(filteredList);
-	}, [minSellPrice, maxSellPrice, minBuyPrice, maxBuyPrice, rarity]);
+	}, [
+		minSellPrice,
+		maxSellPrice,
+		minBuyPrice,
+		maxBuyPrice,
+		rarity,
+		series,
+		team,
+		minOvr,
+		maxOvr,
+	]);
 
-	console.log(minBuyPrice, maxBuyPrice, minSellPrice, maxSellPrice, rarity);
+	console.log(
+		minBuyPrice,
+		maxBuyPrice,
+		minSellPrice,
+		maxSellPrice,
+		rarity,
+		series,
+		team,
+	);
 
 	return (
 		<div className='lg:w-2/3 w-full mx-auto overflow-auto'>
-			<div className='text-gray-600 flex flex-row'>
+			<form id='inputForm' className='text-gray-600 flex flex-row'>
 				<div>
 					<input
+						id='searchPlayers'
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
 						placeholder='Search Players'
 						onChange={playerSearchChange}
 					/>
 				</div>
-
 				<div className='flex flex-col'>
 					<input
+						id='minOvr'
+						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
+						type='text'
+						placeholder='Min Overall'
+						onChange={(e) =>
+							e.target.value === '' ? setMinOvr(0) : setMinOvr(e.target.value)
+						}
+					/>
+					<input
+						id='maxOvr'
+						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
+						type='text'
+						placeholder='Max Overall'
+						onChange={(e) =>
+							e.target.value === '' ? setMaxOvr(100) : setMaxOvr(e.target.value)
+						}
+					/>
+				</div>
+				<div className='flex flex-col'>
+					<input
+						id='minBuyPrice'
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
 						placeholder='Min Best Buy Price'
@@ -246,6 +308,7 @@ export default function Home({ items }) {
 						}
 					/>
 					<input
+						id='maxBuyPrice'
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
 						placeholder='Max Best Buy Price'
@@ -258,6 +321,7 @@ export default function Home({ items }) {
 				</div>
 				<div className='flex flex-col'>
 					<input
+						id='minSellPrice'
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
 						placeholder='Min Best Sell Price'
@@ -268,6 +332,7 @@ export default function Home({ items }) {
 						}
 					/>
 					<input
+						id='maxSellPrice'
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
 						placeholder='Max Best Sell Price'
@@ -278,8 +343,9 @@ export default function Home({ items }) {
 						}
 					/>
 				</div>
-				<div>
+				<div className='flex flex-col'>
 					<select
+						id='rarity'
 						className='rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10'
 						onChange={(e) =>
 							e.target.value === 'Rarity'
@@ -295,8 +361,83 @@ export default function Home({ items }) {
 						<option>Bronze</option>
 						<option>Common</option>
 					</select>
+					<select
+						id='series'
+						className='rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10'
+						onChange={(e) =>
+							e.target.value === 'Series'
+								? setSeries('')
+								: setSeries(e.target.value)
+						}
+						placeholder='Series'
+					>
+						<option>Series</option>
+						<option>2nd Half</option>
+						<option>All-Star</option>
+						<option>Awards</option>
+						<option>Breakout</option>
+						<option>Future Stars</option>
+						<option>Live</option>
+						<option>Veteran</option>
+						<option>Topps Now</option>
+						<option>The 42</option>
+						<option>Rookie</option>
+						<option>Prospect</option>
+						<option>Prime</option>
+						<option>Postseason</option>
+						<option>Monthly Awards</option>
+						<option>Milestone</option>
+					</select>
 				</div>
-			</div>
+				<div>
+					<select
+						id='team'
+						className='rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10'
+						onChange={(e) =>
+							e.target.value === 'Team' ? setTeam('') : setTeam(e.target.value)
+						}
+						placeholder='Team'
+					>
+						<option>Diamondbacks</option>
+						<option>Braves</option>
+						<option>Orioles</option>
+						<option>Red Sox</option>
+						<option>White Sox</option>
+						<option>Cubs</option>
+						<option>Reds</option>
+						<option>Indians</option>
+						<option>Rockies</option>
+						<option>Tigers</option>
+						<option>Astros</option>
+						<option>Royals</option>
+						<option>Angels</option>
+						<option>Dodgers</option>
+						<option>Marlins</option>
+						<option>Brewers</option>
+						<option>Twins</option>
+						<option>Yankees</option>
+						<option>Mets</option>
+						<option>Athletics</option>
+						<option>Phillies</option>
+						<option>Pirates</option>
+						<option>Padres</option>
+						<option>Giants</option>
+						<option>Mariners</option>
+						<option>Cardinals</option>
+						<option>Rays</option>
+						<option>Blue Jays</option>
+						<option>Nationals</option>
+					</select>
+				</div>
+				<div>
+					<button
+						onClick={resetFilters}
+						className='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg'
+					>
+						Reset Filters
+					</button>
+				</div>
+			</form>
 			<table className='table-auto w-full text-left whitespace-no-wrap border-2 border-gray-100'>
 				<tr>
 					<th
@@ -315,13 +456,16 @@ export default function Home({ items }) {
 						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
 						onClick={sortTable}
 					>
-						Series
+						Rarity
 					</th>
 					<th
 						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
 						onClick={sortTable}
 					>
-						Rarity
+						Series
+					</th>
+					<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
+						Team
 					</th>
 					<th
 						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
@@ -381,6 +525,9 @@ export default function Home({ items }) {
 							</td>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
 								{item.item.series}
+							</td>
+							<td className='border-t-2 border-gray-200 px-4 py-3'>
+								{item.item.team}
 							</td>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
 								{item.best_buy_price}
