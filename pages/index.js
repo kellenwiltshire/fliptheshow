@@ -175,137 +175,52 @@ export default function Home({ items }) {
 		e.preventDefault();
 		if (e.target.value) {
 			let nameFilter = [];
-			initialItems.map((names) => {
+			filteredItems.map((names) => {
 				const name = names.listing_name.toLowerCase();
 				if (name.includes(e.target.value.toLowerCase())) {
 					nameFilter.push(names);
 				}
 			});
 			setSortedItems(nameFilter);
-			setFilteredItems(nameFilter);
 		} else {
-			setSortedItems(items);
-			setFilteredItems(items);
-		}
-	};
-
-	const bestSellMinRangeChange = (e) => {
-		e.preventDefault();
-		setMinSellPrice(e.target.value);
-		if (e.target.value) {
-			let minPriceFilter = [];
-			filteredItems.map((item) => {
-				if (
-					item.best_sell_price > e.target.value &&
-					item.best_sell_price < maxSellPrice
-				) {
-					minPriceFilter.push(item);
-				}
-			});
-			setSortedItems(minPriceFilter);
-			setFilteredItems(minPriceFilter);
-		} else {
-			setMinSellPrice(0);
-			setFilteredItems(items);
-			setSortedItems(items);
-		}
-	};
-
-	const bestSellMaxRangeChange = (e) => {
-		e.preventDefault();
-		setMaxSellPrice(e.target.value);
-		if (e.target.value) {
-			let maxPriceFilter = [];
-			filteredItems.map((item) => {
-				if (
-					item.best_sell_price < e.target.value &&
-					item.best_sell_price > minSellPrice
-				) {
-					maxPriceFilter.push(item);
-				}
-			});
-			setSortedItems(maxPriceFilter);
-			setFilteredItems(maxPriceFilter);
-		} else {
-			setSortedItems(items);
-			setFilteredItems(items);
-			setMaxSellPrice(500000);
-		}
-	};
-
-	const bestBuyMinRangeChange = (e) => {
-		e.preventDefault();
-		setMinBuyPrice(e.target.value);
-		if (e.target.value) {
-			let minPriceFilter = [];
-			initialItems.map((item) => {
-				if (
-					item.best_buy_price > e.target.value &&
-					item.best_buy_price < maxBuyPrice
-				) {
-					minPriceFilter.push(item);
-				}
-			});
-			setSortedItems(minPriceFilter);
-			setFilteredItems(minPriceFilter);
-		} else {
-			setSortedItems(items);
-			setFilteredItems(items);
-			setMinSellPrice(0);
-		}
-	};
-
-	const bestBuyMaxRangeChange = (e) => {
-		e.preventDefault();
-		setMaxBuyPrice(e.target.value);
-		if (e.target.value) {
-			let maxPriceFilter = [];
-			filteredItems.map((item) => {
-				if (
-					item.best_buy_price < e.target.value &&
-					item.best_buy_price > minBuyPrice
-				) {
-					maxPriceFilter.push(item);
-				}
-			});
-			setSortedItems(maxPriceFilter);
-			setFilteredItems(maxPriceFilter);
-		} else {
-			setSortedItems(items);
-			setFilteredItems(items);
-			setMaxSellPrice(500000);
-		}
-	};
-
-	const rarityChange = (e) => {
-		e.preventDefault();
-		console.log(e.target.value);
-		setRarity(e.target.value);
-		if (
-			e.target.value === 'Diamond' ||
-			e.target.value === 'Gold' ||
-			e.target.value === 'Bronze' ||
-			e.target.value === 'Silver' ||
-			e.target.value === 'Common'
-		) {
-			let rarityFilter = [];
-			filteredItems.map((item) => {
-				if (item.item.rarity.toLowerCase() === e.target.value.toLowerCase()) {
-					rarityFilter.push(item);
-				}
-			});
-			setSortedItems(rarityFilter);
-			setFilteredItems(rarityFilter);
-		} else {
-			setSortedItems(items);
-			setFilteredItems(items);
-			setRarity('');
+			setSortedItems(filteredItems);
 		}
 	};
 
 	useEffect(() => {
 		determineNumOrdersPerHours();
 	}, []);
+
+	useEffect(() => {
+		console.log('Here');
+		let filteredList = initialItems.filter((item) => {
+			return (
+				item.best_buy_price >= minBuyPrice &&
+				item.best_buy_price <= maxBuyPrice &&
+				item.best_sell_price >= minSellPrice &&
+				item.best_sell_price <= maxSellPrice
+			);
+		});
+		filteredList = filteredList.filter((item) => {
+			if (rarity === '') {
+				return item;
+			} else if (rarity === 'Diamond') {
+				return item.item.rarity === 'Diamond';
+			} else if (rarity === 'Gold') {
+				return item.item.rarity === 'Gold';
+			} else if (rarity === 'Silver') {
+				return item.item.rarity === 'Silver';
+			} else if (rarity === 'Bronze') {
+				return item.item.rarity === 'Bronze';
+			} else if (rarity === 'Common') {
+				return item.item.rarity === 'Common';
+			}
+		});
+		setSortedItems(filteredList);
+		setFilteredItems(filteredList);
+	}, [minSellPrice, maxSellPrice, minBuyPrice, maxBuyPrice, rarity]);
+
+	console.log(minBuyPrice, maxBuyPrice, minSellPrice, maxSellPrice, rarity);
 
 	return (
 		<div className='lg:w-2/3 w-full mx-auto overflow-auto'>
@@ -324,13 +239,21 @@ export default function Home({ items }) {
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
 						placeholder='Min Best Buy Price'
-						onChange={bestBuyMinRangeChange}
+						onChange={(e) =>
+							e.target.value === ''
+								? setMinBuyPrice(0)
+								: setMinBuyPrice(e.target.value)
+						}
 					/>
 					<input
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
 						placeholder='Max Best Buy Price'
-						onChange={bestBuyMaxRangeChange}
+						onChange={(e) =>
+							e.target.value === ''
+								? setMaxBuyPrice(500000)
+								: setMaxBuyPrice(e.target.value)
+						}
 					/>
 				</div>
 				<div className='flex flex-col'>
@@ -338,19 +261,31 @@ export default function Home({ items }) {
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
 						placeholder='Min Best Sell Price'
-						onChange={bestSellMinRangeChange}
+						onChange={(e) =>
+							e.target.value === ''
+								? setMinSellPrice(0)
+								: setMinSellPrice(e.target.value)
+						}
 					/>
 					<input
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
 						placeholder='Max Best Sell Price'
-						onChange={bestSellMaxRangeChange}
+						onChange={(e) =>
+							e.target.value === ''
+								? setMaxSellPrice(0)
+								: setMaxSellPrice(e.target.value)
+						}
 					/>
 				</div>
 				<div>
 					<select
 						className='rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10'
-						onChange={rarityChange}
+						onChange={(e) =>
+							e.target.value === 'Rarity'
+								? setRarity('')
+								: setRarity(e.target.value)
+						}
 						placeholder='Rarity'
 					>
 						<option>Rarity</option>
