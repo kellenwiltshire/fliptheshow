@@ -265,8 +265,8 @@ export default function Home({ items }) {
 
 	return (
 		<div className='lg:w-2/3 w-full mx-auto overflow-auto'>
-			<form id='inputForm' className='text-gray-600 flex flex-row'>
-				<div>
+			<form id='inputForm' className='text-gray-600 flex flex-row flex-wrap'>
+				<div className='m-1'>
 					<input
 						id='searchPlayers'
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
@@ -275,7 +275,7 @@ export default function Home({ items }) {
 						onChange={playerSearchChange}
 					/>
 				</div>
-				<div className='flex flex-col'>
+				<div className='flex flex-col m-1'>
 					<input
 						id='minOvr'
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
@@ -295,7 +295,7 @@ export default function Home({ items }) {
 						}
 					/>
 				</div>
-				<div className='flex flex-col'>
+				<div className='flex flex-col m-1'>
 					<input
 						id='minBuyPrice'
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
@@ -319,7 +319,7 @@ export default function Home({ items }) {
 						}
 					/>
 				</div>
-				<div className='flex flex-col'>
+				<div className='flex flex-col m-1'>
 					<input
 						id='minSellPrice'
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
@@ -343,7 +343,7 @@ export default function Home({ items }) {
 						}
 					/>
 				</div>
-				<div className='flex flex-col'>
+				<div className='flex flex-col m-1'>
 					<select
 						id='rarity'
 						className='rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10'
@@ -389,7 +389,7 @@ export default function Home({ items }) {
 						<option>Milestone</option>
 					</select>
 				</div>
-				<div>
+				<div className='m-1'>
 					<select
 						id='team'
 						className='rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10'
@@ -429,7 +429,7 @@ export default function Home({ items }) {
 						<option>Nationals</option>
 					</select>
 				</div>
-				<div>
+				<div className='m-1'>
 					<button
 						onClick={resetFilters}
 						className='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg'
@@ -554,15 +554,6 @@ export async function getStaticProps(props) {
 	console.time('timer');
 
 	const getItemData = async (items) => {
-		// const itemID = items[0].item.uuid;
-		// console.log('itemID: ', itemID);
-		// const res = await fetch(
-		// 	`https://mlb21.theshow.com/apis/listing.json?uuid=${itemID}`,
-		// );
-		// const data = await res.json();
-		// items[0].additionalData = data;
-		// console.log(items[0]);
-
 		for (let i = 0; i < items.length; i++) {
 			console.log(items.length, i);
 			const itemID = items[i].item.uuid;
@@ -592,15 +583,10 @@ export async function getStaticProps(props) {
 		}
 	};
 
-	// const res = await fetch(`https://mlb21.theshow.com/apis/listings.json?`);
-	// const data = await res.json();
-	// const listings = data.listings;
-
 	let initialItems = [];
 	initialItems = await recursiveGetData();
 	let items = [];
 	items = await getItemData(initialItems);
-	// const items = listings;
 	console.timeEnd('timer');
 	return {
 		props: { items },
