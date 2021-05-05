@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-export default function Home({ items }) {
+export default function Stadiums({ items }) {
+	console.log(items);
 	const [sortedItems, setSortedItems] = useState(items);
 	const [filteredItems, setFilteredItems] = useState(items);
 	const initialItems = items;
@@ -14,8 +15,6 @@ export default function Home({ items }) {
 	const [rarity, setRarity] = useState('');
 	const [series, setSeries] = useState('');
 	const [team, setTeam] = useState('');
-	const [minOvr, setMinOvr] = useState(0);
-	const [maxOvr, setMaxOvr] = useState(100);
 
 	const displayCurrentTime = () => {
 		const date = new Date();
@@ -181,7 +180,11 @@ export default function Home({ items }) {
 			let nameFilter = [];
 			filteredItems.map((names) => {
 				const name = names.listing_name.toLowerCase();
-				if (name.includes(e.target.value.toLowerCase())) {
+				const teamName = names.item.team.toLowerCase();
+				if (
+					name.includes(e.target.value.toLowerCase()) ||
+					teamName.includes(e.target.value.toLowerCase())
+				) {
 					nameFilter.push(names);
 				}
 			});
@@ -198,8 +201,6 @@ export default function Home({ items }) {
 		setMaxSellPrice(500000);
 		setMinSellPrice(0);
 		setRarity('');
-		setMinOvr(0);
-		setMaxOvr(100);
 		document.getElementById('inputForm').reset();
 		setSortedItems(items);
 	};
@@ -209,14 +210,13 @@ export default function Home({ items }) {
 	}, []);
 
 	useEffect(() => {
+		console.log('Here');
 		let filteredList = initialItems.filter((item) => {
 			return (
 				item.best_buy_price >= minBuyPrice &&
 				item.best_buy_price <= maxBuyPrice &&
 				item.best_sell_price >= minSellPrice &&
-				item.best_sell_price <= maxSellPrice &&
-				item.item.ovr >= minOvr &&
-				item.item.ovr <= maxOvr
+				item.best_sell_price <= maxSellPrice
 			);
 		});
 		filteredList = filteredList.filter((item) => {
@@ -250,9 +250,17 @@ export default function Home({ items }) {
 		rarity,
 		series,
 		team,
-		minOvr,
-		maxOvr,
 	]);
+
+	console.log(
+		minBuyPrice,
+		maxBuyPrice,
+		minSellPrice,
+		maxSellPrice,
+		rarity,
+		series,
+		team,
+	);
 
 	return (
 		<div className='lg:w-2/3 w-full mx-auto overflow-auto'>
@@ -262,28 +270,8 @@ export default function Home({ items }) {
 						id='searchPlayers'
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
-						placeholder='Search Players'
+						placeholder='Search Stadiums'
 						onChange={playerSearchChange}
-					/>
-				</div>
-				<div className='flex flex-col m-1'>
-					<input
-						id='minOvr'
-						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-						type='text'
-						placeholder='Min Overall'
-						onChange={(e) =>
-							e.target.value === '' ? setMinOvr(0) : setMinOvr(e.target.value)
-						}
-					/>
-					<input
-						id='maxOvr'
-						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-						type='text'
-						placeholder='Max Overall'
-						onChange={(e) =>
-							e.target.value === '' ? setMaxOvr(100) : setMaxOvr(e.target.value)
-						}
 					/>
 				</div>
 				<div className='flex flex-col m-1'>
@@ -437,12 +425,7 @@ export default function Home({ items }) {
 					>
 						Name
 					</th>
-					<th
-						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-						onClick={sortTable}
-					>
-						Overall
-					</th>
+
 					<th
 						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
 						onClick={sortTable}
@@ -509,9 +492,6 @@ export default function Home({ items }) {
 								</Link>
 							</td>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
-								{item.item.ovr}
-							</td>
-							<td className='border-t-2 border-gray-200 px-4 py-3'>
 								{item.item.rarity}
 							</td>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
@@ -562,7 +542,7 @@ export async function getStaticProps(props) {
 	};
 	const recursiveGetData = async (page = 1) => {
 		const res = await fetch(
-			`https://mlb21.theshow.com/apis/listings.json?page=${page}`,
+			`https://mlb21.theshow.com/apis/listings.json?type=stadium&page=${page}`,
 		);
 		const data = await res.json();
 		const listings = data.listings;
