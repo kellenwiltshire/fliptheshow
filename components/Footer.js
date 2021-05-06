@@ -21,6 +21,8 @@ function Footer() {
 					<a
 						href='https://github.com/kellenwiltshire/fliptheshow'
 						className='text-gray-500'
+						rel='noopener noreferrer'
+						target='_blank'
 					>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
@@ -39,6 +41,20 @@ function Footer() {
 						</svg>
 					</a>
 				</span>
+				<div className='ml-10'>
+					<a
+						href='https://www.paypal.com/donate?business=Z2PC95TA9JLVL&item_name=Web+Services&currency_code=CAD'
+						rel='noopener noreferrer'
+						target='_blank'
+					>
+						<img
+							alt='Donate with PayPal'
+							src='/donate.png'
+							width='90px'
+							height='auto'
+						/>
+					</a>
+				</div>
 			</div>
 		</footer>
 	);

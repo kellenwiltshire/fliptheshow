@@ -19,6 +19,20 @@ function Navigation() {
 					<a className='mr-5 hover:text-gray-900'>Equipment</a>
 				</Link>
 			</nav>
+			<div>
+				<a
+					href='https://www.paypal.com/donate?business=Z2PC95TA9JLVL&item_name=Web+Services&currency_code=CAD'
+					rel='noopener noreferrer'
+					target='_blank'
+				>
+					<img
+						src='/donate.png'
+						alt='Donate with PayPal'
+						width='90px'
+						height='auto'
+					/>
+				</a>
+			</div>
 		</div>
 	);
 }

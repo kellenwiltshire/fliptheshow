@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { seriesOptions, teamOptions, rarityOptions } from '../defaultOptions';
+import Filters from '../components/Filters';
+import SelectFilters from '../components/SelectFilters';
 
 export default function Home({ items }) {
 	const [sortedItems, setSortedItems] = useState(items);
