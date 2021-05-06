@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { seriesOptions, teamOptions, rarityOptions } from '../defaultOptions';
 
 export default function Home({ items }) {
 	const [sortedItems, setSortedItems] = useState(items);
@@ -220,21 +221,21 @@ export default function Home({ items }) {
 			);
 		});
 		filteredList = filteredList.filter((item) => {
-			if (rarity === '') {
+			if (rarity === '' || rarity === 'Rarity') {
 				return item;
 			} else {
 				return item.item.rarity === rarity;
 			}
 		});
 		filteredList = filteredList.filter((item) => {
-			if (series === '') {
+			if (series === '' || series === 'Series') {
 				return item;
 			} else {
 				return item.item.series === series;
 			}
 		});
 		filteredList = filteredList.filter((item) => {
-			if (team === '') {
+			if (team === '' || team === 'Team') {
 				return item;
 			} else {
 				return item.item.team === team;
@@ -267,158 +268,37 @@ export default function Home({ items }) {
 					/>
 				</div>
 				<div className='flex flex-col m-1'>
-					<input
-						id='minOvr'
-						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-						type='text'
-						placeholder='Min Overall'
-						onChange={(e) =>
-							e.target.value === '' ? setMinOvr(0) : setMinOvr(e.target.value)
-						}
-					/>
-					<input
-						id='maxOvr'
-						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-						type='text'
-						placeholder='Max Overall'
-						onChange={(e) =>
-							e.target.value === '' ? setMaxOvr(100) : setMaxOvr(e.target.value)
-						}
-					/>
+					<Filters setValue={setMinBuyPrice} placeholder='Min Best Buy Price' />
+					<Filters setValue={setMaxBuyPrice} placeholder='Max Best Buy Price' />
 				</div>
 				<div className='flex flex-col m-1'>
-					<input
-						id='minBuyPrice'
-						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-						type='text'
-						placeholder='Min Best Buy Price'
-						onChange={(e) =>
-							e.target.value === ''
-								? setMinBuyPrice(0)
-								: setMinBuyPrice(e.target.value)
-						}
-					/>
-					<input
-						id='maxBuyPrice'
-						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-						type='text'
-						placeholder='Max Best Buy Price'
-						onChange={(e) =>
-							e.target.value === ''
-								? setMaxBuyPrice(500000)
-								: setMaxBuyPrice(e.target.value)
-						}
-					/>
-				</div>
-				<div className='flex flex-col m-1'>
-					<input
-						id='minSellPrice'
-						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-						type='text'
+					<Filters
+						setValue={setMinSellPrice}
 						placeholder='Min Best Sell Price'
-						onChange={(e) =>
-							e.target.value === ''
-								? setMinSellPrice(0)
-								: setMinSellPrice(e.target.value)
-						}
 					/>
-					<input
-						id='maxSellPrice'
-						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-						type='text'
+					<Filters
+						setValue={setMaxSellPrice}
 						placeholder='Max Best Sell Price'
-						onChange={(e) =>
-							e.target.value === ''
-								? setMaxSellPrice(0)
-								: setMaxSellPrice(e.target.value)
-						}
 					/>
 				</div>
 				<div className='flex flex-col m-1'>
-					<select
-						id='rarity'
-						className='rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10'
-						onChange={(e) =>
-							e.target.value === 'Rarity'
-								? setRarity('')
-								: setRarity(e.target.value)
-						}
-						placeholder='Rarity'
-					>
-						<option>Rarity</option>
-						<option>Diamond</option>
-						<option>Gold</option>
-						<option>Silver</option>
-						<option>Bronze</option>
-						<option>Common</option>
-					</select>
-					<select
-						id='series'
-						className='rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10'
-						onChange={(e) =>
-							e.target.value === 'Series'
-								? setSeries('')
-								: setSeries(e.target.value)
-						}
-						placeholder='Series'
-					>
-						<option>Series</option>
-						<option>2nd Half</option>
-						<option>All-Star</option>
-						<option>Awards</option>
-						<option>Breakout</option>
-						<option>Future Stars</option>
-						<option>Live</option>
-						<option>Veteran</option>
-						<option>Topps Now</option>
-						<option>The 42</option>
-						<option>Rookie</option>
-						<option>Prospect</option>
-						<option>Prime</option>
-						<option>Postseason</option>
-						<option>Monthly Awards</option>
-						<option>Milestone</option>
-					</select>
+					<SelectFilters
+						defaultValue='Rarity'
+						setValue={setRarity}
+						options={rarityOptions}
+					/>
+					<SelectFilters
+						defaultValue='Rarity'
+						setValue={setSeries}
+						options={seriesOptions}
+					/>
 				</div>
 				<div className='m-1'>
-					<select
-						id='team'
-						className='rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10'
-						onChange={(e) =>
-							e.target.value === 'Team' ? setTeam('') : setTeam(e.target.value)
-						}
-						placeholder='Team'
-					>
-						<option>Diamondbacks</option>
-						<option>Braves</option>
-						<option>Orioles</option>
-						<option>Red Sox</option>
-						<option>White Sox</option>
-						<option>Cubs</option>
-						<option>Reds</option>
-						<option>Indians</option>
-						<option>Rockies</option>
-						<option>Tigers</option>
-						<option>Astros</option>
-						<option>Royals</option>
-						<option>Angels</option>
-						<option>Dodgers</option>
-						<option>Marlins</option>
-						<option>Brewers</option>
-						<option>Twins</option>
-						<option>Yankees</option>
-						<option>Mets</option>
-						<option>Athletics</option>
-						<option>Phillies</option>
-						<option>Pirates</option>
-						<option>Padres</option>
-						<option>Giants</option>
-						<option>Mariners</option>
-						<option>Cardinals</option>
-						<option>Rays</option>
-						<option>Blue Jays</option>
-						<option>Nationals</option>
-					</select>
+					<SelectFilters
+						defaultValue='Team'
+						setValue={setTeam}
+						options={teamOptions}
+					/>
 				</div>
 				<div className='m-1'>
 					<button
