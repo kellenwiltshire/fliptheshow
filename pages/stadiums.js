@@ -361,8 +361,8 @@ export default function Stadiums({ items }) {
 					const salesPerMin = getSalesPerMin(item);
 					const profitPerMin = getProfitPerMin(profit, salesPerMin);
 					const itemName = item.listing_name
-						.replace('&trade', '™')
-						.replace('&reg', '®');
+						.replace('&trade;', '™')
+						.replace('&reg;', '®');
 					return (
 						<tr key={item.item.uuid}>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>

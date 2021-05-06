@@ -15,7 +15,9 @@ function Navigation() {
 				<Link href='/stadiums'>
 					<a className='mr-5 hover:text-gray-900'>Stadiums</a>
 				</Link>
-				<a className='mr-5 hover:text-gray-900'>Equipment</a>
+				<Link href='/equipment'>
+					<a className='mr-5 hover:text-gray-900'>Equipment</a>
+				</Link>
 			</nav>
 		</div>
 	);

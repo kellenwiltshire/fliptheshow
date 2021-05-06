@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Filters from '../components/Filters';
 import SelectFilters from '../components/SelectFilters';
-import { rarityOptions, teamOptions } from '../defaultOptions';
+import { rarityOptions, slotOptions, brandOptions } from '../defaultOptions';
 
 export default function Equipment({ items }) {
 	console.log(items);
@@ -16,7 +16,8 @@ export default function Equipment({ items }) {
 	const [minBuyPrice, setMinBuyPrice] = useState(0);
 	const [maxBuyPrice, setMaxBuyPrice] = useState(500000);
 	const [rarity, setRarity] = useState('');
-	const [team, setTeam] = useState('');
+	const [slot, setSlot] = useState('');
+	const [brand, setBrand] = useState('');
 
 	const displayCurrentTime = () => {
 		const date = new Date();
@@ -182,11 +183,7 @@ export default function Equipment({ items }) {
 			let nameFilter = [];
 			filteredItems.map((names) => {
 				const name = names.listing_name.toLowerCase();
-				const teamName = names.item.team.toLowerCase();
-				if (
-					name.includes(e.target.value.toLowerCase()) ||
-					teamName.includes(e.target.value.toLowerCase())
-				) {
+				if (name.includes(e.target.value.toLowerCase())) {
 					nameFilter.push(names);
 				}
 			});
@@ -203,6 +200,8 @@ export default function Equipment({ items }) {
 		setMaxSellPrice(500000);
 		setMinSellPrice(0);
 		setRarity('');
+		setSlot('');
+		setBrand('');
 		document.getElementById('inputForm').reset();
 		setSortedItems(items);
 	};
@@ -228,17 +227,32 @@ export default function Equipment({ items }) {
 				return item.item.rarity === rarity;
 			}
 		});
-
 		filteredList = filteredList.filter((item) => {
-			if (team === '' || team === 'Team') {
+			if (brand === '' || brand === 'Brand') {
 				return item;
 			} else {
-				return item.item.team === team;
+				return item.item.brand.replace('&reg;', '') === brand;
+			}
+		});
+
+		filteredList = filteredList.filter((item) => {
+			if (slot === '' || slot === 'Slot') {
+				return item;
+			} else {
+				return item.item.slot === slot;
 			}
 		});
 		setSortedItems(filteredList);
 		setFilteredItems(filteredList);
-	}, [minSellPrice, maxSellPrice, minBuyPrice, maxBuyPrice, rarity, team]);
+	}, [
+		minSellPrice,
+		maxSellPrice,
+		minBuyPrice,
+		maxBuyPrice,
+		rarity,
+		slot,
+		brand,
+	]);
 
 	console.log(
 		minBuyPrice,
@@ -246,7 +260,7 @@ export default function Equipment({ items }) {
 		minSellPrice,
 		maxSellPrice,
 		rarity,
-		team,
+		slot,
 	);
 
 	return (
@@ -257,7 +271,7 @@ export default function Equipment({ items }) {
 						id='searchPlayers'
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
-						placeholder='Search Stadiums'
+						placeholder='Search Equipment'
 						onChange={playerSearchChange}
 					/>
 				</div>
@@ -282,11 +296,17 @@ export default function Equipment({ items }) {
 						options={rarityOptions}
 					/>
 				</div>
-				<div className='m-1'>
+
+				<div className='m-1 flex flex-col'>
 					<SelectFilters
-						defaultValue='Team'
-						setValue={setTeam}
-						options={teamOptions}
+						defaultValue='Slot'
+						setValue={setSlot}
+						options={slotOptions}
+					/>
+					<SelectFilters
+						defaultValue='Brand'
+						setValue={setBrand}
+						options={brandOptions}
 					/>
 				</div>
 				<div className='m-1'>
@@ -319,8 +339,14 @@ export default function Equipment({ items }) {
 					>
 						Series
 					</th>
+					<th
+						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+						onClick={sortTable}
+					>
+						Brand
+					</th>
 					<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
-						Team
+						Slot
 					</th>
 					<th
 						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
@@ -360,6 +386,12 @@ export default function Equipment({ items }) {
 					).toFixed(2);
 					const salesPerMin = getSalesPerMin(item);
 					const profitPerMin = getProfitPerMin(profit, salesPerMin);
+					const itemName = item.listing_name
+						.replace('&trade;', '™')
+						.replace('&reg;', '®');
+					const brandName = item.item.brand
+						.replace('&trade;', '™')
+						.replace('&reg;', '®');
 					return (
 						<tr key={item.item.uuid}>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
@@ -369,7 +401,7 @@ export default function Equipment({ items }) {
 										query: { player: item.item.uuid },
 									}}
 								>
-									<a>{item.listing_name}</a>
+									<a>{itemName}</a>
 								</Link>
 							</td>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
@@ -379,7 +411,10 @@ export default function Equipment({ items }) {
 								{item.item.series}
 							</td>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
-								{item.item.team}
+								{brandName}
+							</td>
+							<td className='border-t-2 border-gray-200 px-4 py-3'>
+								{item.item.slot}
 							</td>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
 								{item.best_buy_price}
