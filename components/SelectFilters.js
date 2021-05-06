@@ -12,7 +12,7 @@ function SelectFilters({ setValue, options, defaultValue }) {
 			placeholder={defaultValue}
 		>
 			{options.map((item) => {
-				return <option>{item}</option>;
+				return <option key={item}>{item}</option>;
 			})}
 		</select>
 	);

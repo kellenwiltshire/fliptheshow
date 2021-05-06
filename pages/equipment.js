@@ -4,7 +4,7 @@ import Filters from '../components/Filters';
 import SelectFilters from '../components/SelectFilters';
 import { rarityOptions, teamOptions } from '../defaultOptions';
 
-export default function Stadiums({ items }) {
+export default function Equipment({ items }) {
 	console.log(items);
 	const [sortedItems, setSortedItems] = useState(items);
 	const [filteredItems, setFilteredItems] = useState(items);
@@ -360,9 +360,6 @@ export default function Stadiums({ items }) {
 					).toFixed(2);
 					const salesPerMin = getSalesPerMin(item);
 					const profitPerMin = getProfitPerMin(profit, salesPerMin);
-					const itemName = item.listing_name
-						.replace('&trade', '™')
-						.replace('&reg', '®');
 					return (
 						<tr key={item.item.uuid}>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
@@ -372,7 +369,7 @@ export default function Stadiums({ items }) {
 										query: { player: item.item.uuid },
 									}}
 								>
-									<a>{itemName}</a>
+									<a>{item.listing_name}</a>
 								</Link>
 							</td>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
@@ -426,7 +423,7 @@ export async function getStaticProps(props) {
 	};
 	const recursiveGetData = async (page = 1) => {
 		const res = await fetch(
-			`https://mlb21.theshow.com/apis/listings.json?type=stadium&page=${page}`,
+			`https://mlb21.theshow.com/apis/listings.json?type=equipment&page=${page}`,
 		);
 		const data = await res.json();
 		const listings = data.listings;
