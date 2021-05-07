@@ -52,7 +52,6 @@ export default function Equipment({ items }) {
 		return time;
 	};
 
-	console.log(sortedItems);
 	const date = new Date();
 	const month = date.getUTCMonth() + 1;
 	const day = date.getUTCDate();
