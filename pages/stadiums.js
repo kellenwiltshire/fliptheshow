@@ -5,7 +5,6 @@ import SelectFilters from '../components/SelectFilters';
 import { rarityOptions, teamOptions } from '../defaultOptions';
 
 export default function Stadiums({ items }) {
-	console.log(items);
 	const [sortedItems, setSortedItems] = useState(items);
 	const [filteredItems, setFilteredItems] = useState(items);
 	const initialItems = items;
@@ -212,7 +211,6 @@ export default function Stadiums({ items }) {
 	}, []);
 
 	useEffect(() => {
-		console.log('Here');
 		let filteredList = initialItems.filter((item) => {
 			return (
 				item.best_buy_price >= minBuyPrice &&
@@ -239,15 +237,6 @@ export default function Stadiums({ items }) {
 		setSortedItems(filteredList);
 		setFilteredItems(filteredList);
 	}, [minSellPrice, maxSellPrice, minBuyPrice, maxBuyPrice, rarity, team]);
-
-	console.log(
-		minBuyPrice,
-		maxBuyPrice,
-		minSellPrice,
-		maxSellPrice,
-		rarity,
-		team,
-	);
 
 	return (
 		<div className='lg:w-2/3 w-full mx-auto'>
@@ -366,14 +355,7 @@ export default function Stadiums({ items }) {
 					return (
 						<tr key={item.item.uuid}>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
-								<Link
-									href={{
-										pathname: '/players/[player]',
-										query: { player: item.item.uuid },
-									}}
-								>
-									<a>{itemName}</a>
-								</Link>
+								{itemName}
 							</td>
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
 								{item.item.rarity}
@@ -406,11 +388,9 @@ export default function Stadiums({ items }) {
 }
 
 export async function getStaticProps(props) {
-	console.time('timer');
-
+	console.log('Stadium Revalidate');
 	const getItemData = async (items) => {
 		for (let i = 0; i < items.length; i++) {
-			console.log(items.length, i);
 			const itemID = items[i].item.uuid;
 			try {
 				const res = await fetch(
@@ -430,7 +410,6 @@ export async function getStaticProps(props) {
 		);
 		const data = await res.json();
 		const listings = data.listings;
-		console.log(data.total_pages, page);
 		if (data.total_pages > page) {
 			return listings.concat(await recursiveGetData(page + 1));
 		} else {
@@ -442,7 +421,6 @@ export async function getStaticProps(props) {
 	initialItems = await recursiveGetData();
 	let items = [];
 	items = await getItemData(initialItems);
-	console.timeEnd('timer');
 	return {
 		props: { items },
 		revalidate: 1,

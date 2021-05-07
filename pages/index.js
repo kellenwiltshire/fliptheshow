@@ -53,8 +53,6 @@ export default function Home({ items }) {
 		const time = hours + ':' + minutes + ':' + seconds + ' ' + am_pm;
 		return time;
 	};
-
-	console.log(sortedItems);
 	const date = new Date();
 	const month = date.getUTCMonth() + 1;
 	const day = date.getUTCDate();
@@ -201,6 +199,7 @@ export default function Home({ items }) {
 		setMaxSellPrice(500000);
 		setMinSellPrice(0);
 		setRarity('');
+		setTeam('');
 		setMinOvr(0);
 		setMaxOvr(100);
 		document.getElementById('inputForm').reset();
@@ -424,11 +423,10 @@ export default function Home({ items }) {
 }
 
 export async function getStaticProps(props) {
-	console.time('timer');
+	console.log('Players Revalidate');
 
 	const getItemData = async (items) => {
 		for (let i = 0; i < items.length; i++) {
-			console.log(items.length, i);
 			const itemID = items[i].item.uuid;
 			try {
 				const res = await fetch(
@@ -448,7 +446,6 @@ export async function getStaticProps(props) {
 		);
 		const data = await res.json();
 		const listings = data.listings;
-		console.log(data.total_pages, page);
 		if (data.total_pages > page) {
 			return listings.concat(await recursiveGetData(page + 1));
 		} else {
@@ -460,7 +457,7 @@ export async function getStaticProps(props) {
 	initialItems = await recursiveGetData();
 	let items = [];
 	items = await getItemData(initialItems);
-	console.timeEnd('timer');
+
 	return {
 		props: { items },
 		revalidate: 1,
