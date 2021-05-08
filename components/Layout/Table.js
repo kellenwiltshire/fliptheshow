@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 
-function Table({ sortedItems, setSortedItems }) {
+function Table({ sortedItems, setSortedItems, isPlayer }) {
 	const [sort, setSort] = useState('');
 	const [sortSwitch, setSortSwitch] = useState(false);
 	const sortTable = (e) => {
@@ -155,9 +156,21 @@ function Table({ sortedItems, setSortedItems }) {
 						.replace('&reg;', '®');
 					return (
 						<tr key={item.item.uuid}>
-							<td className='border-t-2 border-gray-200 px-4 py-3'>
-								{itemName}
-							</td>
+							{isPlayer ? (
+								<Link
+									href={{
+										pathname: '/players/[player]',
+										query: { player: item.item.uuid },
+									}}
+								>
+									<a>{item.listing_name}</a>
+								</Link>
+							) : (
+								<td className='border-t-2 border-gray-200 px-4 py-3'>
+									{itemName}
+								</td>
+							)}
+
 							<td className='border-t-2 border-gray-200 px-4 py-3'>
 								{item.item.rarity}
 							</td>

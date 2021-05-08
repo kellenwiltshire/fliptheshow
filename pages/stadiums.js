@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
@@ -13,6 +14,7 @@ export default function Stadiums({ items }) {
 	const [rarity, setRarity] = useState('');
 	const [team, setTeam] = useState('');
 	const [series, setSeries] = useState('');
+	const isPlayer = false;
 
 	const displayCurrentTime = () => {
 		const date = new Date();
@@ -120,6 +122,9 @@ export default function Stadiums({ items }) {
 
 	return (
 		<div className='lg:w-2/3 w-full mx-auto'>
+			<Head>
+				<title>Flip The Show | Stadiums</title>
+			</Head>
 			<FilterForm
 				setMinBuyPrice={setMinBuyPrice}
 				setMaxBuyPrice={setMaxBuyPrice}
@@ -132,7 +137,11 @@ export default function Stadiums({ items }) {
 				items={items}
 				filteredItems={filteredItems}
 			/>
-			<Table sortedItems={sortedItems} setSortedItems={setSortedItems} />
+			<Table
+				sortedItems={sortedItems}
+				setSortedItems={setSortedItems}
+				isPlayer={isPlayer}
+			/>
 		</div>
 	);
 }

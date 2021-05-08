@@ -7,7 +7,6 @@ function Layout({ children }) {
 	return (
 		<div>
 			<Head>
-				<title>Flip The Show</title>
 				<link rel='icon' href='/favicon.ico' />
 				<meta description='Flip The Show MLB21 The Show 21 TheShow21 Baseball Cards Flipping Market Xbox Playstation' />
 				<meta name='Flip The Show' />
