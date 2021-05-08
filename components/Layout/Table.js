@@ -1,9 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Paginate from 'react-paginate';
 
 function Table({ sortedItems, setSortedItems, isPlayer }) {
 	const [sort, setSort] = useState('');
 	const [sortSwitch, setSortSwitch] = useState(false);
+	const [numPages, setNumPages] = useState(Math.round(sortedItems.length / 50));
+	const [currPage, setCurrPage] = useState(0);
+	const [offset, setOffSet] = useState(0);
+	const [currItems, setCurrItems] = useState(
+		sortedItems.slice(offset, offset + 50),
+	);
+
+	console.log(currItems);
+
+	const onPageChange = (e) => {
+		const selectedPage = e.selected;
+		const newOffset = selectedPage * 50;
+		setOffSet(newOffset);
+		setCurrPage(e.selected);
+		window.scrollTo(0, 0);
+	};
+
+	useEffect(() => {
+		setCurrItems(sortedItems.slice(offset, offset + 50));
+	}, [offset, sortedItems]);
+
 	const sortTable = (e) => {
 		e.preventDefault();
 		setSort(e.target.textContent);
@@ -75,6 +97,7 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 			setSortSwitch(!sortSwitch);
 		}
 		setSortedItems(newItems);
+		setCurrItems(newItems.slice(offset, offset + 50));
 	};
 	const getSalesPerMin = (item) => {
 		if (item.additionalData.orderPerHour) {
@@ -89,6 +112,19 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 	};
 	return (
 		<table className='table-auto w-full text-left whitespace-no-wrap border-2 border-gray-100'>
+			<Paginate
+				pageCount={numPages}
+				pageRangeDisplayed={5}
+				marginPagesDisplayed={0}
+				onPageChange={onPageChange}
+				forcePage={currPage}
+				previousClassName='mx-2 py-1 px-2 border-blue-200 border w-50 text-center rounded-l cursor-pointer'
+				nextClassName='mx-2 py-1 px-2 border-blue-200 border w-50 text-center rounded-r cursor-pointer'
+				containerClassName='flex flex-row flex-wrap m-5 align-middle'
+				activeClassName='bg-blue-200 text-gray-200'
+				pageClass='py-1 px-2 border-blue-200 border cursor-pointer'
+				breakClass='border border-blue-200 text-gray-200'
+			/>
 			<thead className='sticky top-24'>
 				<td
 					className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
@@ -144,7 +180,7 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 				</td>
 			</thead>
 			<tbody>
-				{sortedItems.map((item) => {
+				{currItems.map((item) => {
 					const profit = (
 						item.best_sell_price * 0.9 -
 						item.best_buy_price
