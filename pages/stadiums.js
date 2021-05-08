@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
 
-//TODO Avg Buy/Sell Price, Paginate the Table
+//TODO Avg Buy/Sell Price, Mobile Layout
 
 export default function Stadiums({ items }) {
 	const [sortedItems, setSortedItems] = useState(items);

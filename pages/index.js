@@ -110,6 +110,14 @@ export default function Home({ items }) {
 		});
 
 		filteredList = filteredList.filter((item) => {
+			if (series === '' || series === 'Series') {
+				return item;
+			} else {
+				return item.item.series === series;
+			}
+		});
+
+		filteredList = filteredList.filter((item) => {
 			if (team === '' || team === 'Team') {
 				return item;
 			} else {
@@ -118,7 +126,15 @@ export default function Home({ items }) {
 		});
 		setSortedItems(filteredList);
 		setFilteredItems(filteredList);
-	}, [minSellPrice, maxSellPrice, minBuyPrice, maxBuyPrice, rarity, team]);
+	}, [
+		minSellPrice,
+		maxSellPrice,
+		minBuyPrice,
+		maxBuyPrice,
+		rarity,
+		team,
+		series,
+	]);
 
 	return (
 		<div className='lg:w-2/3 w-full mx-auto'>
