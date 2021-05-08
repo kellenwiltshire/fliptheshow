@@ -1,5 +1,5 @@
 import 'tailwindcss/tailwind.css';
-import Layout from '../components/Layout';
+import Layout from '../components/Layout/Layout';
 import * as gtag from '../lib/gtag';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';

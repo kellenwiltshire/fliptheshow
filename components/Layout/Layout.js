@@ -14,7 +14,7 @@ function Layout({ children }) {
 				<meta lang='en' />
 			</Head>
 			<Navigation />
-			<main className='mx-auto max-h-screen overflow-hidden overflow-y-scroll flex justify-center flex-row flex-wrap'>
+			<main className='mx-auto min-h-screen flex justify-center flex-row flex-wrap'>
 				{children}
 			</main>
 			<Footer />

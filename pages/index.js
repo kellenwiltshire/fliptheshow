@@ -289,7 +289,7 @@ export default function Home({ items }) {
 						options={rarityOptions}
 					/>
 					<SelectFilters
-						defaultValue='Rarity'
+						defaultValue='Series'
 						setValue={setSeries}
 						options={seriesOptions}
 					/>
