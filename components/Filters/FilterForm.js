@@ -68,20 +68,24 @@ function FilterForm({
 			<div className='flex flex-col m-1'>
 				<TextFilters
 					setValue={setMinBuyPrice}
+					defaultValue={0}
 					placeholder='Min Best Buy Price'
 				/>
 				<TextFilters
 					setValue={setMaxBuyPrice}
+					defaultValue={500000}
 					placeholder='Max Best Buy Price'
 				/>
 			</div>
 			<div className='flex flex-col m-1'>
 				<TextFilters
 					setValue={setMinSellPrice}
+					defaultValue={0}
 					placeholder='Min Best Sell Price'
 				/>
 				<TextFilters
 					setValue={setMaxSellPrice}
+					defaultValue={500000}
 					placeholder='Max Best Sell Price'
 				/>
 			</div>

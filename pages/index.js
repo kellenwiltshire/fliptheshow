@@ -123,7 +123,7 @@ export default function Home({ items }) {
 	return (
 		<div className='lg:w-2/3 w-full mx-auto'>
 			<Head>
-				<title>Flip The Show | Stadiums</title>
+				<title>Flip The Show | Players</title>
 			</Head>
 			<FilterForm
 				setMinBuyPrice={setMinBuyPrice}
