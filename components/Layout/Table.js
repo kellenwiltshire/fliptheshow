@@ -22,6 +22,7 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 
 	useEffect(() => {
 		setCurrItems(sortedItems.slice(offset, offset + 50));
+		setNumPages(Math.round(sortedItems.length / 50));
 	}, [offset, sortedItems]);
 
 	const sortTable = (e) => {
@@ -116,13 +117,14 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 				marginPagesDisplayed={0}
 				onPageChange={onPageChange}
 				forcePage={currPage}
-				previousClassName='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer'
-				nextClassName='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer'
-				containerClassName='flex flex-row bg-gray-100 rounded-t text-lg'
-				activeClassName='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg'
-				pageClass='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer'
-				breakClass='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg'
+				previousClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
+				nextClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
+				containerClassName='flex flex-row bg-gray-100 rounded-t text-lg justify-center'
+				activeClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
+				pageClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
+				breakClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg mx-1'
 			/>
+
 			<table className='table-auto w-full text-left whitespace-no-wrap border-2 border-gray-100'>
 				<thead className='sticky top-24'>
 					<td
@@ -192,14 +194,16 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 						return (
 							<tr key={item.item.uuid}>
 								{isPlayer ? (
-									<Link
-										href={{
-											pathname: '/players/[player]',
-											query: { player: item.item.uuid },
-										}}
-									>
-										<a>{item.listing_name}</a>
-									</Link>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										<Link
+											href={{
+												pathname: '/players/[player]',
+												query: { player: item.item.uuid },
+											}}
+										>
+											<a>{item.listing_name}</a>
+										</Link>
+									</td>
 								) : (
 									<td className='border-t-2 border-gray-200 px-4 py-3'>
 										{itemName}
@@ -241,12 +245,12 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 				marginPagesDisplayed={0}
 				onPageChange={onPageChange}
 				forcePage={currPage}
-				previousClassName='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer'
-				nextClassName='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer'
-				containerClassName='flex flex-row bg-gray-100 rounded-b text-lg'
-				activeClassName='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg'
-				pageClass='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer'
-				breakClass='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg'
+				previousClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
+				nextClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
+				containerClassName='flex flex-row bg-gray-100 rounded-t text-lg justify-center'
+				activeClassName='flex text-white bg-indigo-100 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
+				pageClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
+				breakClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg mx-1'
 			/>
 		</div>
 	);
