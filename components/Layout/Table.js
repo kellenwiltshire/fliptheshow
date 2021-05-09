@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Paginate from 'react-paginate';
 
-function Table({ sortedItems, setSortedItems, isPlayer }) {
+function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 	const [sort, setSort] = useState('');
 	const [sortSwitch, setSortSwitch] = useState(false);
 	const [numPages, setNumPages] = useState(Math.round(sortedItems.length / 50));
@@ -27,7 +27,8 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 
 	const sortTable = (e) => {
 		e.preventDefault();
-		setSort(e.target.textContent);
+		setSort(e.target.value);
+		console.log(e.target.textContent);
 		let newItems = sortedItems;
 		//! Sort By Name
 		if (e.target.textContent === 'Name') {
@@ -61,6 +62,18 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 		} else if (e.target.textContent === 'Best Buy') {
 			newItems = newItems.sort((a, b) => {
 				return a.best_buy_price - b.best_buy_price;
+			});
+		} else if (e.target.textContent === 'Best Buy (Last Hour)') {
+			newItems = newItems.sort((a, b) => {
+				return (
+					a.additionalData.bestBuyLastHour - b.additionalData.bestBuyLastHour
+				);
+			});
+		} else if (e.target.textContent === 'Best Sell (Last Hour)') {
+			newItems = newItems.sort((a, b) => {
+				return (
+					a.additionalData.bestSellLastHour - b.additionalData.bestSellLastHour
+				);
 			});
 		} else if (e.target.textContent === 'Best Sell') {
 			newItems = newItems.sort((a, b) => {
@@ -120,7 +133,7 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 				previousClassName='page'
 				nextClassName='page'
 				containerClassName='pageContainerTop'
-				activeClassName='page'
+				activeClassName='pageActive'
 				pageClassName='page'
 				breakClassName='page'
 			/>
@@ -147,14 +160,23 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 						>
 							Series
 						</th>
-						<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
-							Team
-						</th>
+						{isTeam ? (
+							<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
+								Team
+							</th>
+						) : null}
+
 						<th
 							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
 							onClick={sortTable}
 						>
 							Best Buy
+						</th>
+						<th
+							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+							onClick={sortTable}
+						>
+							Best Buy (Last Hour)
 						</th>
 
 						<th
@@ -164,12 +186,12 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 							Best Sell
 						</th>
 						<th
-							className='flex flex-col px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
 							onClick={sortTable}
 						>
-							<span>Avg sell Price </span>
-							<span className='text-xs'>(last hour)</span>
+							Best Sell (Last Hour)
 						</th>
+
 						<th
 							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
 							onClick={sortTable}
@@ -192,7 +214,6 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 				</thead>
 				<tbody>
 					{currItems.map((item) => {
-						console.log(item);
 						const profit = Math.round(
 							item.best_sell_price * 0.9 - item.best_buy_price,
 						);
@@ -227,19 +248,26 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 								<td className='border-t-2 border-gray-200 px-4 py-3'>
 									{item.item.series}
 								</td>
-								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{item.item.team}
-								</td>
+								{isTeam ? (
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.item.team}
+									</td>
+								) : null}
+
 								<td className='border-t-2 border-gray-200 px-4 py-3'>
 									{item.best_buy_price}
+								</td>
+								<td className='border-t-2 border-gray-200 px-4 py-3'>
+									{item.additionalData.bestBuyLastHour}
 								</td>
 
 								<td className='border-t-2 border-gray-200 px-4 py-3'>
 									{item.best_sell_price}
 								</td>
 								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{item.additionalData.avgPrice}
+									{item.additionalData.bestSellLastHour}
 								</td>
+
 								<td className='border-t-2 border-gray-200 px-4 py-3'>
 									{profit}
 								</td>

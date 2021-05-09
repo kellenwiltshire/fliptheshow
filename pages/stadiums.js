@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
 
-//TODO, Mobile Layout
+//TODO Mobile Layout
 
 export default function Stadiums({ items }) {
 	const [sortedItems, setSortedItems] = useState(items);
@@ -17,6 +17,7 @@ export default function Stadiums({ items }) {
 	const [team, setTeam] = useState('');
 	const [series, setSeries] = useState('');
 	const isPlayer = false;
+	const isTeam = true;
 
 	const displayCurrentTime = () => {
 		const date = new Date();
@@ -76,8 +77,10 @@ export default function Stadiums({ items }) {
 
 	const determineNumOrdersPerHours = () => {
 		for (let i = 0; i < sortedItems.length; i++) {
-			let avgPrice = 0;
+			let bestBuyLastHour = 500000;
+			let bestSellLastHour = 0;
 			sortedItems[i].additionalData.orderPerHour = [];
+			sortedItems[i].additionalData.bestBuyLastHour = 0;
 			sortedItems[i].additionalData.completed_orders.map((order) => {
 				let orderTime = order.date.split(' ');
 				let convertedTime = convertTime12To24(orderTime[1], orderTime[2]);
@@ -85,14 +88,18 @@ export default function Stadiums({ items }) {
 				if (convertedTime > convertedTestTime) {
 					sortedItems[i].additionalData.orderPerHour.push(order);
 					const fixedNum = order.price.split(',').join('');
-					avgPrice += Number(fixedNum);
+					if (fixedNum >= bestSellLastHour) {
+						bestSellLastHour = fixedNum;
+					}
+					if (fixedNum <= bestBuyLastHour) {
+						bestBuyLastHour = fixedNum;
+					}
 				} else {
 					return;
 				}
 			});
-			sortedItems[i].additionalData.avgPrice = Math.round(
-				avgPrice / sortedItems[i].additionalData.orderPerHour.length,
-			);
+			sortedItems[i].additionalData.bestBuyLastHour = bestBuyLastHour;
+			sortedItems[i].additionalData.bestSellLastHour = bestSellLastHour;
 		}
 	};
 

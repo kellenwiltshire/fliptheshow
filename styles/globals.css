@@ -39,3 +39,16 @@
 	line-height: 1.75rem;
 	justify-content: center;
 }
+
+.pageActive {
+	display: flex;
+	color: white;
+	background: #0004fa;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-right: 1rem;
+	padding-left: 1rem;
+	border-radius: 0.25rem;
+	cursor: pointer;
+	margin-left: 0.25rem;
+}

@@ -15,6 +15,7 @@ export default function Equipment({ items }) {
 	const [team, setTeam] = useState('');
 	const [series, setSeries] = useState('');
 	const isPlayer = false;
+	const isTeam = false;
 
 	const displayCurrentTime = () => {
 		const date = new Date();
@@ -74,17 +75,29 @@ export default function Equipment({ items }) {
 
 	const determineNumOrdersPerHours = () => {
 		for (let i = 0; i < sortedItems.length; i++) {
+			let bestBuyLastHour = 500000;
+			let bestSellLastHour = 0;
 			sortedItems[i].additionalData.orderPerHour = [];
+			sortedItems[i].additionalData.bestBuyLastHour = 0;
 			sortedItems[i].additionalData.completed_orders.map((order) => {
 				let orderTime = order.date.split(' ');
 				let convertedTime = convertTime12To24(orderTime[1], orderTime[2]);
 				let convertedTestTime = convertTime12To24(fullTime[1], fullTime[2]);
 				if (convertedTime > convertedTestTime) {
 					sortedItems[i].additionalData.orderPerHour.push(order);
+					const fixedNum = order.price.split(',').join('');
+					if (fixedNum >= bestSellLastHour) {
+						bestSellLastHour = fixedNum;
+					}
+					if (fixedNum <= bestBuyLastHour) {
+						bestBuyLastHour = fixedNum;
+					}
 				} else {
 					return;
 				}
 			});
+			sortedItems[i].additionalData.bestBuyLastHour = bestBuyLastHour;
+			sortedItems[i].additionalData.bestSellLastHour = bestSellLastHour;
 		}
 	};
 
