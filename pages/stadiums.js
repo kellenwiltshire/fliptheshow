@@ -76,6 +76,7 @@ export default function Stadiums({ items }) {
 
 	const determineNumOrdersPerHours = () => {
 		for (let i = 0; i < sortedItems.length; i++) {
+			let avgPrice = 0;
 			sortedItems[i].additionalData.orderPerHour = [];
 			sortedItems[i].additionalData.completed_orders.map((order) => {
 				let orderTime = order.date.split(' ');
@@ -83,10 +84,15 @@ export default function Stadiums({ items }) {
 				let convertedTestTime = convertTime12To24(fullTime[1], fullTime[2]);
 				if (convertedTime > convertedTestTime) {
 					sortedItems[i].additionalData.orderPerHour.push(order);
+					const fixedNum = order.price.split(',').join('');
+					avgPrice += Number(fixedNum);
 				} else {
 					return;
 				}
 			});
+			sortedItems[i].additionalData.avgPrice = Math.round(
+				avgPrice / sortedItems[i].additionalData.orderPerHour.length,
+			);
 		}
 	};
 

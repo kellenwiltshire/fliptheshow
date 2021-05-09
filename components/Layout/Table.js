@@ -21,22 +21,6 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 	};
 
 	useEffect(() => {
-		for (let i = 0; i < sortedItems.length; i++) {
-			let avgPrice = 0;
-			for (
-				let k = 0;
-				k < sortedItems[i].additionalData.orderPerHour.length;
-				k++
-			) {
-				avgPrice += Number(sortedItems[i].additionalData.orderPerHour[k].price);
-			}
-			sortedItems[i].additionalData.avg_sell_price = (
-				avgPrice / sortedItems[i].additionalData.orderPerHour.length
-			).toFixed(2);
-		}
-	}, []);
-
-	useEffect(() => {
 		setCurrItems(sortedItems.slice(offset, offset + 50));
 		setNumPages(Math.round(sortedItems.length / 50));
 	}, [offset, sortedItems]);
@@ -209,10 +193,9 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 				<tbody>
 					{currItems.map((item) => {
 						console.log(item);
-						const profit = (
-							item.best_sell_price * 0.9 -
-							item.best_buy_price
-						).toFixed(2);
+						const profit = Math.round(
+							item.best_sell_price * 0.9 - item.best_buy_price,
+						);
 						const salesPerMin = getSalesPerMin(item);
 						const profitPerMin = getProfitPerMin(profit, salesPerMin);
 						const itemName = item.listing_name
@@ -255,7 +238,7 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 									{item.best_sell_price}
 								</td>
 								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{item.additionalData.avg_sell_price}
+									{item.additionalData.avgPrice}
 								</td>
 								<td className='border-t-2 border-gray-200 px-4 py-3'>
 									{profit}
