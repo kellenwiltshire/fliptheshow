@@ -1,0 +1,41 @@
+.page {
+	display: flex;
+	color: white;
+	background: #6366f1;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-right: 1rem;
+	padding-left: 1rem;
+	border-radius: 0.25rem;
+	cursor: pointer;
+	margin-left: 0.25rem;
+}
+
+.page:focus {
+	outline: 2px solid transparent;
+	outline-offset: 2px;
+}
+
+.page:hover {
+	background-color: #484bf0;
+}
+
+.pageContainerTop {
+	display: flex;
+	flex: row;
+	justify-content: center;
+	background: #f3f4f6;
+	border-top: 0.25rem;
+	font-size: 1.125rem;
+	line-height: 1.75rem;
+}
+
+.pageContainerBottom {
+	display: flex;
+	flex: row;
+	background: #f3f4f6;
+	border-bottom: 0.25rem;
+	font-size: 1.125rem;
+	line-height: 1.75rem;
+	justify-content: center;
+}

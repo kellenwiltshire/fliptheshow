@@ -21,6 +21,22 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 	};
 
 	useEffect(() => {
+		for (let i = 0; i < sortedItems.length; i++) {
+			let avgPrice = 0;
+			for (
+				let k = 0;
+				k < sortedItems[i].additionalData.orderPerHour.length;
+				k++
+			) {
+				avgPrice += Number(sortedItems[i].additionalData.orderPerHour[k].price);
+			}
+			sortedItems[i].additionalData.avg_sell_price = (
+				avgPrice / sortedItems[i].additionalData.orderPerHour.length
+			).toFixed(2);
+		}
+	}, []);
+
+	useEffect(() => {
 		setCurrItems(sortedItems.slice(offset, offset + 50));
 		setNumPages(Math.round(sortedItems.length / 50));
 	}, [offset, sortedItems]);
@@ -117,71 +133,82 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 				marginPagesDisplayed={0}
 				onPageChange={onPageChange}
 				forcePage={currPage}
-				previousClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
-				nextClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
-				containerClassName='flex flex-row bg-gray-100 rounded-t text-lg justify-center'
-				activeClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
-				pageClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
-				breakClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg mx-1'
+				previousClassName='page'
+				nextClassName='page'
+				containerClassName='pageContainerTop'
+				activeClassName='page'
+				pageClassName='page'
+				breakClassName='page'
 			/>
 
 			<table className='table-auto w-full text-left whitespace-no-wrap border-2 border-gray-100'>
 				<thead className='sticky top-24'>
-					<td
-						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-						onClick={sortTable}
-					>
-						Name
-					</td>
+					<tr>
+						<th
+							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+							onClick={sortTable}
+						>
+							Name
+						</th>
 
-					<td
-						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-						onClick={sortTable}
-					>
-						Rarity
-					</td>
-					<td
-						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-						onClick={sortTable}
-					>
-						Series
-					</td>
-					<td className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
-						Team
-					</td>
-					<td
-						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-						onClick={sortTable}
-					>
-						Best Buy
-					</td>
-					<td
-						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-						onClick={sortTable}
-					>
-						Best Sell
-					</td>
-					<td
-						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-						onClick={sortTable}
-					>
-						Profit
-					</td>
-					<td
-						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-						onClick={sortTable}
-					>
-						Sales/Minute
-					</td>
-					<td
-						className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-						onClick={sortTable}
-					>
-						Profit/Minute
-					</td>
+						<th
+							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+							onClick={sortTable}
+						>
+							Rarity
+						</th>
+						<th
+							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+							onClick={sortTable}
+						>
+							Series
+						</th>
+						<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
+							Team
+						</th>
+						<th
+							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+							onClick={sortTable}
+						>
+							Best Buy
+						</th>
+
+						<th
+							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+							onClick={sortTable}
+						>
+							Best Sell
+						</th>
+						<th
+							className='flex flex-col px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+							onClick={sortTable}
+						>
+							<span>Avg sell Price </span>
+							<span className='text-xs'>(last hour)</span>
+						</th>
+						<th
+							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+							onClick={sortTable}
+						>
+							Profit
+						</th>
+						<th
+							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+							onClick={sortTable}
+						>
+							Sales/Minute
+						</th>
+						<th
+							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+							onClick={sortTable}
+						>
+							Profit/Minute
+						</th>
+					</tr>
 				</thead>
 				<tbody>
 					{currItems.map((item) => {
+						console.log(item);
 						const profit = (
 							item.best_sell_price * 0.9 -
 							item.best_buy_price
@@ -191,6 +218,7 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 						const itemName = item.listing_name
 							.replace('&trade;', '™')
 							.replace('&reg;', '®');
+
 						return (
 							<tr key={item.item.uuid}>
 								{isPlayer ? (
@@ -222,8 +250,12 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 								<td className='border-t-2 border-gray-200 px-4 py-3'>
 									{item.best_buy_price}
 								</td>
+
 								<td className='border-t-2 border-gray-200 px-4 py-3'>
 									{item.best_sell_price}
+								</td>
+								<td className='border-t-2 border-gray-200 px-4 py-3'>
+									{item.additionalData.avg_sell_price}
 								</td>
 								<td className='border-t-2 border-gray-200 px-4 py-3'>
 									{profit}
@@ -245,12 +277,12 @@ function Table({ sortedItems, setSortedItems, isPlayer }) {
 				marginPagesDisplayed={0}
 				onPageChange={onPageChange}
 				forcePage={currPage}
-				previousClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
-				nextClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
-				containerClassName='flex flex-row bg-gray-100 rounded-t text-lg justify-center'
-				activeClassName='flex text-white bg-indigo-100 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
-				pageClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer mx-1'
-				breakClassName='flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg mx-1'
+				previousClassName='page'
+				nextClassName='page'
+				containerClassName='pageContainerBottom'
+				activeClassName='page'
+				pageClassName='page'
+				breakClassName='page'
 			/>
 		</div>
 	);

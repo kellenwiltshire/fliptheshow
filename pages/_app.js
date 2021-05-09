@@ -1,4 +1,5 @@
 import 'tailwindcss/tailwind.css';
+import '../styles/globals.css';
 import Layout from '../components/Layout/Layout';
 import * as gtag from '../lib/gtag';
 import { useRouter } from 'next/router';
