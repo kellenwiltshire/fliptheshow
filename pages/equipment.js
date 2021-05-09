@@ -149,6 +149,7 @@ export default function Equipment({ items }) {
 				setSortedItems={setSortedItems}
 				items={items}
 				filteredItems={filteredItems}
+				placeholder='Search Equipment'
 			/>
 			<Table
 				sortedItems={sortedItems}

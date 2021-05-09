@@ -165,6 +165,7 @@ export default function Home({ items }) {
 				setSortedItems={setSortedItems}
 				items={items}
 				filteredItems={filteredItems}
+				placeholder='Search Players'
 			/>
 			<Table
 				sortedItems={sortedItems}

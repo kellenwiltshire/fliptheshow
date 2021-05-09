@@ -151,6 +151,7 @@ export default function Stadiums({ items }) {
 				setSortedItems={setSortedItems}
 				items={items}
 				filteredItems={filteredItems}
+				placeholder='Search Stadiums'
 			/>
 			<Table
 				sortedItems={sortedItems}
