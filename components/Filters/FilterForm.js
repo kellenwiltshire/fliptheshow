@@ -51,10 +51,10 @@ function FilterForm({
 		}
 	};
 	return (
-		<div>
+		<div className='sticky top-0 mt-2'>
 			<form
 				id='inputForm'
-				className='text-gray-600 hidden lg:flex flex-row flex-wrap sticky h-24 top-0 bg-white mt-2'
+				className='text-gray-600 hidden lg:flex flex-row flex-wrap h-24 bg-white mt-2'
 			>
 				<div className='m-1'>
 					<input
@@ -165,7 +165,7 @@ function FilterForm({
 						placeholder='Max Best Sell Price'
 					/>
 				</div>
-				<div className='flex flex-col m-1'>
+				<div className='flex flex-col m-1 w-56'>
 					<SelectFilters
 						defaultValue='Rarity'
 						setValue={setRarity}
@@ -177,7 +177,7 @@ function FilterForm({
 						options={seriesOptions}
 					/>
 				</div>
-				<div className='m-1'>
+				<div className='m-1 w-56'>
 					<SelectFilters
 						defaultValue='Team'
 						setValue={setTeam}

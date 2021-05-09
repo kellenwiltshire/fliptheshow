@@ -123,178 +123,353 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 		return (profit * salesPerMin).toFixed(2);
 	};
 	return (
-		<div className='flex flex-col w-full justify-center'>
-			<Paginate
-				pageCount={numPages}
-				pageRangeDisplayed={5}
-				marginPagesDisplayed={0}
-				onPageChange={onPageChange}
-				forcePage={currPage}
-				previousClassName='page'
-				nextClassName='page'
-				containerClassName='pageContainerTop'
-				activeClassName='pageActive'
-				pageClassName='page'
-				breakClassName='page'
-			/>
+		<div className='flex flex-col w-full justify-center overflow-auto'>
+			<div className='hidden lg:block'>
+				<Paginate
+					pageCount={numPages}
+					pageRangeDisplayed={5}
+					marginPagesDisplayed={0}
+					onPageChange={onPageChange}
+					forcePage={currPage}
+					previousClassName='page'
+					nextClassName='page'
+					containerClassName='pageContainerTop'
+					activeClassName='pageActive'
+					pageClassName='page'
+					breakClassName='page'
+				/>
 
-			<table className='table-auto w-full text-left whitespace-no-wrap border-2 border-gray-100'>
-				<thead className='sticky top-24'>
-					<tr>
-						<th
-							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-							onClick={sortTable}
-						>
-							Name
-						</th>
-
-						<th
-							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-							onClick={sortTable}
-						>
-							Rarity
-						</th>
-						<th
-							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-							onClick={sortTable}
-						>
-							Series
-						</th>
-						{isTeam ? (
-							<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
-								Team
+				<table className='table-auto w-full text-left whitespace-no-wrap border-2 border-gray-100'>
+					<thead className='sticky top-24'>
+						<tr>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Name
 							</th>
-						) : null}
 
-						<th
-							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-							onClick={sortTable}
-						>
-							Best Buy
-						</th>
-						<th
-							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-							onClick={sortTable}
-						>
-							Best Buy (Last Hour)
-						</th>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Rarity
+							</th>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Series
+							</th>
+							{isTeam ? (
+								<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
+									Team
+								</th>
+							) : null}
 
-						<th
-							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-							onClick={sortTable}
-						>
-							Best Sell
-						</th>
-						<th
-							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-							onClick={sortTable}
-						>
-							Best Sell (Last Hour)
-						</th>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Best Buy
+							</th>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Best Buy (Last Hour)
+							</th>
 
-						<th
-							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-							onClick={sortTable}
-						>
-							Profit
-						</th>
-						<th
-							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-							onClick={sortTable}
-						>
-							Sales/Minute
-						</th>
-						<th
-							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
-							onClick={sortTable}
-						>
-							Profit/Minute
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{currItems.map((item) => {
-						const profit = Math.round(
-							item.best_sell_price * 0.9 - item.best_buy_price,
-						);
-						const salesPerMin = getSalesPerMin(item);
-						const profitPerMin = getProfitPerMin(profit, salesPerMin);
-						const itemName = item.listing_name
-							.replace('&trade;', '™')
-							.replace('&reg;', '®');
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Best Sell
+							</th>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Best Sell (Last Hour)
+							</th>
 
-						return (
-							<tr key={item.item.uuid}>
-								{isPlayer ? (
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Profit
+							</th>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Sales/Minute
+							</th>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Profit/Minute
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{currItems.map((item) => {
+							const profit = Math.round(
+								item.best_sell_price * 0.9 - item.best_buy_price,
+							);
+							const salesPerMin = getSalesPerMin(item);
+							const profitPerMin = getProfitPerMin(profit, salesPerMin);
+							const itemName = item.listing_name
+								.replace('&trade;', '™')
+								.replace('&reg;', '®');
+
+							return (
+								<tr key={item.item.uuid}>
+									{isPlayer ? (
+										<td className='border-t-2 border-gray-200 px-4 py-3'>
+											<Link
+												href={{
+													pathname: '/players/[player]',
+													query: { player: item.item.uuid },
+												}}
+											>
+												<a>{item.listing_name}</a>
+											</Link>
+										</td>
+									) : (
+										<td className='border-t-2 border-gray-200 px-4 py-3'>
+											{itemName}
+										</td>
+									)}
+
 									<td className='border-t-2 border-gray-200 px-4 py-3'>
-										<Link
-											href={{
-												pathname: '/players/[player]',
-												query: { player: item.item.uuid },
-											}}
-										>
-											<a>{item.listing_name}</a>
-										</Link>
+										{item.item.rarity}
 									</td>
-								) : (
 									<td className='border-t-2 border-gray-200 px-4 py-3'>
-										{itemName}
+										{item.item.series}
 									</td>
-								)}
+									{isTeam ? (
+										<td className='border-t-2 border-gray-200 px-4 py-3'>
+											{item.item.team}
+										</td>
+									) : null}
 
-								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{item.item.rarity}
-								</td>
-								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{item.item.series}
-								</td>
-								{isTeam ? (
 									<td className='border-t-2 border-gray-200 px-4 py-3'>
-										{item.item.team}
+										{item.best_buy_price}
 									</td>
-								) : null}
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.additionalData.bestBuyLastHour}
+									</td>
 
-								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{item.best_buy_price}
-								</td>
-								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{item.additionalData.bestBuyLastHour}
-								</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.best_sell_price}
+									</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.additionalData.bestSellLastHour}
+									</td>
 
-								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{item.best_sell_price}
-								</td>
-								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{item.additionalData.bestSellLastHour}
-								</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{profit}
+									</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{salesPerMin}
+									</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{profitPerMin}
+									</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</table>
+				<Paginate
+					pageCount={numPages}
+					pageRangeDisplayed={5}
+					marginPagesDisplayed={0}
+					onPageChange={onPageChange}
+					forcePage={currPage}
+					previousClassName='page'
+					nextClassName='page'
+					containerClassName='pageContainerBottom'
+					activeClassName='page'
+					pageClassName='page'
+					breakClassName='page'
+				/>
+			</div>
+			<div className='block lg:hidden'>
+				<Paginate
+					pageCount={numPages}
+					pageRangeDisplayed={5}
+					marginPagesDisplayed={0}
+					onPageChange={onPageChange}
+					forcePage={currPage}
+					previousClassName='page'
+					nextClassName='page'
+					containerClassName='pageContainerTop'
+					activeClassName='pageActive'
+					pageClassName='page'
+					breakClassName='page'
+				/>
 
-								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{profit}
-								</td>
-								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{salesPerMin}
-								</td>
-								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{profitPerMin}
-								</td>
-							</tr>
-						);
-					})}
-				</tbody>
-			</table>
-			<Paginate
-				pageCount={numPages}
-				pageRangeDisplayed={5}
-				marginPagesDisplayed={0}
-				onPageChange={onPageChange}
-				forcePage={currPage}
-				previousClassName='page'
-				nextClassName='page'
-				containerClassName='pageContainerBottom'
-				activeClassName='page'
-				pageClassName='page'
-				breakClassName='page'
-			/>
+				<table className='table-auto w-full text-left whitespace-no-wrap border-2 border-gray-100'>
+					<thead>
+						<tr>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Name
+							</th>
+
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Rarity
+							</th>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Series
+							</th>
+							{isTeam ? (
+								<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
+									Team
+								</th>
+							) : null}
+
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Best Buy
+							</th>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Best Buy (Last Hour)
+							</th>
+
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Best Sell
+							</th>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Best Sell (Last Hour)
+							</th>
+
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Profit
+							</th>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Sales/Minute
+							</th>
+							<th
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								onClick={sortTable}
+							>
+								Profit/Minute
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{currItems.map((item) => {
+							const profit = Math.round(
+								item.best_sell_price * 0.9 - item.best_buy_price,
+							);
+							const salesPerMin = getSalesPerMin(item);
+							const profitPerMin = getProfitPerMin(profit, salesPerMin);
+							const itemName = item.listing_name
+								.replace('&trade;', '™')
+								.replace('&reg;', '®');
+
+							return (
+								<tr key={item.item.uuid}>
+									{isPlayer ? (
+										<td className='border-t-2 border-gray-200 px-4 py-3'>
+											<Link
+												href={{
+													pathname: '/players/[player]',
+													query: { player: item.item.uuid },
+												}}
+											>
+												<a>{item.listing_name}</a>
+											</Link>
+										</td>
+									) : (
+										<td className='border-t-2 border-gray-200 px-4 py-3'>
+											{itemName}
+										</td>
+									)}
+
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.item.rarity}
+									</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.item.series}
+									</td>
+									{isTeam ? (
+										<td className='border-t-2 border-gray-200 px-4 py-3'>
+											{item.item.team}
+										</td>
+									) : null}
+
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.best_buy_price}
+									</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.additionalData.bestBuyLastHour}
+									</td>
+
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.best_sell_price}
+									</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.additionalData.bestSellLastHour}
+									</td>
+
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{profit}
+									</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{salesPerMin}
+									</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{profitPerMin}
+									</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</table>
+				<Paginate
+					pageCount={numPages}
+					pageRangeDisplayed={5}
+					marginPagesDisplayed={0}
+					onPageChange={onPageChange}
+					forcePage={currPage}
+					previousClassName='page'
+					nextClassName='page'
+					containerClassName='pageContainerBottom'
+					activeClassName='page'
+					pageClassName='page'
+					breakClassName='page'
+				/>
+			</div>
 		</div>
 	);
 }
