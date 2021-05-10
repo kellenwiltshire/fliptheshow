@@ -151,11 +151,22 @@ export default function Equipment({ items }) {
 				filteredItems={filteredItems}
 				placeholder='Search Equipment'
 			/>
-			<Table
-				sortedItems={sortedItems}
-				setSortedItems={setSortedItems}
-				isPlayer={isPlayer}
-			/>
+			<div className='hidden lg:block'>
+				<Table
+					sortedItems={sortedItems}
+					setSortedItems={setSortedItems}
+					isPlayer={isPlayer}
+					isSticky={true}
+				/>
+			</div>
+			<div className='block lg:hidden'>
+				<Table
+					sortedItems={sortedItems}
+					setSortedItems={setSortedItems}
+					isPlayer={isPlayer}
+					isSticky={false}
+				/>
+			</div>
 		</div>
 	);
 }

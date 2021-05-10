@@ -51,7 +51,7 @@ function FilterForm({
 		}
 	};
 	return (
-		<div className='sticky top-0 mt-2'>
+		<div className='lg:sticky lg:top-0 mt-2'>
 			<form
 				id='inputForm'
 				className='text-gray-600 hidden lg:flex flex-row flex-wrap h-24 bg-white mt-2'
@@ -118,7 +118,7 @@ function FilterForm({
 				</div>
 			</form>
 			<button
-				className='text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none bg-indigo-600 p-1 bg-opacity-75 m-5'
+				className='text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none bg-indigo-600 p-1 bg-opacity-75 m-5 ml-auto'
 				type='button'
 				onClick={() => setMenuOpen(!menuOpen)}
 				aria-label='Menu Button'
