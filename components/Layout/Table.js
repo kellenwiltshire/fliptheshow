@@ -132,8 +132,8 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 		>
 			<Paginate
 				pageCount={numPages}
-				pageRangeDisplayed={5}
-				marginPagesDisplayed={0}
+				pageRangeDisplayed={1}
+				marginPagesDisplayed={1}
 				onPageChange={onPageChange}
 				forcePage={currPage}
 				previousClassName='page'
@@ -290,14 +290,14 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 			</table>
 			<Paginate
 				pageCount={numPages}
-				pageRangeDisplayed={5}
-				marginPagesDisplayed={0}
+				pageRangeDisplayed={1}
+				marginPagesDisplayed={1}
 				onPageChange={onPageChange}
 				forcePage={currPage}
 				previousClassName='page'
 				nextClassName='page'
-				containerClassName='pageContainerBottom'
-				activeClassName='page'
+				containerClassName='pageContainerTop'
+				activeClassName='pageActive'
 				pageClassName='page'
 				breakClassName='page'
 			/>
