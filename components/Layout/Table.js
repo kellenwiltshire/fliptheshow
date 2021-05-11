@@ -113,7 +113,7 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 	};
 	const getSalesPerMin = (item) => {
 		if (item.additionalData.orderPerHour) {
-			return (item.additionalData.orderPerHour.length / 60).toFixed(2);
+			return (item.additionalData.orderPerHour.length / 30).toFixed(2);
 		} else {
 			return 0;
 		}

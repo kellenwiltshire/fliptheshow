@@ -31,20 +31,14 @@ export default function Stadiums({ items }) {
 			date.getUTCSeconds() < 10
 				? '0' + date.getUTCSeconds()
 				: date.getUTCSeconds();
-		if (hours) {
-			if (hours === 1 || hours === 12) {
-				if (hours === 1) {
-					hours = 12;
-				} else if (hours === 12) {
-					hours = 11;
-					if (am_pm === 'PM') {
-						am_pm = 'AM';
-					} else {
-						am_pm = 'PM';
-					}
-				}
-			} else {
+
+		if (minutes) {
+			if (minutes < 30) {
+				minutes = minutes - 30;
+				minutes = 60 - minutes;
 				hours = hours - 1;
+			} else {
+				minutes = minutes - 30;
 			}
 		}
 		const time = hours + ':' + minutes + ':' + seconds + ' ' + am_pm;
@@ -58,6 +52,8 @@ export default function Stadiums({ items }) {
 	const time = displayCurrentTime();
 	let fullTime = `${month}/${day}/${year} ${time}`;
 	fullTime = fullTime.split(' ');
+
+	console.log(time);
 
 	const convertTime12To24 = (time, modifier) => {
 		let [hours, minutes, seconds] = time.split(':');

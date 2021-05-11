@@ -38,7 +38,10 @@ function PitchingStats({ data }) {
 					<div className='w-full flex flex-row flex-wrap'>
 						{data.pitches.map((pitch) => {
 							return (
-								<div className='flex-row flex-wrap justify-center flex my-2'>
+								<div
+									key={Math.random()}
+									className='flex-row flex-wrap justify-center flex my-2'
+								>
 									<span className='w-full underline text-center'>
 										{pitch.name}
 									</span>
