@@ -167,12 +167,22 @@ export default function Home({ items }) {
 				filteredItems={filteredItems}
 				placeholder='Search Players'
 			/>
-			<Table
-				sortedItems={sortedItems}
-				setSortedItems={setSortedItems}
-				isPlayer={isPlayer}
-				isTeam={isTeam}
-			/>
+			<div className='hidden lg:block'>
+				<Table
+					sortedItems={sortedItems}
+					setSortedItems={setSortedItems}
+					isPlayer={isPlayer}
+					isSticky={true}
+				/>
+			</div>
+			<div className='block lg:hidden'>
+				<Table
+					sortedItems={sortedItems}
+					setSortedItems={setSortedItems}
+					isPlayer={isPlayer}
+					isSticky={false}
+				/>
+			</div>
 		</div>
 	);
 }
