@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Paginate from 'react-paginate';
 
-function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
+function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 	const [sort, setSort] = useState('');
 	const [sortSwitch, setSortSwitch] = useState(false);
 	const [numPages, setNumPages] = useState(Math.round(sortedItems.length / 50));
@@ -123,11 +123,17 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 		return (profit * salesPerMin).toFixed(2);
 	};
 	return (
-		<div className='flex flex-col w-full justify-center'>
+		<div
+			className={
+				isSticky
+					? 'flex flex-col w-full justify-center'
+					: 'flex flex-col w-full justify-center overflow-auto'
+			}
+		>
 			<Paginate
 				pageCount={numPages}
-				pageRangeDisplayed={5}
-				marginPagesDisplayed={0}
+				pageRangeDisplayed={1}
+				marginPagesDisplayed={1}
 				onPageChange={onPageChange}
 				forcePage={currPage}
 				previousClassName='page'
@@ -139,7 +145,7 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 			/>
 
 			<table className='table-auto w-full text-left whitespace-no-wrap border-2 border-gray-100'>
-				<thead className='sticky top-24'>
+				<thead className={isSticky ? 'sticky top-24' : ''}>
 					<tr>
 						<th
 							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
@@ -284,14 +290,14 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 			</table>
 			<Paginate
 				pageCount={numPages}
-				pageRangeDisplayed={5}
-				marginPagesDisplayed={0}
+				pageRangeDisplayed={1}
+				marginPagesDisplayed={1}
 				onPageChange={onPageChange}
 				forcePage={currPage}
 				previousClassName='page'
 				nextClassName='page'
-				containerClassName='pageContainerBottom'
-				activeClassName='page'
+				containerClassName='pageContainerTop'
+				activeClassName='pageActive'
 				pageClassName='page'
 				breakClassName='page'
 			/>
