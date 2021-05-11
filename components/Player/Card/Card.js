@@ -1,37 +1,39 @@
 import React from 'react';
+import PitchingStats from './PitchingStats';
 import Stats from './Stats';
 
 function Card({ data, listingData }) {
-	console.log(listingData);
 	return (
 		<div className='max-w-screen flex'>
-			<div class='container px-5 py-24 mx-auto'>
-				<div class='lg:w-4/5 mx-auto flex flex-wrap justify-center'>
+			<div className='container px-5 py-24 mx-auto'>
+				<div className='lg:w-4/5 mx-auto flex flex-row flex-wrap justify-center'>
 					<img
 						alt='Play Card'
-						class='lg:w-1/3 w-full lg:h-auto h-64 object-scale-down lg:object-cover rounded'
+						className='lg:w-1/3 w-full h-96 lg:object-center object-scale-down rounded'
 						src={data.img}
 					/>
-					<div class='lg:w-2/3 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0'>
-						<h2 class='text-sm title-font text-gray-500 tracking-widest'>
+
+					<div className='lg:w-2/3 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0'>
+						<h2 className='text-sm title-font text-gray-500 tracking-widest'>
 							{data.team}
 						</h2>
-						<h1 class='text-gray-900 text-3xl title-font font-medium mb-1'>
+						<h1 className='text-gray-900 text-3xl title-font font-medium mb-1'>
 							{data.jersey_number} | {data.name} | {data.display_position}
 						</h1>
-						<div class='flex mb-1 flex-row'>
-							<span class='text-gray-600'>
+						<div className='flex mb-1 flex-row'>
+							<span className='text-gray-600'>
 								{data.bat_hand}/{data.throw_hand} | Age: {data.age} | Weight:
 								{data.weight} | Height: {data.height}
 							</span>
 						</div>
-						<div class='flex mb-4 flex-row'>
-							<span class='text-gray-600'>
+						<div className='flex mb-4 flex-row'>
+							<span className='text-gray-600'>
 								Overall: {data.ovr} Rarity: {data.rarity}
 							</span>
 						</div>
 						<Stats data={data} />
-						<div className='flex flex-row flex-wrap'>
+						<PitchingStats data={data} />
+						<div className='flex flex-row flex-wrap justify-center'>
 							{data.quirks.map((item) => {
 								if (item.img) {
 									return (
@@ -47,18 +49,32 @@ function Card({ data, listingData }) {
 								}
 							})}
 						</div>
-						<div id='job' className='text-gray-800 mt-2 flex flex-row'>
+						{data.fielding_rank_image ? (
+							<div id='job' className='text-gray-800 my-4 flex flex-row'>
+								<span className='flex flex-col mx-2'>
+									Fielding
+									<img
+										src={data.fielding_rank_image}
+										height='25px'
+										width='25px'
+									/>
+								</span>
+								<span className='flex flex-col mx-2'>
+									Batting
+									<img src={data.hit_rank_image} height='25px' width='25px' />
+								</span>
+							</div>
+						) : null}
+
+						<div
+							id='job'
+							className='text-gray-800 flex flex-row text-lg my-5 justify-center'
+						>
 							<span className='flex flex-col mx-2'>
-								Fielding
-								<img
-									src={data.fielding_rank_image}
-									height='25px'
-									width='25px'
-								/>
+								Best Buy: {listingData.best_buy_price}
 							</span>
 							<span className='flex flex-col mx-2'>
-								Batting
-								<img src={data.hit_rank_image} height='25px' width='25px' />
+								Best Sell: {listingData.best_sell_price}
 							</span>
 						</div>
 					</div>

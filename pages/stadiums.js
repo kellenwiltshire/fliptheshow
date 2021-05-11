@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
 
-//TODO Mobile Layout
-
 export default function Stadiums({ items }) {
 	const [sortedItems, setSortedItems] = useState(items);
 	const [filteredItems, setFilteredItems] = useState(items);

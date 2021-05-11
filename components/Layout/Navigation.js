@@ -4,9 +4,9 @@ import Link from 'next/link';
 function Navigation() {
 	return (
 		<div className='w-screen flex justify-center'>
-			<div className='container flex flex-wrap mt-2 flex-col md:flex-row justify-center'>
+			<div className='container flex flex-wrap mt-2 flex-row justify-center'>
 				<Link href='/'>
-					<a className='mr-5 hover:text-gray-900 py-1'>
+					<a className='hover:text-gray-900 py-1 text-center'>
 						Flip The Show<span className='text-xs'>(beta)</span>
 					</a>
 				</Link>

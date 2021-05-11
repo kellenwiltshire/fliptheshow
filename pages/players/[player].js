@@ -1,10 +1,24 @@
 import React from 'react';
 import Card from '../../components/Player/Card/Card';
+import PlayerTable from '../../components/Player/Card/PlayerTable';
 
 export default function player({ cardData, listingData }) {
+	console.log(cardData);
 	return (
 		<div className='mt-5'>
 			<Card data={cardData} listingData={listingData} />
+			<div className='hidden lg:flex justify-center'>
+				<PlayerTable
+					listingData={listingData.completed_orders}
+					isSticky={true}
+				/>
+			</div>
+			<div className='flex lg:hidden justify-center'>
+				<PlayerTable
+					listingData={listingData.completed_orders}
+					isSticky={false}
+				/>
+			</div>
 		</div>
 	);
 }

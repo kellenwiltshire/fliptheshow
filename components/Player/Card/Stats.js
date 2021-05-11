@@ -3,8 +3,8 @@ import React from 'react';
 function Stats({ data }) {
 	return (
 		<div>
-			<div className='flex-row flex-wrap flex my-2'>
-				<h1 className='w-full'>Hitting Stats</h1>
+			<div className='flex-row flex-wrap flex my-2 justify-center'>
+				<h1 className='w-full underline text-lg'>Hitting Stats</h1>
 				<div className='flex-col flex border border-gray-200 px-2'>
 					<span className='w-20 text-center'>Con-L</span>
 					<span className='w-20 text-center'>{data.contact_left}</span>
@@ -56,8 +56,8 @@ function Stats({ data }) {
 					<span className='w-20 text-center'>{data.plate_vision}</span>
 				</div>
 			</div>
-			<div className='flex-row flex-wrap flex my-2'>
-				<h1 className='w-full'>Fielding Stats</h1>
+			<div className='flex-row flex-wrap flex my-2 justify-center'>
+				<h1 className='w-full underline text-lg'>Fielding Stats</h1>
 				<div className='flex-col flex border border-gray-200 px-2'>
 					<span className='w-20 text-center'>Arm Acc</span>
 					<span className='w-20 text-center'>{data.arm_accuracy}</span>
