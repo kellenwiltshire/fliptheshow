@@ -17,83 +17,43 @@ export default function Equipment({ items }) {
 	const isPlayer = false;
 	const isTeam = false;
 
-	const displayCurrentTime = () => {
-		const date = new Date();
-		let hours =
-			date.getUTCHours() > 12 ? date.getUTCHours() - 12 : date.getUTCHours();
-		let am_pm = date.getUTCHours() >= 12 ? 'PM' : 'AM';
-		hours = hours < 10 ? '0' + hours : hours;
-		let minutes =
-			date.getUTCMinutes() < 10
-				? '0' + date.getUTCMinutes()
-				: date.getUTCMinutes();
-		let seconds =
-			date.getUTCSeconds() < 10
-				? '0' + date.getUTCSeconds()
-				: date.getUTCSeconds();
-		if (hours) {
-			if (hours === 1 || hours === 12) {
-				if (hours === 1) {
-					hours = 12;
-				} else if (hours === 12) {
-					hours = 11;
-					if (am_pm === 'PM') {
-						am_pm = 'AM';
-					} else {
-						am_pm = 'PM';
-					}
-				}
-			} else {
-				hours = hours - 1;
-			}
-		}
-		const time = hours + ':' + minutes + ':' + seconds + ' ' + am_pm;
-		return time;
-	};
-
 	const date = new Date();
 	const month = date.getUTCMonth() + 1;
 	const day = date.getUTCDate();
 	const year = date.getUTCFullYear();
-	const time = displayCurrentTime();
-	let fullTime = `${month}/${day}/${year} ${time}`;
-	fullTime = fullTime.split(' ');
+	const hour = date.getUTCHours();
+	const min = date.getUTCMinutes();
+	const sec = date.getUTCSeconds();
+	let currentTime = `${month}/${day}/${year} ${hour}:${min}:${sec}`;
 
-	const convertTime12To24 = (time, modifier) => {
-		let [hours, minutes, seconds] = time.split(':');
-
-		if (hours === '12') {
-			hours = '00';
-		}
-
-		if (modifier === 'PM') {
-			hours = parseInt(hours, 10) + 12;
-		}
-
-		return `${hours}:${minutes}:${seconds}`;
-	};
-
-	const determineNumOrdersPerHours = () => {
+	const DetermineNumOrdersPerHour = () => {
 		for (let i = 0; i < sortedItems.length; i++) {
 			let bestBuyLastHour = 500000;
 			let bestSellLastHour = 0;
-			sortedItems[i].additionalData.orderPerHour = [];
+
+			const orderLength =
+				sortedItems[i].additionalData.completed_orders.length - 1;
+
+			sortedItems[i].additionalData.orderPerMinute = 0;
 			sortedItems[i].additionalData.bestBuyLastHour = 0;
+
+			const oldestOrder =
+				sortedItems[i].additionalData.completed_orders[orderLength].date;
+			const oldestOrderDate = new Date(oldestOrder);
+			const currentDate = new Date(currentTime);
+			const timeDifference = (currentDate - oldestOrderDate) / 1000;
+			const salesPerSecond = timeDifference / orderLength;
+			const salesPerMinute = (salesPerSecond / 60).toFixed(2);
+
+			sortedItems[i].additionalData.salesPerMinute = salesPerMinute;
+
 			sortedItems[i].additionalData.completed_orders.map((order) => {
-				let orderTime = order.date.split(' ');
-				let convertedTime = convertTime12To24(orderTime[1], orderTime[2]);
-				let convertedTestTime = convertTime12To24(fullTime[1], fullTime[2]);
-				if (convertedTime > convertedTestTime) {
-					sortedItems[i].additionalData.orderPerHour.push(order);
-					const fixedNum = order.price.split(',').join('');
-					if (fixedNum >= bestSellLastHour) {
-						bestSellLastHour = fixedNum;
-					}
-					if (fixedNum <= bestBuyLastHour) {
-						bestBuyLastHour = fixedNum;
-					}
-				} else {
-					return;
+				const fixedNum = order.price.split(',').join('');
+				if (fixedNum >= bestSellLastHour) {
+					bestSellLastHour = fixedNum;
+				}
+				if (fixedNum <= bestBuyLastHour) {
+					bestBuyLastHour = fixedNum;
 				}
 			});
 			sortedItems[i].additionalData.bestBuyLastHour = bestBuyLastHour;
@@ -102,7 +62,7 @@ export default function Equipment({ items }) {
 	};
 
 	useEffect(() => {
-		determineNumOrdersPerHours();
+		DetermineNumOrdersPerHour();
 	}, []);
 
 	useEffect(() => {

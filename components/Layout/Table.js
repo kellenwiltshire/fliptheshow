@@ -28,7 +28,6 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 	const sortTable = (e) => {
 		e.preventDefault();
 		setSort(e.target.value);
-		console.log(e.target.textContent);
 		let newItems = sortedItems;
 		//! Sort By Name
 		if (e.target.textContent === 'Name') {
@@ -63,13 +62,13 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 			newItems = newItems.sort((a, b) => {
 				return a.best_buy_price - b.best_buy_price;
 			});
-		} else if (e.target.textContent === 'Best Buy (Last Hour)') {
+		} else if (e.target.textContent === 'Best Buy (Last 200 Orders)') {
 			newItems = newItems.sort((a, b) => {
 				return (
 					a.additionalData.bestBuyLastHour - b.additionalData.bestBuyLastHour
 				);
 			});
-		} else if (e.target.textContent === 'Best Sell (Last Hour)') {
+		} else if (e.target.textContent === 'Best Sell (Last 200 Orders)') {
 			newItems = newItems.sort((a, b) => {
 				return (
 					a.additionalData.bestSellLastHour - b.additionalData.bestSellLastHour
@@ -87,16 +86,16 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 			});
 		} else if (e.target.textContent === 'Sales/Minute') {
 			newItems = newItems.sort((a, b) => {
-				const aSalesPerMin = getSalesPerMin(a);
-				const bSalesPerMin = getSalesPerMin(b);
+				const aSalesPerMin = a.additionalData.salesPerMinute;
+				const bSalesPerMin = b.additionalData.salesPerMinute;
 				return aSalesPerMin - bSalesPerMin;
 			});
 		} else if (e.target.textContent === 'Profit/Minute') {
 			newItems = newItems.sort((a, b) => {
 				const aProfit = a.best_sell_price * 0.9 - a.best_buy_price;
 				const bProfit = b.best_sell_price * 0.9 - b.best_buy_price;
-				const aSalesPerMin = getSalesPerMin(a);
-				const bSalesPerMin = getSalesPerMin(b);
+				const aSalesPerMin = a.additionalData.salesPerMinute;
+				const bSalesPerMin = b.additionalData.salesPerMinute;
 				const aProfitPerMin = getProfitPerMin(aProfit, aSalesPerMin);
 				const bProfitPerMin = getProfitPerMin(bProfit, bSalesPerMin);
 				return aProfitPerMin - bProfitPerMin;
@@ -111,13 +110,6 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 		setSortedItems(newItems);
 		setCurrItems(newItems.slice(offset, offset + 50));
 	};
-	const getSalesPerMin = (item) => {
-		if (item.additionalData.orderPerHour) {
-			return (item.additionalData.orderPerHour.length / 30).toFixed(2);
-		} else {
-			return 0;
-		}
-	};
 
 	const getProfitPerMin = (profit, salesPerMin) => {
 		return (profit * salesPerMin).toFixed(2);
@@ -127,7 +119,7 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 			className={
 				isSticky
 					? 'flex flex-col w-full justify-center'
-					: 'flex flex-col w-full justify-center overflow-auto'
+					: 'flex flex-col w-full justify-center overflow-auto overflow-x-scroll'
 			}
 		>
 			<Paginate
@@ -182,7 +174,7 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
 							onClick={sortTable}
 						>
-							Best Buy (Last Hour)
+							Best Buy (Last 200 Orders)
 						</th>
 
 						<th
@@ -195,7 +187,7 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 							className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
 							onClick={sortTable}
 						>
-							Best Sell (Last Hour)
+							Best Sell (Last 200 Orders)
 						</th>
 
 						<th
@@ -223,8 +215,10 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 						const profit = Math.round(
 							item.best_sell_price * 0.9 - item.best_buy_price,
 						);
-						const salesPerMin = getSalesPerMin(item);
-						const profitPerMin = getProfitPerMin(profit, salesPerMin);
+						const profitPerMin = getProfitPerMin(
+							profit,
+							item.additionalData.salesPerMinute,
+						);
 						const itemName = item.listing_name
 							.replace('&trade;', '™')
 							.replace('&reg;', '®');
@@ -278,7 +272,7 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 									{profit}
 								</td>
 								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{salesPerMin}
+									{item.additionalData.salesPerMinute}
 								</td>
 								<td className='border-t-2 border-gray-200 px-4 py-3'>
 									{profitPerMin}

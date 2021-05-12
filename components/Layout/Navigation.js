@@ -6,7 +6,7 @@ function Navigation() {
 		<div className='w-screen flex justify-center'>
 			<div className='container flex flex-wrap mt-2 flex-row justify-center'>
 				<Link href='/'>
-					<a className='hover:text-gray-900 py-1 text-center'>
+					<a className='hover:text-gray-900 py-1 text-center w-full md:w-auto md:py-1 md:my-2 md:ml-2'>
 						Flip The Show<span className='text-xs'>(beta)</span>
 					</a>
 				</Link>
