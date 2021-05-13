@@ -4,9 +4,6 @@ import Head from 'next/head';
 import Table from '../components/Layout/Table';
 
 export default function Equipment({ items }) {
-	const [sortedItems, setSortedItems] = useState(items);
-	const [filteredItems, setFilteredItems] = useState(items);
-	const initialItems = items;
 	const [minSellPrice, setMinSellPrice] = useState(0);
 	const [maxSellPrice, setMaxSellPrice] = useState(500000);
 	const [minBuyPrice, setMinBuyPrice] = useState(0);
@@ -16,6 +13,20 @@ export default function Equipment({ items }) {
 	const [series, setSeries] = useState('');
 	const isPlayer = false;
 	const isTeam = false;
+
+	const removeZeroItems = () => {
+		let zeroItems = [];
+		items.map((item) => {
+			if (item.best_buy_price > 0) {
+				zeroItems.push(item);
+			}
+		});
+		return zeroItems;
+	};
+
+	const [zeroItems, setZeroItems] = useState(removeZeroItems);
+	const [sortedItems, setSortedItems] = useState(zeroItems);
+	const [filteredItems, setFilteredItems] = useState(zeroItems);
 
 	const date = new Date();
 	const month = date.getUTCMonth() + 1;
@@ -58,6 +69,10 @@ export default function Equipment({ items }) {
 			});
 			sortedItems[i].additionalData.bestBuyLastHour = bestBuyLastHour;
 			sortedItems[i].additionalData.bestSellLastHour = bestSellLastHour;
+			sortedItems[i].additionalData.profitPerMin = (
+				(sortedItems[i].best_sell_price * 0.9 - sortedItems[i].best_buy_price) *
+				sortedItems[i].additionalData.salesPerMinute
+			).toFixed(2);
 		}
 	};
 
@@ -66,7 +81,7 @@ export default function Equipment({ items }) {
 	}, []);
 
 	useEffect(() => {
-		let filteredList = initialItems.filter((item) => {
+		let filteredList = zeroItems.filter((item) => {
 			return (
 				item.best_buy_price >= minBuyPrice &&
 				item.best_buy_price <= maxBuyPrice &&
@@ -107,7 +122,7 @@ export default function Equipment({ items }) {
 				setTeam={setTeam}
 				setSeries={setSeries}
 				setSortedItems={setSortedItems}
-				items={items}
+				items={zeroItems}
 				filteredItems={filteredItems}
 				placeholder='Search Equipment'
 			/>

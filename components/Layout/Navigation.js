@@ -21,6 +21,9 @@ function Navigation() {
 					<Link href='/equipment'>
 						<a className='mr-5 hover:text-gray-900'>Equipment</a>
 					</Link>
+					<Link href='/contact'>
+						<a className='mr-5 hover:text-gray-900'>Contact</a>
+					</Link>
 				</nav>
 				<div className='mt-3 lg:mt-0 hidden md:block'>
 					<a
