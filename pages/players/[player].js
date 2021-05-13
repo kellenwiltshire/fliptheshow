@@ -3,7 +3,7 @@ import Card from '../../components/Player/Card/Card';
 import PlayerTable from '../../components/Player/Card/PlayerTable';
 
 export default function player({ cardData, listingData }) {
-	console.log(cardData);
+	console.log(cardData.name);
 	return (
 		<div className='mt-5'>
 			<Card data={cardData} listingData={listingData} />
