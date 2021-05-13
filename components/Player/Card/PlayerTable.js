@@ -39,11 +39,11 @@ function PlayerTable({ listingData, isSticky }) {
 			<table className='table-auto w-auto text-left whitespace-no-wrap border-2 border-gray-100'>
 				<thead className={isSticky ? 'sticky top-0' : ''}>
 					<tr>
-						<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'>
-							Date
+						<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
+							Date (UTC)
 						</th>
 
-						<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'>
+						<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
 							Price
 						</th>
 					</tr>
