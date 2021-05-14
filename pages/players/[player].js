@@ -1,11 +1,15 @@
 import React from 'react';
 import Card from '../../components/Player/Card/Card';
 import PlayerTable from '../../components/Player/Card/PlayerTable';
+import Head from 'next/head';
 
 export default function player({ cardData, listingData }) {
 	console.log(cardData.name);
 	return (
 		<div className='mt-5'>
+			<Head>
+				<title>Flip The Show | {cardData.name}</title>
+			</Head>
 			<Card data={cardData} listingData={listingData} />
 			<div className='hidden lg:flex justify-center'>
 				<PlayerTable
