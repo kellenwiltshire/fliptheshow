@@ -159,6 +159,7 @@ export async function getStaticProps() {
 				items[i].additionalData = data;
 			} catch (error) {
 				console.log(error);
+				items[i].additionalData = {};
 			}
 		}
 		return items;
