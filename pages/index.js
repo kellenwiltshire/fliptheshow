@@ -43,38 +43,45 @@ export default function Home({ items }) {
 			let bestSellLastHour = 0;
 
 			if (sortedItems[i].additionalData) {
-				const orderLength =
-					sortedItems[i].additionalData.completed_orders.length - 1;
+				if (sortedItems[i].additionalData.completed_orders) {
+					const orderLength =
+						sortedItems[i].additionalData.completed_orders.length - 1;
 
-				sortedItems[i].additionalData.orderPerMinute = 0;
-				sortedItems[i].additionalData.bestBuyLastHour = 0;
+					sortedItems[i].additionalData.orderPerMinute = 0;
+					sortedItems[i].additionalData.bestBuyLastHour = 0;
 
-				const oldestOrder =
-					sortedItems[i].additionalData.completed_orders[orderLength].date;
-				const oldestOrderDate = new Date(oldestOrder);
-				const currentDate = new Date(currentTime);
-				const timeDifference = (currentDate - oldestOrderDate) / 1000;
-				const salesPerSecond = timeDifference / orderLength;
-				const salesPerMinute = (salesPerSecond / 60).toFixed(2);
+					const oldestOrder =
+						sortedItems[i].additionalData.completed_orders[orderLength].date;
+					const oldestOrderDate = new Date(oldestOrder);
+					const currentDate = new Date(currentTime);
+					const timeDifference = (currentDate - oldestOrderDate) / 1000;
+					const salesPerSecond = timeDifference / orderLength;
+					const salesPerMinute = (salesPerSecond / 60).toFixed(2);
 
-				sortedItems[i].additionalData.salesPerMinute = salesPerMinute;
+					sortedItems[i].additionalData.salesPerMinute = salesPerMinute;
 
-				sortedItems[i].additionalData.completed_orders.map((order) => {
-					const fixedNum = order.price.split(',').join('');
-					if (fixedNum >= bestSellLastHour) {
-						bestSellLastHour = fixedNum;
-					}
-					if (fixedNum <= bestBuyLastHour) {
-						bestBuyLastHour = fixedNum;
-					}
-				});
-				sortedItems[i].additionalData.bestBuyLastHour = bestBuyLastHour;
-				sortedItems[i].additionalData.bestSellLastHour = bestSellLastHour;
-				sortedItems[i].additionalData.profitPerMin = (
-					(sortedItems[i].best_sell_price * 0.9 -
-						sortedItems[i].best_buy_price) *
-					sortedItems[i].additionalData.salesPerMinute
-				).toFixed(2);
+					sortedItems[i].additionalData.completed_orders.map((order) => {
+						const fixedNum = order.price.split(',').join('');
+						if (fixedNum >= bestSellLastHour) {
+							bestSellLastHour = fixedNum;
+						}
+						if (fixedNum <= bestBuyLastHour) {
+							bestBuyLastHour = fixedNum;
+						}
+					});
+					sortedItems[i].additionalData.bestBuyLastHour = bestBuyLastHour;
+					sortedItems[i].additionalData.bestSellLastHour = bestSellLastHour;
+					sortedItems[i].additionalData.profitPerMin = (
+						(sortedItems[i].best_sell_price * 0.9 -
+							sortedItems[i].best_buy_price) *
+						sortedItems[i].additionalData.salesPerMinute
+					).toFixed(2);
+				} else {
+					sortedItems[i].additionalData.bestBuyLastHour = 0;
+					sortedItems[i].additionalData.bestSellLastHour = 0;
+					sortedItems[i].additionalData.profitPerMin = 0;
+					sortedItems[i].additionalData.salesPerMinute = 0;
+				}
 			} else {
 				sortedItems[i].additionalData.bestBuyLastHour = 0;
 				sortedItems[i].additionalData.bestSellLastHour = 0;
