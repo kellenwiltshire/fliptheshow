@@ -24,7 +24,7 @@ export default function Stadiums({ items }) {
 		return zeroItems;
 	};
 
-	const [zeroItems, setZeroItems] = useState(removeZeroItems);
+	const zeroItems = removeZeroItems();
 	const [sortedItems, setSortedItems] = useState(zeroItems);
 	const [filteredItems, setFilteredItems] = useState(zeroItems);
 
@@ -131,7 +131,7 @@ export default function Stadiums({ items }) {
 					sortedItems={sortedItems}
 					setSortedItems={setSortedItems}
 					isPlayer={isPlayer}
-					isSticky={true}
+					isTeam={isTeam}
 				/>
 			</div>
 			<div className='block lg:hidden'>
@@ -139,14 +139,14 @@ export default function Stadiums({ items }) {
 					sortedItems={sortedItems}
 					setSortedItems={setSortedItems}
 					isPlayer={isPlayer}
-					isSticky={false}
+					isTeam={isTeam}
 				/>
 			</div>
 		</div>
 	);
 }
 
-export async function getStaticProps(props) {
+export async function getStaticProps() {
 	console.log('Stadium Revalidate');
 	const getItemData = async (items) => {
 		for (let i = 0; i < items.length; i++) {

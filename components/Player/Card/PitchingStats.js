@@ -36,31 +36,37 @@ function PitchingStats({ data }) {
 				<div className='flex-col flex m-2'>
 					<span className='w-full text-lg text-center'>Pitches</span>
 					<div className='w-full flex flex-row flex-wrap'>
-						{data.pitches.map((pitch) => {
-							return (
-								<div
-									key={Math.random()}
-									className='flex-row flex-wrap justify-center flex my-2'
-								>
-									<span className='w-full underline text-center'>
-										{pitch.name}
-									</span>
+						{data.pitches.length
+							? data.pitches.map((pitch) => {
+									return (
+										<div
+											key={Math.random()}
+											className='flex-row flex-wrap justify-center flex my-2'
+										>
+											<span className='w-full underline text-center'>
+												{pitch.name}
+											</span>
 
-									<div className='flex-col flex border border-gray-200 px-2'>
-										<span className='w-20 text-center'>Control</span>
-										<span className='w-20 text-center'>{pitch.control}</span>
-									</div>
-									<div className='flex-col flex border border-gray-200 px-2'>
-										<span className='w-20 text-center'>Movement</span>
-										<span className='w-20 text-center'>{pitch.movement}</span>
-									</div>
-									<div className='flex-col flex border border-gray-200 px-2'>
-										<span className='w-20 text-center'>Speed</span>
-										<span className='w-20 text-center'>{pitch.speed}</span>
-									</div>
-								</div>
-							);
-						})}
+											<div className='flex-col flex border border-gray-200 px-2'>
+												<span className='w-20 text-center'>Control</span>
+												<span className='w-20 text-center'>
+													{pitch.control}
+												</span>
+											</div>
+											<div className='flex-col flex border border-gray-200 px-2'>
+												<span className='w-20 text-center'>Movement</span>
+												<span className='w-20 text-center'>
+													{pitch.movement}
+												</span>
+											</div>
+											<div className='flex-col flex border border-gray-200 px-2'>
+												<span className='w-20 text-center'>Speed</span>
+												<span className='w-20 text-center'>{pitch.speed}</span>
+											</div>
+										</div>
+									);
+							  })
+							: null}
 					</div>
 				</div>
 			</div>

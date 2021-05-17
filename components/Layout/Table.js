@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Paginate from 'react-paginate';
 
-function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
+function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 	const [sort, setSort] = useState('');
 	const [sortSwitch, setSortSwitch] = useState(false);
 	const [numPages, setNumPages] = useState(Math.round(sortedItems.length / 50));
@@ -23,11 +23,8 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 	useEffect(() => {
 		setCurrItems(sortedItems.slice(offset, offset + 50));
 		const numberOfPages = Math.round(sortedItems.length / 50);
-		if (numberOfPages <= 1) {
-			setNumPages(1);
-		} else {
-			setNumPages(numberOfPages);
-		}
+
+		numberOfPages <= 1 ? setNumPages(1) : setNumPages(numberOfPages);
 	}, [offset, sortedItems]);
 
 	const sortTable = (e) => {
