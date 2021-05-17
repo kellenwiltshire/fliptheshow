@@ -22,7 +22,12 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 
 	useEffect(() => {
 		setCurrItems(sortedItems.slice(offset, offset + 50));
-		setNumPages(Math.round(sortedItems.length / 50));
+		const numberOfPages = Math.round(sortedItems.length / 50);
+		if (numberOfPages <= 1) {
+			setNumPages(1);
+		} else {
+			setNumPages(numberOfPages);
+		}
 	}, [offset, sortedItems]);
 
 	const sortTable = (e) => {
@@ -122,74 +127,74 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam, isSticky }) {
 			/>
 
 			<div className='max-w-screen overflow-auto overflow-x-scroll'>
-				<table className='table-auto w-full text-left whitespace-no-wrap border-2 border-gray-100'>
+				<table className='table-fixed w-full text-left whitespace-no-wrap border-2 border-gray-100'>
 					<thead>
 						<tr>
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-52'
 								onClick={sortTable}
 							>
 								Name
 							</th>
 
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
 								onClick={sortTable}
 							>
 								Rarity
 							</th>
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
 								onClick={sortTable}
 							>
 								Series
 							</th>
 							{isTeam ? (
-								<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
+								<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-24'>
 									Team
 								</th>
 							) : null}
 
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
 								onClick={sortTable}
 							>
 								Best Buy
 							</th>
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
 								onClick={sortTable}
 							>
 								Best Buy (Last 200 Orders)
 							</th>
 
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
 								onClick={sortTable}
 							>
 								Best Sell
 							</th>
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
 								onClick={sortTable}
 							>
 								Best Sell (Last 200 Orders)
 							</th>
 
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
 								onClick={sortTable}
 							>
 								Profit
 							</th>
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
 								onClick={sortTable}
 							>
 								Sales/Minute
 							</th>
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer'
+								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
 								onClick={sortTable}
 							>
 								Profit/Minute
