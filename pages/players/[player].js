@@ -6,22 +6,13 @@ import Head from 'next/head';
 export default function player({ cardData, listingData }) {
 	console.log(cardData.name);
 	return (
-		<div className='mt-5'>
+		<div className='md:mt-5'>
 			<Head>
 				<title>Flip The Show | {cardData.name}</title>
 			</Head>
 			<Card data={cardData} listingData={listingData} />
-			<div className='hidden lg:flex justify-center'>
-				<PlayerTable
-					listingData={listingData.completed_orders}
-					isSticky={true}
-				/>
-			</div>
-			<div className='flex lg:hidden justify-center'>
-				<PlayerTable
-					listingData={listingData.completed_orders}
-					isSticky={false}
-				/>
+			<div className='flex justify-center'>
+				<PlayerTable listingData={listingData.completed_orders} />
 			</div>
 		</div>
 	);

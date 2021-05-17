@@ -24,7 +24,7 @@ export default function Equipment({ items }) {
 		return zeroItems;
 	};
 
-	const [zeroItems, setZeroItems] = useState(removeZeroItems);
+	const zeroItems = removeZeroItems();
 	const [sortedItems, setSortedItems] = useState(zeroItems);
 	const [filteredItems, setFilteredItems] = useState(zeroItems);
 
@@ -131,6 +131,7 @@ export default function Equipment({ items }) {
 					sortedItems={sortedItems}
 					setSortedItems={setSortedItems}
 					isPlayer={isPlayer}
+					isTeam={isTeam}
 					isSticky={true}
 				/>
 			</div>
@@ -139,6 +140,7 @@ export default function Equipment({ items }) {
 					sortedItems={sortedItems}
 					setSortedItems={setSortedItems}
 					isPlayer={isPlayer}
+					isTeam={isTeam}
 					isSticky={false}
 				/>
 			</div>

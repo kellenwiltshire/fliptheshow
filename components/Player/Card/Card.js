@@ -31,6 +31,30 @@ function Card({ data, listingData }) {
 								Overall: {data.ovr} Rarity: {data.rarity}
 							</span>
 						</div>
+						{data.fielding_rank_image ? (
+							<div id='job' className='text-gray-800 my-4 flex flex-row'>
+								<span className='flex flex-col mx-2'>
+									Fielding
+									<img
+										src={data.fielding_rank_image}
+										height='25px'
+										width='25px'
+									/>
+								</span>
+								<span className='flex flex-col mx-2'>
+									Batting
+									<img src={data.hit_rank_image} height='25px' width='25px' />
+								</span>
+							</div>
+						) : null}
+						<div className='text-gray-800 flex flex-row text-lg my-5 justify-center'>
+							<span className='flex flex-col mx-2'>
+								Best Buy: {listingData.best_buy_price}
+							</span>
+							<span className='flex flex-col mx-2'>
+								Best Sell: {listingData.best_sell_price}
+							</span>
+						</div>
 						<Stats data={data} />
 						<PitchingStats data={data} />
 						<div className='flex flex-row flex-wrap justify-center'>
@@ -48,34 +72,6 @@ function Card({ data, listingData }) {
 									return;
 								}
 							})}
-						</div>
-						{data.fielding_rank_image ? (
-							<div id='job' className='text-gray-800 my-4 flex flex-row'>
-								<span className='flex flex-col mx-2'>
-									Fielding
-									<img
-										src={data.fielding_rank_image}
-										height='25px'
-										width='25px'
-									/>
-								</span>
-								<span className='flex flex-col mx-2'>
-									Batting
-									<img src={data.hit_rank_image} height='25px' width='25px' />
-								</span>
-							</div>
-						) : null}
-
-						<div
-							id='job'
-							className='text-gray-800 flex flex-row text-lg my-5 justify-center'
-						>
-							<span className='flex flex-col mx-2'>
-								Best Buy: {listingData.best_buy_price}
-							</span>
-							<span className='flex flex-col mx-2'>
-								Best Sell: {listingData.best_sell_price}
-							</span>
 						</div>
 					</div>
 				</div>

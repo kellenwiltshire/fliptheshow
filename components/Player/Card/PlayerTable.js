@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Paginate from 'react-paginate';
 
-function PlayerTable({ listingData, isSticky }) {
+function PlayerTable({ listingData }) {
 	const [numPages, setNumPages] = useState(Math.round(listingData.length / 50));
 	const [currPage, setCurrPage] = useState(0);
 	const [offset, setOffSet] = useState(0);
@@ -37,7 +37,7 @@ function PlayerTable({ listingData, isSticky }) {
 				breakClassName='page'
 			/>
 			<table className='table-auto w-auto text-left whitespace-no-wrap border-2 border-gray-100'>
-				<thead className={isSticky ? 'sticky top-0' : ''}>
+				<thead>
 					<tr>
 						<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
 							Date (UTC)

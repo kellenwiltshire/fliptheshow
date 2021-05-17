@@ -24,7 +24,7 @@ export default function Home({ items }) {
 		return zeroItems;
 	};
 
-	const [zeroItems, setZeroItems] = useState(removeZeroItems);
+	const zeroItems = removeZeroItems();
 	const [sortedItems, setSortedItems] = useState(zeroItems);
 	const [filteredItems, setFilteredItems] = useState(zeroItems);
 
@@ -146,8 +146,8 @@ export default function Home({ items }) {
 				<Table
 					sortedItems={sortedItems}
 					setSortedItems={setSortedItems}
+					isTeam={isTeam}
 					isPlayer={isPlayer}
-					isSticky={true}
 				/>
 			</div>
 			<div className='block lg:hidden'>
@@ -155,7 +155,7 @@ export default function Home({ items }) {
 					sortedItems={sortedItems}
 					setSortedItems={setSortedItems}
 					isPlayer={isPlayer}
-					isSticky={false}
+					isTeam={isTeam}
 				/>
 			</div>
 		</div>

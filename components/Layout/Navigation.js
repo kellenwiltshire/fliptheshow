@@ -7,7 +7,7 @@ function Navigation() {
 			<div className='container flex flex-wrap mt-2 flex-row justify-center'>
 				<Link href='/'>
 					<a className='hover:text-gray-900 py-1 text-center w-full md:w-auto md:py-1 md:my-2 md:ml-2'>
-						Flip The Show<span className='text-xs'>(beta)</span>
+						Flip The Show
 					</a>
 				</Link>
 				<nav className='md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 flex flex-wrap items-center text-base justify-center my-2 lg:my-0'>
