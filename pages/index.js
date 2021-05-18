@@ -43,7 +43,7 @@ export default function Home({ items }) {
 			let bestSellLastHour = 0;
 
 			if (sortedItems[i].additionalData) {
-				if (sortedItems[i].additionalData.completed_orders) {
+				if (sortedItems[i].additionalData.completed_orders.length) {
 					const orderLength =
 						sortedItems[i].additionalData.completed_orders.length - 1;
 
