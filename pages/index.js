@@ -51,7 +51,8 @@ export default function Home({ items }) {
 					sortedItems[i].additionalData.bestBuyLastHour = 0;
 
 					const oldestOrder =
-						sortedItems[i].additionalData.completed_orders[orderLength].date;
+						sortedItems[i].additionalData.completed_orders[orderLength - 1]
+							.date;
 					const oldestOrderDate = new Date(oldestOrder);
 					const currentDate = new Date(currentTime);
 					const timeDifference = (currentDate - oldestOrderDate) / 1000;
