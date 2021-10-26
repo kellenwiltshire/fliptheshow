@@ -64,18 +64,6 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 			newItems = newItems.sort((a, b) => {
 				return a.best_buy_price - b.best_buy_price;
 			});
-		} else if (e.target.textContent === 'Best Buy (Last 200 Orders)') {
-			newItems = newItems.sort((a, b) => {
-				return (
-					a.additionalData.bestBuyLastHour - b.additionalData.bestBuyLastHour
-				);
-			});
-		} else if (e.target.textContent === 'Best Sell (Last 200 Orders)') {
-			newItems = newItems.sort((a, b) => {
-				return (
-					a.additionalData.bestSellLastHour - b.additionalData.bestSellLastHour
-				);
-			});
 		} else if (e.target.textContent === 'Best Sell') {
 			newItems = newItems.sort((a, b) => {
 				return a.best_sell_price - b.best_sell_price;
@@ -85,16 +73,6 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 				const aProfit = a.best_sell_price * 0.9 - a.best_buy_price;
 				const bProfit = b.best_sell_price * 0.9 - b.best_buy_price;
 				return aProfit - bProfit;
-			});
-		} else if (e.target.textContent === 'Sales/Minute') {
-			newItems = newItems.sort((a, b) => {
-				const aSalesPerMin = a.additionalData.salesPerMinute;
-				const bSalesPerMin = b.additionalData.salesPerMinute;
-				return aSalesPerMin - bSalesPerMin;
-			});
-		} else if (e.target.textContent === 'Profit/Minute') {
-			newItems = newItems.sort((a, b) => {
-				return a.additionalData.profitPerMin - b.additionalData.profitPerMin;
 			});
 		}
 		if (sortSwitch) {
@@ -158,12 +136,6 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 							>
 								Best Buy
 							</th>
-							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
-								onClick={sortTable}
-							>
-								Best Buy (Last 200 Orders)
-							</th>
 
 							<th
 								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
@@ -171,30 +143,12 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 							>
 								Best Sell
 							</th>
-							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
-								onClick={sortTable}
-							>
-								Best Sell (Last 200 Orders)
-							</th>
 
 							<th
 								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
 								onClick={sortTable}
 							>
 								Profit
-							</th>
-							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
-								onClick={sortTable}
-							>
-								Sales/Minute
-							</th>
-							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
-								onClick={sortTable}
-							>
-								Profit/Minute
 							</th>
 						</tr>
 					</thead>
@@ -241,25 +195,13 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 									<td className='border-t-2 border-gray-200 px-4 py-3'>
 										{item.best_buy_price}
 									</td>
-									<td className='border-t-2 border-gray-200 px-4 py-3'>
-										{item.additionalData.bestBuyLastHour}
-									</td>
 
 									<td className='border-t-2 border-gray-200 px-4 py-3'>
 										{item.best_sell_price}
 									</td>
-									<td className='border-t-2 border-gray-200 px-4 py-3'>
-										{item.additionalData.bestSellLastHour}
-									</td>
 
 									<td className='border-t-2 border-gray-200 px-4 py-3'>
 										{profit}
-									</td>
-									<td className='border-t-2 border-gray-200 px-4 py-3'>
-										{item.additionalData.salesPerMinute}
-									</td>
-									<td className='border-t-2 border-gray-200 px-4 py-3'>
-										{item.additionalData.profitPerMin}
 									</td>
 								</tr>
 							);
