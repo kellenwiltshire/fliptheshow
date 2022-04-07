@@ -1,6 +1,6 @@
 # Flip The Show
 
-Website created for flipping cards in the game MLB The Show 21
+Website created for flipping cards in the game MLB The Show 22
 
 ## Lessons Learned
 
