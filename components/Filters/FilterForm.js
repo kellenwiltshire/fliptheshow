@@ -51,7 +51,7 @@ function FilterForm({
 		}
 	};
 	return (
-		<div className='lg:sticky lg:top-0 mt-2'>
+		<div className=''>
 			<form
 				id='inputForm'
 				className='text-gray-600 hidden lg:flex flex-row flex-wrap h-24 bg-white mt-2'

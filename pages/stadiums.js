@@ -72,19 +72,21 @@ export default function Stadiums({ items }) {
 				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 22 on Xbox and Playstation'
 				canonical='https://flipthe.show/stadiums'
 			/>
-			<FilterForm
-				setMinBuyPrice={setMinBuyPrice}
-				setMaxBuyPrice={setMaxBuyPrice}
-				setMinSellPrice={setMinSellPrice}
-				setMaxSellPrice={setMaxSellPrice}
-				setRarity={setRarity}
-				setTeam={setTeam}
-				setSeries={setSeries}
-				setSortedItems={setSortedItems}
-				items={zeroItems}
-				filteredItems={filteredItems}
-				placeholder='Search Stadiums'
-			/>
+			<div className='mb-24'>
+				<FilterForm
+					setMinBuyPrice={setMinBuyPrice}
+					setMaxBuyPrice={setMaxBuyPrice}
+					setMinSellPrice={setMinSellPrice}
+					setMaxSellPrice={setMaxSellPrice}
+					setRarity={setRarity}
+					setTeam={setTeam}
+					setSeries={setSeries}
+					setSortedItems={setSortedItems}
+					items={zeroItems}
+					filteredItems={filteredItems}
+					placeholder='Search Stadiums'
+				/>
+			</div>
 			<div className='hidden lg:block'>
 				<Table
 					sortedItems={sortedItems}
