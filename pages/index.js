@@ -124,7 +124,7 @@ export async function getStaticProps() {
 
 	const recursiveGetData = async (page = 1) => {
 		const res = await fetch(
-			`https://mlb21.theshow.com/apis/listings.json?page=${page}`,
+			`https://mlb22.theshow.com/apis/listings.json?page=${page}`,
 		);
 		const data = await res.json();
 		const listings = data.listings;

@@ -110,7 +110,7 @@ export async function getStaticProps() {
 			const itemID = items[i].item.uuid;
 			try {
 				const res = await fetch(
-					`https://mlb21.theshow.com/apis/listing.json?uuid=${itemID}`,
+					`https://mlb22.theshow.com/apis/listing.json?uuid=${itemID}`,
 				);
 				const data = await res.json();
 				items[i].additionalData = data;
@@ -123,7 +123,7 @@ export async function getStaticProps() {
 	};
 	const recursiveGetData = async (page = 1) => {
 		const res = await fetch(
-			`https://mlb21.theshow.com/apis/listings.json?type=stadium&page=${page}`,
+			`https://mlb22.theshow.com/apis/listings.json?type=stadium&page=${page}`,
 		);
 		const data = await res.json();
 		const listings = data.listings;

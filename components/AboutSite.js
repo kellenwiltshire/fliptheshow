@@ -13,7 +13,7 @@ function AboutSite() {
 
 				<p className='text-sm sm:text-xl pb-5 leading-relaxed font-body text-center'>
 					This site is dedicated to helping you get the best deal for your card
-					in MLB The Show 21.
+					in MLB The Show 22.
 				</p>
 				<p className='text-sm sm:text-xl pb-5 leading-relaxed font-body text-center'>
 					Using the information on this site you can make sure that you don't

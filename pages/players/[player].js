@@ -21,12 +21,12 @@ export default function player({ cardData, listingData }) {
 export async function getServerSideProps({ query }) {
 	const uuid = query.player;
 	const res = await fetch(
-		`https://mlb21.theshow.com/apis/item.json?uuid=${uuid}`,
+		`https://mlb22.theshow.com/apis/item.json?uuid=${uuid}`,
 	);
 	const cardData = await res.json();
 
 	const nextres = await fetch(
-		`https://mlb21.theshow.com/apis/listing.json?uuid=${uuid}`,
+		`https://mlb22.theshow.com/apis/listing.json?uuid=${uuid}`,
 	);
 
 	const listingData = await nextres.json();
