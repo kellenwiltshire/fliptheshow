@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import Table from '../components/Layout/Table';
 
 export default function Equipment({ items }) {
@@ -67,9 +67,11 @@ export default function Equipment({ items }) {
 
 	return (
 		<div className='lg:w-2/3 w-full mx-auto'>
-			<Head>
-				<title>Flip The Show | Equipment</title>
-			</Head>
+			<NextSeo
+				title='Flip The Show | Equipment'
+				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 22 on Xbox and Playstation'
+				canonical='https://flipthe.show/equipment'
+			/>
 			<FilterForm
 				setMinBuyPrice={setMinBuyPrice}
 				setMaxBuyPrice={setMaxBuyPrice}
