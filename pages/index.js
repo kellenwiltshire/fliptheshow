@@ -21,7 +21,7 @@ export default function Home({ items }) {
 	const [filteredItems, setFilteredItems] = useState(zeroItems);
 
 	useEffect(() => {
-		let filteredList = filterByPrice(zeroItems, minBuyPrice, maxBuyPrice, minSellPrice, maxSellPrice);
+		let filteredList = filterByPrice(zeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
 		filteredList = filterByRarity(filteredList, rarity);
 		filteredList = filterByTeam(filteredList, team);
 		setSortedItems(filteredList);

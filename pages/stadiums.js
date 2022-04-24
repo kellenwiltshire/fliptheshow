@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo';
 import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
-import { filterByPrice, filterByRarity, filterByTeam, removeZeroItems } from '../utils/filterFunctionsctions';
+import { filterByPrice, filterByRarity, filterByTeam, removeZeroItems } from '../utils/filterFunctions';
 
 export default function Stadiums({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
@@ -21,7 +21,7 @@ export default function Stadiums({ items }) {
 	const [filteredItems, setFilteredItems] = useState(zeroItems);
 
 	useEffect(() => {
-		let filteredList = filterByPrice(zeroItems, minBuyPrice, maxBuyPrice, minSellPrice, maxSellPrice);
+		let filteredList = filterByPrice(zeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
 		filteredList = filterByRarity(filteredList, rarity);
 		filteredList = filterByTeam(filteredList, team);
 		setSortedItems(filteredList);
