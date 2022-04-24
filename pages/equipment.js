@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import { NextSeo } from 'next-seo';
 import Table from '../components/Layout/Table';
-import { filterByPrice, filterByRarity, filterByTeam, removeZeroItems } from '../utils/functions';
+import { filterByPrice, filterByRarity, filterByTeam, removeZeroItems } from '../utils/filterFunctions';
 
 export default function Equipment({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
