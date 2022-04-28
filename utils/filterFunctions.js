@@ -1,4 +1,10 @@
-export const filterByPrice = (items, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice) => {
+export const filterByPrice = (
+	items,
+	minBuyPrice,
+	minSellPrice,
+	maxBuyPrice,
+	maxSellPrice,
+) => {
 	const filteredItems = items.filter((item) => {
 		return (
 			item.best_buy_price >= minBuyPrice &&
@@ -43,4 +49,16 @@ export const removeZeroItems = (items) => {
 		}
 	});
 	return zeroItems;
+};
+
+export const filterBySeries = (items, series) => {
+	const filteredItems = items.filter((item) => {
+		if (series === '' || series === 'Series') {
+			return item;
+		} else {
+			return item.item.series === series;
+		}
+	});
+
+	return filteredItems;
 };

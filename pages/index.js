@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { NextSeo } from 'next-seo';
 import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
-import { filterByPrice, filterByRarity, filterByTeam, removeZeroItems } from '../utils/filterFunctions';
+import {
+	filterByPrice,
+	filterByRarity,
+	filterBySeries,
+	filterByTeam,
+	removeZeroItems,
+} from '../utils/filterFunctions';
 
 export default function Home({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
@@ -21,12 +27,27 @@ export default function Home({ items }) {
 	const [filteredItems, setFilteredItems] = useState(zeroItems);
 
 	useEffect(() => {
-		let filteredList = filterByPrice(zeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
+		let filteredList = filterByPrice(
+			zeroItems,
+			minBuyPrice,
+			minSellPrice,
+			maxBuyPrice,
+			maxSellPrice,
+		);
 		filteredList = filterByRarity(filteredList, rarity);
 		filteredList = filterByTeam(filteredList, team);
+		filteredList = filterBySeries(filteredList, series);
 		setSortedItems(filteredList);
 		setFilteredItems(filteredList);
-	}, [minSellPrice, maxSellPrice, minBuyPrice, maxBuyPrice, rarity, team]);
+	}, [
+		minSellPrice,
+		maxSellPrice,
+		minBuyPrice,
+		maxBuyPrice,
+		rarity,
+		team,
+		series,
+	]);
 
 	return (
 		<div className='lg:w-2/3 w-full mx-auto'>
@@ -51,10 +72,20 @@ export default function Home({ items }) {
 				/>
 			</div>
 			<div className='hidden lg:block'>
-				<Table sortedItems={sortedItems} setSortedItems={setSortedItems} isTeam={isTeam} isPlayer={isPlayer} />
+				<Table
+					sortedItems={sortedItems}
+					setSortedItems={setSortedItems}
+					isTeam={isTeam}
+					isPlayer={isPlayer}
+				/>
 			</div>
 			<div className='block lg:hidden'>
-				<Table sortedItems={sortedItems} setSortedItems={setSortedItems} isPlayer={isPlayer} isTeam={isTeam} />
+				<Table
+					sortedItems={sortedItems}
+					setSortedItems={setSortedItems}
+					isPlayer={isPlayer}
+					isTeam={isTeam}
+				/>
 			</div>
 		</div>
 	);
@@ -64,7 +95,9 @@ export async function getStaticProps() {
 	console.log('Players Revalidate');
 
 	const recursiveGetData = async (page = 1) => {
-		const res = await fetch(`https://mlb22.theshow.com/apis/listings.json?page=${page}`);
+		const res = await fetch(
+			`https://mlb22.theshow.com/apis/listings.json?page=${page}`,
+		);
 		const data = await res.json();
 		const listings = data.listings;
 		if (data.total_pages > page) {
