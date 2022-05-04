@@ -62,3 +62,15 @@ export const filterBySeries = (items, series) => {
 
 	return filteredItems;
 };
+
+export const filterByText = (items, text) => {
+	if (text) {
+		const filteredItems = items.filter((item) => {
+			const name = item.listing_name.toLowerCase();
+			return name.includes(text.toLowerCase());
+		});
+		return filteredItems;
+	} else {
+		return items;
+	}
+};
