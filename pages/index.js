@@ -8,6 +8,7 @@ import {
 	filterBySeries,
 	filterByTeam,
 	removeZeroItems,
+	filterByText,
 } from '../utils/filterFunctions';
 import useSWR from 'swr';
 
@@ -19,6 +20,7 @@ export default function Home({ items }) {
 	const [rarity, setRarity] = useState('');
 	const [team, setTeam] = useState('');
 	const [series, setSeries] = useState('');
+	const [textFilter, setTextFilter] = useState('');
 	const isPlayer = true;
 	const isTeam = true;
 	const [updatedItems, setUpdatedItems] = useState();
@@ -28,26 +30,12 @@ export default function Home({ items }) {
 	const [sortedItems, setSortedItems] = useState(zeroItems);
 	const [filteredItems, setFilteredItems] = useState(zeroItems);
 
-	// const recursiveGetData = async (page = 1) => {
-	// 	console.log('SWR Called');
-	// 	const res = await fetch(
-	// 		`https://mlb22.theshow.com/apis/listings.json?page=${page}`,
-	// 	);
-	// 	const data = await res.json();
-	// 	const listings = data.listings;
-	// 	if (data.total_pages > page) {
-	// 		return listings.concat(await recursiveGetData(page + 1));
-	// 	} else {
-	// 		return listings;
-	// 	}
-	// };
-
 	const fetcher = (url) =>
 		fetch(url)
 			.then((r) => r.json())
 			.then((data) => setUpdatedItems(data));
 
-	const { data } = useSWR('/api/requestPlayers', fetcher, {
+	useSWR('/api/requestPlayers', fetcher, {
 		refreshInterval: 30000,
 	});
 
@@ -65,6 +53,7 @@ export default function Home({ items }) {
 			filteredList = filterByRarity(filteredList, rarity);
 			filteredList = filterByTeam(filteredList, team);
 			filteredList = filterBySeries(filteredList, series);
+			filteredList = filterByText(filteredList, textFilter);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 		} else {
@@ -78,6 +67,7 @@ export default function Home({ items }) {
 			filteredList = filterByRarity(filteredList, rarity);
 			filteredList = filterByTeam(filteredList, team);
 			filteredList = filterBySeries(filteredList, series);
+			filteredList = filterByText(filteredList, textFilter);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 		}
@@ -90,6 +80,7 @@ export default function Home({ items }) {
 		team,
 		series,
 		updatedItems,
+		textFilter,
 	]);
 
 	return (
@@ -111,6 +102,7 @@ export default function Home({ items }) {
 					setSortedItems={setSortedItems}
 					items={zeroItems}
 					filteredItems={filteredItems}
+					setTextFilter={setTextFilter}
 					placeholder='Search Players'
 				/>
 			</div>
