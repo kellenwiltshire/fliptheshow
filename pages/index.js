@@ -22,7 +22,7 @@ export default function Home({ items }) {
 	const isPlayer = true;
 	const isTeam = true;
 
-	const zeroItems = removeZeroItems(items);
+	const [zeroItems, setZeroItems] = useState(removeZeroItems(items));
 
 	const [sortedItems, setSortedItems] = useState(zeroItems);
 	const [filteredItems, setFilteredItems] = useState(zeroItems);
@@ -40,7 +40,10 @@ export default function Home({ items }) {
 		}
 	};
 
-	useSWR(recursiveGetData, { refreshInterval: 30000 });
+	const { data } = useSWR(recursiveGetData, { refreshInterval: 30000 });
+	useEffect(() => {
+		setZeroItems(removeZeroItems(data));
+	}, [data]);
 
 	useEffect(() => {
 		let filteredList = filterByPrice(
