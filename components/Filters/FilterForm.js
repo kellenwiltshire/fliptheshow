@@ -18,8 +18,8 @@ function FilterForm({
 	setSeries,
 	setSortedItems,
 	items,
-	filteredItems,
 	placeholder,
+	setTextFilter,
 }) {
 	const [menuOpen, setMenuOpen] = useState(false);
 	const resetFilters = (e) => {
@@ -31,24 +31,8 @@ function FilterForm({
 		setRarity('');
 		setSeries('');
 		setTeam('');
-		document.getElementById('inputForm').reset();
+		setTextFilter('');
 		setSortedItems(items);
-	};
-
-	const playerSearchChange = (e) => {
-		e.preventDefault();
-		if (e.target.value) {
-			let nameFilter = [];
-			filteredItems.map((names) => {
-				const name = names.listing_name.toLowerCase();
-				if (name.includes(e.target.value.toLowerCase())) {
-					nameFilter.push(names);
-				}
-			});
-			setSortedItems(nameFilter);
-		} else {
-			setSortedItems(filteredItems);
-		}
 	};
 	return (
 		<div className=''>
@@ -62,7 +46,7 @@ function FilterForm({
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
 						placeholder={placeholder}
-						onChange={playerSearchChange}
+						onChange={(e) => setTextFilter(e.target.value)}
 					/>
 				</div>
 				<div className='flex flex-col m-1'>
@@ -138,7 +122,7 @@ function FilterForm({
 						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
 						type='text'
 						placeholder={placeholder}
-						onChange={playerSearchChange}
+						onChange={(e) => setTextFilter(e.target.value)}
 					/>
 				</div>
 				<div className='flex flex-col m-1'>

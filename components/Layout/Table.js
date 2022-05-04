@@ -80,57 +80,59 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 			/>
 
 			<div className='max-w-screen overflow-auto overflow-x-scroll'>
-				<table className='table-fixed w-full text-left whitespace-no-wrap border-2 border-gray-100'>
+				<table className='table-fixed min-w-full divide-y divide-gray-200 text-left whitespace-no-wrap border-2 border-gray-100'>
 					<thead>
 						<tr>
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-52'
+								scope='col'
+								className='py-3.5 pl-4 pr-3 title-font bg-gray-100 text-left text-sm font-semibold text-gray-900 sm:pl-6 cursor-pointer'
 								onClick={sortTable}
 							>
 								Name
 							</th>
 
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
+								className='hidden px-3 py-3.5 text-left text-sm bg-gray-100 font-semibold text-gray-900 sm:table-cell cursor-pointer'
 								onClick={sortTable}
 							>
 								Rarity
 							</th>
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
+								className='hidden px-3 py-3.5 text-left text-sm bg-gray-100 font-semibold text-gray-900 sm:table-cell cursor-pointer'
 								onClick={sortTable}
 							>
 								Series
 							</th>
 							{isTeam ? (
-								<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 w-24'>
+								<th className='hidden px-3 py-3.5 text-left text-sm bg-gray-100 font-semibold text-gray-900 sm:table-cell cursor-pointer'>
 									Team
 								</th>
 							) : null}
 
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
+								scope='col'
+								className='py-3.5 pl-4 pr-3 title-font bg-gray-100 text-left text-sm font-semibold text-gray-900 sm:pl-6 cursor-pointer'
 								onClick={sortTable}
 							>
 								Best Buy
 							</th>
 
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
+								className='py-3.5 pl-4 pr-3 title-font bg-gray-100 text-left text-sm font-semibold text-gray-900 sm:pl-6 cursor-pointer'
 								onClick={sortTable}
 							>
 								Best Sell
 							</th>
 
 							<th
-								className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 cursor-pointer w-24'
+								className='py-3.5 pl-4 pr-3 title-font bg-gray-100 text-left text-sm font-semibold text-gray-900 sm:pl-6 cursor-pointer'
 								onClick={sortTable}
 							>
 								Profit
 							</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody className='divide-y divide-gray-200 bg-white'>
 						{currItems.map((item) => {
 							const profit = Math.round(
 								item.best_sell_price * 0.9 - item.best_buy_price,
@@ -142,42 +144,84 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 							return (
 								<tr key={item.item.uuid}>
 									{isPlayer ? (
-										<td className='border-t-2 border-gray-200 px-4 py-3 flex flex-row justify-between'>
-											<Link
-												href={{
-													pathname: '/players/[player]',
-													query: { player: item.item.uuid },
-												}}
-											>
-												<a>{item.listing_name}</a>
-											</Link>
-											<a
-												href={`https://mlb22.theshow.com/items/${item.item.uuid}`}
-												target='_blank'
-											>
-												<ExternalLinkIcon className='h-5 w-5' />
-											</a>
+										<td className='border-t-2 border-gray-200 px-4 py-3 flex flex-col lg:flex-row justify-between'>
+											<span className='flex flex-row justify-between'>
+												<Link
+													href={{
+														pathname: '/players/[player]',
+														query: { player: item.item.uuid },
+													}}
+												>
+													<a>{item.listing_name}</a>
+												</Link>
+												<a
+													href={`https://mlb22.theshow.com/items/${item.item.uuid}`}
+													target='_blank'
+												>
+													<ExternalLinkIcon className='h-5 w-5' />
+												</a>
+											</span>
+											<dl className='font-normal sm:hidden'>
+												<dt className='sr-only'>Rarity</dt>
+												<dd className='mt-1 truncate text-gray-700'>
+													{item.item.rarity}
+												</dd>
+												<dt className='sr-only'>Series</dt>
+												<dd className='mt-1 truncate text-gray-700'>
+													{item.item.series}
+												</dd>
+
+												{isTeam ? (
+													<>
+														<dt className='sr-only'>Team</dt>
+														<dd className='mt-1 truncate text-gray-700'>
+															{item.item.team}
+														</dd>
+													</>
+												) : null}
+											</dl>
 										</td>
 									) : (
-										<td className='border-t-2 border-gray-200 px-4 py-3 flex flex-row justify-between'>
-											{itemName}
-											<a
-												href={`https://mlb22.theshow.com/items/${item.item.uuid}`}
-												target='_blank'
-											>
-												<ExternalLinkIcon className='h-5 w-5' />
-											</a>
+										<td className='border-t-2 border-gray-200 px-4 py-3 lg:flex-row justify-between flex flex-col'>
+											<span className='flex flex-row justify-between'>
+												{itemName}
+												<a
+													href={`https://mlb22.theshow.com/items/${item.item.uuid}`}
+													target='_blank'
+												>
+													<ExternalLinkIcon className='h-5 w-5' />
+												</a>
+											</span>
+											<dl className='font-normal sm:hidden'>
+												<dt className='sr-only'>Rarity</dt>
+												<dd className='mt-1 truncate text-gray-700'>
+													{item.item.rarity}
+												</dd>
+												<dt className='sr-only'>Series</dt>
+												<dd className='mt-1 truncate text-gray-700'>
+													{item.item.series}
+												</dd>
+
+												{isTeam ? (
+													<>
+														<dt className='sr-only'>Team</dt>
+														<dd className='mt-1 truncate text-gray-700'>
+															{item.item.team}
+														</dd>
+													</>
+												) : null}
+											</dl>
 										</td>
 									)}
 
-									<td className='border-t-2 border-gray-200 px-4 py-3'>
+									<td className='border-t-2 border-gray-200 px-4 py-3 hidden sm:table-cell'>
 										{item.item.rarity}
 									</td>
-									<td className='border-t-2 border-gray-200 px-4 py-3'>
+									<td className='border-t-2 border-gray-200 px-4 py-3 hidden sm:table-cell'>
 										{item.item.series}
 									</td>
 									{isTeam ? (
-										<td className='border-t-2 border-gray-200 px-4 py-3'>
+										<td className='border-t-2 border-gray-200 px-4 py-3 hidden sm:table-cell'>
 											{item.item.team}
 										</td>
 									) : null}
