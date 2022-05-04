@@ -9,6 +9,7 @@ import {
 	sortByProfit,
 	sortBySeries,
 } from '../../utils/sortingFunctions';
+import { ExternalLinkIcon } from '@heroicons/react/solid';
 
 function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 	const [sort, setSort] = useState('');
@@ -16,7 +17,9 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 	const [numPages, setNumPages] = useState(Math.round(sortedItems.length / 50));
 	const [currPage, setCurrPage] = useState(0);
 	const [offset, setOffSet] = useState(0);
-	const [currItems, setCurrItems] = useState(sortedItems.slice(offset, offset + 50));
+	const [currItems, setCurrItems] = useState(
+		sortedItems.slice(offset, offset + 50),
+	);
 
 	const onPageChange = (e) => {
 		const selectedPage = e.selected;
@@ -129,13 +132,17 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 					</thead>
 					<tbody>
 						{currItems.map((item) => {
-							const profit = Math.round(item.best_sell_price * 0.9 - item.best_buy_price);
-							const itemName = item.listing_name.replace('&trade;', '™').replace('&reg;', '®');
+							const profit = Math.round(
+								item.best_sell_price * 0.9 - item.best_buy_price,
+							);
+							const itemName = item.listing_name
+								.replace('&trade;', '™')
+								.replace('&reg;', '®');
 
 							return (
 								<tr key={item.item.uuid}>
 									{isPlayer ? (
-										<td className='border-t-2 border-gray-200 px-4 py-3'>
+										<td className='border-t-2 border-gray-200 px-4 py-3 flex flex-row justify-between'>
 											<Link
 												href={{
 													pathname: '/players/[player]',
@@ -144,20 +151,48 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 											>
 												<a>{item.listing_name}</a>
 											</Link>
+											<a
+												href={`https://mlb22.theshow.com/items/${item.item.uuid}`}
+												target='_blank'
+											>
+												<ExternalLinkIcon className='h-5 w-5' />
+											</a>
 										</td>
 									) : (
-										<td className='border-t-2 border-gray-200 px-4 py-3'>{itemName}</td>
+										<td className='border-t-2 border-gray-200 px-4 py-3 flex flex-row justify-between'>
+											{itemName}
+											<a
+												href={`https://mlb22.theshow.com/items/${item.item.uuid}`}
+												target='_blank'
+											>
+												<ExternalLinkIcon className='h-5 w-5' />
+											</a>
+										</td>
 									)}
 
-									<td className='border-t-2 border-gray-200 px-4 py-3'>{item.item.rarity}</td>
-									<td className='border-t-2 border-gray-200 px-4 py-3'>{item.item.series}</td>
-									{isTeam ? <td className='border-t-2 border-gray-200 px-4 py-3'>{item.item.team}</td> : null}
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.item.rarity}
+									</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.item.series}
+									</td>
+									{isTeam ? (
+										<td className='border-t-2 border-gray-200 px-4 py-3'>
+											{item.item.team}
+										</td>
+									) : null}
 
-									<td className='border-t-2 border-gray-200 px-4 py-3'>{item.best_buy_price}</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.best_buy_price}
+									</td>
 
-									<td className='border-t-2 border-gray-200 px-4 py-3'>{item.best_sell_price}</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{item.best_sell_price}
+									</td>
 
-									<td className='border-t-2 border-gray-200 px-4 py-3'>{profit}</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>
+										{profit}
+									</td>
 								</tr>
 							);
 						})}
