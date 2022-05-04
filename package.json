@@ -12,6 +12,7 @@
 		"@formspree/react": "^2.2.4",
 		"@heroicons/react": "^1.0.6",
 		"caniuse-lite": "^1.0.30001332",
+		"cors": "^2.8.5",
 		"next": "^12.1.5",
 		"next-seo": "^5.4.0",
 		"next-sitemap": "^1.9.12",
