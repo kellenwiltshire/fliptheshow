@@ -21,43 +21,66 @@ export default function Home({ items }) {
 	const [series, setSeries] = useState('');
 	const isPlayer = true;
 	const isTeam = true;
+	const [updatedItems, setUpdatedItems] = useState();
 
-	const [zeroItems, setZeroItems] = useState(removeZeroItems(items));
+	const zeroItems = removeZeroItems(items);
 
 	const [sortedItems, setSortedItems] = useState(zeroItems);
 	const [filteredItems, setFilteredItems] = useState(zeroItems);
 
-	const recursiveGetData = async (page = 1) => {
-		const res = await fetch(
-			`https://mlb22.theshow.com/apis/listings.json?page=${page}`,
-		);
-		const data = await res.json();
-		const listings = data.listings;
-		if (data.total_pages > page) {
-			return listings.concat(await recursiveGetData(page + 1));
+	// const recursiveGetData = async (page = 1) => {
+	// 	console.log('SWR Called');
+	// 	const res = await fetch(
+	// 		`https://mlb22.theshow.com/apis/listings.json?page=${page}`,
+	// 	);
+	// 	const data = await res.json();
+	// 	const listings = data.listings;
+	// 	if (data.total_pages > page) {
+	// 		return listings.concat(await recursiveGetData(page + 1));
+	// 	} else {
+	// 		return listings;
+	// 	}
+	// };
+
+	const fetcher = (url) =>
+		fetch(url)
+			.then((r) => r.json())
+			.then((data) => setUpdatedItems(data));
+
+	const { data } = useSWR('/api/requestPlayers', fetcher, {
+		refreshInterval: 30000,
+	});
+
+	useEffect(() => {
+		console.log('useEffect Called');
+		if (updatedItems) {
+			const newZeroItems = removeZeroItems(updatedItems);
+			let filteredList = filterByPrice(
+				newZeroItems,
+				minBuyPrice,
+				minSellPrice,
+				maxBuyPrice,
+				maxSellPrice,
+			);
+			filteredList = filterByRarity(filteredList, rarity);
+			filteredList = filterByTeam(filteredList, team);
+			filteredList = filterBySeries(filteredList, series);
+			setSortedItems(filteredList);
+			setFilteredItems(filteredList);
 		} else {
-			return listings;
+			let filteredList = filterByPrice(
+				zeroItems,
+				minBuyPrice,
+				minSellPrice,
+				maxBuyPrice,
+				maxSellPrice,
+			);
+			filteredList = filterByRarity(filteredList, rarity);
+			filteredList = filterByTeam(filteredList, team);
+			filteredList = filterBySeries(filteredList, series);
+			setSortedItems(filteredList);
+			setFilteredItems(filteredList);
 		}
-	};
-
-	const { data } = useSWR(recursiveGetData, { refreshInterval: 30000 });
-	useEffect(() => {
-		setZeroItems(removeZeroItems(data));
-	}, [data]);
-
-	useEffect(() => {
-		let filteredList = filterByPrice(
-			zeroItems,
-			minBuyPrice,
-			minSellPrice,
-			maxBuyPrice,
-			maxSellPrice,
-		);
-		filteredList = filterByRarity(filteredList, rarity);
-		filteredList = filterByTeam(filteredList, team);
-		filteredList = filterBySeries(filteredList, series);
-		setSortedItems(filteredList);
-		setFilteredItems(filteredList);
 	}, [
 		minSellPrice,
 		maxSellPrice,
@@ -66,7 +89,7 @@ export default function Home({ items }) {
 		rarity,
 		team,
 		series,
-		zeroItems,
+		updatedItems,
 	]);
 
 	return (
