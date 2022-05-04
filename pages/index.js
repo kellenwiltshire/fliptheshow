@@ -9,6 +9,7 @@ import {
 	filterByTeam,
 	removeZeroItems,
 } from '../utils/filterFunctions';
+import useSWR from 'swr';
 
 export default function Home({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
@@ -25,6 +26,21 @@ export default function Home({ items }) {
 
 	const [sortedItems, setSortedItems] = useState(zeroItems);
 	const [filteredItems, setFilteredItems] = useState(zeroItems);
+
+	const recursiveGetData = async (page = 1) => {
+		const res = await fetch(
+			`https://mlb22.theshow.com/apis/listings.json?page=${page}`,
+		);
+		const data = await res.json();
+		const listings = data.listings;
+		if (data.total_pages > page) {
+			return listings.concat(await recursiveGetData(page + 1));
+		} else {
+			return listings;
+		}
+	};
+
+	useSWR(recursiveGetData, { refreshInterval: 30000 });
 
 	useEffect(() => {
 		let filteredList = filterByPrice(
@@ -47,6 +63,7 @@ export default function Home({ items }) {
 		rarity,
 		team,
 		series,
+		zeroItems,
 	]);
 
 	return (
