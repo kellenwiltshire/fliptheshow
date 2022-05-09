@@ -1,3 +1,5 @@
+//TODO rework filtering functions to minimize - Like in Puzzle
+
 export const sortByName = (items) => {
 	const sortedList = items.sort((a, b) => {
 		return a.listing_name.localeCompare(b.listing_name);
