@@ -1,47 +1,22 @@
-//TODO rework filtering functions to minimize - Like in Puzzle
+export const sortByString = (items, id) => {
+	if (id === 'rarity' || id === 'series' || id === 'team') {
+		const sortedList = items.sort((a, b) => {
+			return a.item[id].localeCompare(b.item[id]);
+		});
 
-export const sortByName = (items) => {
+		return sortedList;
+	}
 	const sortedList = items.sort((a, b) => {
-		return a.listing_name.localeCompare(b.listing_name);
+		return a[id].localeCompare(b[id]);
 	});
 
 	return sortedList;
 };
 
-export const sortByOverall = (items) => {
+export const sortByNumber = (items, id) => {
 	const sortedList = items.sort((a, b) => {
-		return a.item.ovr - b.item.ovr;
+		return a[id] - b[id];
 	});
 
-	return sortedList;
-};
-
-export const sortBySeries = (items) => {
-	const sortedList = items.sort((a, b) => {
-		return a.item.series.localeCompare(b.item.series);
-	});
-
-	return sortedList;
-};
-
-export const sortByBestBuy = (items) => {
-	const sortedList = items.sort((a, b) => {
-		return a.best_buy_price - b.best_buy_price;
-	});
-
-	return sortedList;
-};
-
-export const sortByBestSell = (items) => {
-	const sortedList = items.sort((a, b) => {
-		return a.best_sell_price - b.best_sell_price;
-	});
-	return sortedList;
-};
-
-export const sortByProfit = (items) => {
-	const sortedList = items.sort((a, b) => {
-		return a.profit - b.profit;
-	});
 	return sortedList;
 };

@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Paginate from 'react-paginate';
-import {
-	sortByBestBuy,
-	sortByBestSell,
-	sortByName,
-	sortByOverall,
-	sortByProfit,
-	sortBySeries,
-} from '../../utils/sortingFunctions';
+import { sortByNumber, sortByString } from '../../utils/sortingFunctions';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
 
 function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
@@ -36,20 +29,17 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 
 	const sortTable = (e) => {
 		e.preventDefault();
-		setSort(e.target.value);
+		setSort(e.target.id);
 		let newItems = sortedItems;
-		if (e.target.textContent === 'Name') {
-			newItems = sortByName(newItems);
-		} else if (e.target.textContent === 'Overall') {
-			newItems = sortByOverall(newItems);
-		} else if (e.target.textContent === 'Series') {
-			newItems = sortBySeries(newItems);
-		} else if (e.target.textContent === 'Best Buy') {
-			newItems = sortByBestBuy(newItems);
-		} else if (e.target.textContent === 'Best Sell') {
-			newItems = sortByBestSell(newItems);
-		} else if (e.target.textContent === 'Profit') {
-			newItems = sortByProfit(newItems);
+		if (
+			e.target.id === 'listing_name' ||
+			e.target.id === 'series' ||
+			e.target.id === 'team' ||
+			e.target.id === 'rarity'
+		) {
+			newItems = sortByString(newItems, e.target.id);
+		} else {
+			newItems = sortByNumber(newItems, e.target.id);
 		}
 		if (sortSwitch) {
 			newItems.reverse();
@@ -108,6 +98,7 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 								<th
 									id='team'
 									className='hidden px-3 py-3.5 text-left text-sm bg-gray-100 font-semibold text-gray-900 sm:table-cell cursor-pointer'
+									onClick={sortTable}
 								>
 									Team
 								</th>
