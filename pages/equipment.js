@@ -33,7 +33,9 @@ export default function Equipment({ items }) {
 
 	useEffect(() => {
 		const date = new Date();
-		const updated = `${date.getHours()}:${date.getMinutes()}:${('0' + date.getSeconds()).slice(-2)}`;
+		const updated = `${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}:${(
+			'0' + date.getSeconds()
+		).slice(-2)}`;
 		if (updatedItems) {
 			const filteredList = refilterItems(
 				updatedItems,
