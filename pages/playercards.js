@@ -12,6 +12,10 @@ import {
 } from '../utils/filterFunctions';
 import useSWR from 'swr';
 
+//TODO Add in "Last Updated" stamp above table
+//TODO rework filtering layout
+//TODO Update Pagination - Infinite Scroll?
+
 export default function Home({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
 	const [maxSellPrice, setMaxSellPrice] = useState(500000);
