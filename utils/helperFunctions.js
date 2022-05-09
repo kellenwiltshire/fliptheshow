@@ -24,11 +24,15 @@ export const refilterItems = (
 	rarity,
 	team,
 	textFilter,
+	series,
 ) => {
 	let filteredList = filterByPrice(items, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
 	filteredList = filterByRarity(filteredList, rarity);
 	filteredList = filterByTeam(filteredList, team);
 	filteredList = filterByText(filteredList, textFilter);
+	if (series) {
+		filteredList = filterBySeries(filteredList, series);
+	}
 
 	return filteredList;
 };

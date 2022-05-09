@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { NextSeo } from 'next-seo';
 import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
-import { filterByPrice, filterByRarity, filterBySeries, filterByTeam, filterByText } from '../utils/filterFunctions';
 import useSWR from 'swr';
-import { getProfit, removeZeroItems } from '../utils/helperFunctions';
+import { getProfit, refilterItems, removeZeroItems } from '../utils/helperFunctions';
 
 //TODO rework filtering layout
 //TODO Update Pagination - Infinite Scroll?
@@ -37,22 +36,34 @@ export default function Home({ items }) {
 
 	useEffect(() => {
 		const date = new Date();
-		const updated = `${date.getHours()}:${date.getMinutes()}:${('0' + date.getSeconds()).slice(-2)}`;
+		const updated = `${date.getHours()}:${('0' + date.getMinutes()).slice(-2)}:${('0' + date.getSeconds()).slice(-2)}`;
 		if (updatedItems) {
-			let filteredList = filterByPrice(updatedItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
-			filteredList = filterByRarity(filteredList, rarity);
-			filteredList = filterByTeam(filteredList, team);
-			filteredList = filterBySeries(filteredList, series);
-			filteredList = filterByText(filteredList, textFilter);
+			const filteredList = refilterItems(
+				updatedItems,
+				minBuyPrice,
+				minSellPrice,
+				maxBuyPrice,
+				maxSellPrice,
+				rarity,
+				team,
+				textFilter,
+				series,
+			);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 			setLastUpdated(updated);
 		} else {
-			let filteredList = filterByPrice(items, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
-			filteredList = filterByRarity(filteredList, rarity);
-			filteredList = filterByTeam(filteredList, team);
-			filteredList = filterBySeries(filteredList, series);
-			filteredList = filterByText(filteredList, textFilter);
+			const filteredList = refilterItems(
+				updatedItems,
+				minBuyPrice,
+				minSellPrice,
+				maxBuyPrice,
+				maxSellPrice,
+				rarity,
+				team,
+				textFilter,
+				series,
+			);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 		}

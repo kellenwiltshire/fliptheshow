@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import { NextSeo } from 'next-seo';
 import Table from '../components/Layout/Table';
-import { filterByPrice, filterByRarity, filterByTeam, filterByText } from '../utils/filterFunctions';
 import useSWR from 'swr';
-import { getProfit, removeZeroItems } from '../utils/helperFunctions';
+import { getProfit, removeZeroItems, refilterItems } from '../utils/helperFunctions';
 
 export default function Equipment({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
@@ -36,18 +35,30 @@ export default function Equipment({ items }) {
 		const date = new Date();
 		const updated = `${date.getHours()}:${date.getMinutes()}:${('0' + date.getSeconds()).slice(-2)}`;
 		if (updatedItems) {
-			let filteredList = filterByPrice(updatedItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
-			filteredList = filterByRarity(filteredList, rarity);
-			filteredList = filterByTeam(filteredList, team);
-			filteredList = filterByText(filteredList, textFilter);
+			const filteredList = refilterItems(
+				updatedItems,
+				minBuyPrice,
+				minSellPrice,
+				maxBuyPrice,
+				maxSellPrice,
+				rarity,
+				team,
+				textFilter,
+			);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 			setLastUpdated(updated);
 		} else {
-			let filteredList = filterByPrice(items, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
-			filteredList = filterByRarity(filteredList, rarity);
-			filteredList = filterByTeam(filteredList, team);
-			filteredList = filterByText(filteredList, textFilter);
+			const filteredList = refilterItems(
+				updatedItems,
+				minBuyPrice,
+				minSellPrice,
+				maxBuyPrice,
+				maxSellPrice,
+				rarity,
+				team,
+				textFilter,
+			);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 		}

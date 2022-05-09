@@ -2,7 +2,6 @@ import { NextSeo } from 'next-seo';
 import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
-import { filterByPrice, filterByRarity, filterByTeam, filterByText } from '../utils/filterFunctions';
 import useSWR from 'swr';
 import { getProfit, refilterItems, removeZeroItems } from '../utils/helperFunctions';
 
