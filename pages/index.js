@@ -8,7 +8,7 @@ export default function Home() {
 		<div>
 			<NextSeo
 				title='Flip The Show'
-				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 22 on Xbox and Playstation'
+				description='MLB The Show player database and flipping tool. Flip MLB The Show Cards for profit. MLB The Show 22 is playable on Xbox and Playstation'
 				canonical='https://flipthe.show/'
 			/>
 			<Hero />
