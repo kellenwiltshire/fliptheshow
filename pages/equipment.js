@@ -2,13 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import { NextSeo } from 'next-seo';
 import Table from '../components/Layout/Table';
-import {
-	filterByPrice,
-	filterByRarity,
-	filterByTeam,
-	removeZeroItems,
-	filterByText,
-} from '../utils/filterFunctions';
+import { filterByPrice, filterByRarity, filterByTeam, removeZeroItems, filterByText } from '../utils/filterFunctions';
 import useSWR from 'swr';
 
 export default function Equipment({ items }) {
@@ -42,43 +36,21 @@ export default function Equipment({ items }) {
 		console.log('useEffect Called');
 		if (updatedItems) {
 			const newZeroItems = removeZeroItems(updatedItems);
-			let filteredList = filterByPrice(
-				newZeroItems,
-				minBuyPrice,
-				minSellPrice,
-				maxBuyPrice,
-				maxSellPrice,
-			);
+			let filteredList = filterByPrice(newZeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
 			filteredList = filterByRarity(filteredList, rarity);
 			filteredList = filterByTeam(filteredList, team);
 			filteredList = filterByText(filteredList, textFilter);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 		} else {
-			let filteredList = filterByPrice(
-				zeroItems,
-				minBuyPrice,
-				minSellPrice,
-				maxBuyPrice,
-				maxSellPrice,
-			);
+			let filteredList = filterByPrice(zeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
 			filteredList = filterByRarity(filteredList, rarity);
 			filteredList = filterByTeam(filteredList, team);
 			filteredList = filterByText(filteredList, textFilter);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 		}
-	}, [
-		minSellPrice,
-		maxSellPrice,
-		minBuyPrice,
-		maxBuyPrice,
-		rarity,
-		team,
-		series,
-		updatedItems,
-		textFilter,
-	]);
+	}, [minSellPrice, maxSellPrice, minBuyPrice, maxBuyPrice, rarity, team, series, updatedItems, textFilter]);
 
 	return (
 		<div className='lg:w-2/3 w-full mx-auto'>
@@ -129,9 +101,7 @@ export async function getStaticProps(props) {
 	console.log('Equipment Revalidate');
 
 	const recursiveGetData = async (page = 1) => {
-		const res = await fetch(
-			`https://mlb22.theshow.com/apis/listings.json?type=equipment&page=${page}`,
-		);
+		const res = await fetch(`https://mlb22.theshow.com/apis/listings.json?type=equipment&page=${page}`);
 		const data = await res.json();
 		const listings = data.listings;
 		if (data.total_pages > page) {
@@ -143,6 +113,11 @@ export async function getStaticProps(props) {
 
 	let items = [];
 	items = await recursiveGetData();
+	if (items.length) {
+		for (let i = 0; i < items.length; i++) {
+			items[i].profit = Math.floor(getProfit(items[i].best_buy_price, items[i].best_sell_price));
+		}
+	}
 
 	return {
 		props: { items },

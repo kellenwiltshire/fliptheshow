@@ -19,9 +19,7 @@ function runMiddleware(req, res, fn) {
 }
 
 const recursiveGetData = async (page = 1) => {
-	const res = await fetch(
-		`https://mlb22.theshow.com/apis/listings.json?page=${page}`,
-	);
+	const res = await fetch(`https://mlb22.theshow.com/apis/listings.json?page=${page}`);
 	const data = await res.json();
 	const listings = data.listings;
 	if (data.total_pages > page) {
@@ -35,6 +33,12 @@ const getItems = async (req, res) => {
 	console.log('SWR Called');
 
 	const data = await recursiveGetData();
+
+	if (data.length) {
+		for (let i = 0; i < data.length; i++) {
+			data[i].profit = Math.floor(getProfit(data[i].best_buy_price, data[i].best_sell_price));
+		}
+	}
 
 	res.status(200).json(data);
 };

@@ -41,10 +41,7 @@ export const sortByBestSell = (items) => {
 
 export const sortByProfit = (items) => {
 	const sortedList = items.sort((a, b) => {
-		//0.9 because Marketplace takes 10% of sale
-		const aProfit = a.best_sell_price * 0.9 - a.best_buy_price;
-		const bProfit = b.best_sell_price * 0.9 - b.best_buy_price;
-		return aProfit - bProfit;
+		return a.profit - b.profit;
 	});
 	return sortedList;
 };

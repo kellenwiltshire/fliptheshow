@@ -11,6 +11,7 @@ import {
 	filterByText,
 } from '../utils/filterFunctions';
 import useSWR from 'swr';
+import { getProfit } from '../utils/helperFunctions';
 
 //TODO Add in "Last Updated" stamp above table
 //TODO rework filtering layout
@@ -114,6 +115,12 @@ export async function getStaticProps() {
 
 	let items = [];
 	items = await recursiveGetData();
+
+	if (items.length) {
+		for (let i = 0; i < items.length; i++) {
+			items[i].profit = Math.floor(getProfit(items[i].best_buy_price, items[i].best_sell_price));
+		}
+	}
 
 	return {
 		props: { items },

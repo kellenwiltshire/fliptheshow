@@ -2,14 +2,9 @@ import { NextSeo } from 'next-seo';
 import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
-import {
-	filterByPrice,
-	filterByRarity,
-	filterByTeam,
-	removeZeroItems,
-	filterByText,
-} from '../utils/filterFunctions';
+import { filterByPrice, filterByRarity, filterByTeam, removeZeroItems, filterByText } from '../utils/filterFunctions';
 import useSWR from 'swr';
+import { getProfit } from '../utils/helperFunctions';
 
 export default function Stadiums({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
@@ -42,43 +37,21 @@ export default function Stadiums({ items }) {
 		console.log('useEffect Called');
 		if (updatedItems) {
 			const newZeroItems = removeZeroItems(updatedItems);
-			let filteredList = filterByPrice(
-				newZeroItems,
-				minBuyPrice,
-				minSellPrice,
-				maxBuyPrice,
-				maxSellPrice,
-			);
+			let filteredList = filterByPrice(newZeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
 			filteredList = filterByRarity(filteredList, rarity);
 			filteredList = filterByTeam(filteredList, team);
 			filteredList = filterByText(filteredList, textFilter);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 		} else {
-			let filteredList = filterByPrice(
-				zeroItems,
-				minBuyPrice,
-				minSellPrice,
-				maxBuyPrice,
-				maxSellPrice,
-			);
+			let filteredList = filterByPrice(zeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
 			filteredList = filterByRarity(filteredList, rarity);
 			filteredList = filterByTeam(filteredList, team);
 			filteredList = filterByText(filteredList, textFilter);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 		}
-	}, [
-		minSellPrice,
-		maxSellPrice,
-		minBuyPrice,
-		maxBuyPrice,
-		rarity,
-		team,
-		series,
-		updatedItems,
-		textFilter,
-	]);
+	}, [minSellPrice, maxSellPrice, minBuyPrice, maxBuyPrice, rarity, team, series, updatedItems, textFilter]);
 
 	return (
 		<div className='lg:w-2/3 w-full mx-auto'>
@@ -104,20 +77,10 @@ export default function Stadiums({ items }) {
 				/>
 			</div>
 			<div className='hidden lg:block'>
-				<Table
-					sortedItems={sortedItems}
-					setSortedItems={setSortedItems}
-					isPlayer={isPlayer}
-					isTeam={isTeam}
-				/>
+				<Table sortedItems={sortedItems} setSortedItems={setSortedItems} isPlayer={isPlayer} isTeam={isTeam} />
 			</div>
 			<div className='block lg:hidden'>
-				<Table
-					sortedItems={sortedItems}
-					setSortedItems={setSortedItems}
-					isPlayer={isPlayer}
-					isTeam={isTeam}
-				/>
+				<Table sortedItems={sortedItems} setSortedItems={setSortedItems} isPlayer={isPlayer} isTeam={isTeam} />
 			</div>
 		</div>
 	);
@@ -126,9 +89,7 @@ export default function Stadiums({ items }) {
 export async function getStaticProps() {
 	console.log('Stadium Revalidate');
 	const recursiveGetData = async (page = 1) => {
-		const res = await fetch(
-			`https://mlb22.theshow.com/apis/listings.json?type=stadium&page=${page}`,
-		);
+		const res = await fetch(`https://mlb22.theshow.com/apis/listings.json?type=stadium&page=${page}`);
 		const data = await res.json();
 		const listings = data.listings;
 		if (data.total_pages > page) {
@@ -140,6 +101,11 @@ export async function getStaticProps() {
 
 	let items = [];
 	items = await recursiveGetData();
+	if (items.length) {
+		for (let i = 0; i < items.length; i++) {
+			items[i].profit = Math.floor(getProfit(items[i].best_buy_price, items[i].best_sell_price));
+		}
+	}
 	return {
 		props: { items },
 		revalidate: 1,
