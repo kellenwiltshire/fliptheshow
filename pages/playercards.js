@@ -13,7 +13,6 @@ import {
 import useSWR from 'swr';
 import { getProfit } from '../utils/helperFunctions';
 
-//TODO Add in "Last Updated" stamp above table
 //TODO rework filtering layout
 //TODO Update Pagination - Infinite Scroll?
 
@@ -29,6 +28,7 @@ export default function Home({ items }) {
 	const isPlayer = true;
 	const isTeam = true;
 	const [updatedItems, setUpdatedItems] = useState();
+	const [lastUpdated, setLastUpdated] = useState();
 
 	const zeroItems = removeZeroItems(items);
 
@@ -45,7 +45,8 @@ export default function Home({ items }) {
 	});
 
 	useEffect(() => {
-		console.log('useEffect Called');
+		const date = new Date();
+		const updated = `${date.getHours()}:${date.getMinutes()}:${('0' + date.getSeconds()).slice(-2)}`;
 		if (updatedItems) {
 			const newZeroItems = removeZeroItems(updatedItems);
 			let filteredList = filterByPrice(newZeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
@@ -55,6 +56,7 @@ export default function Home({ items }) {
 			filteredList = filterByText(filteredList, textFilter);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
+			setLastUpdated(updated);
 		} else {
 			let filteredList = filterByPrice(zeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
 			filteredList = filterByRarity(filteredList, rarity);
@@ -71,7 +73,7 @@ export default function Home({ items }) {
 			<NextSeo
 				title='Flip The Show'
 				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 23 on Xbox and Playstation'
-				canonical='https://flipthe.show/'
+				canonical='https://flipthe.show/playercards'
 			/>
 			<div className='mb-24'>
 				<FilterForm
@@ -89,11 +91,9 @@ export default function Home({ items }) {
 					placeholder='Search Players'
 				/>
 			</div>
-			<div className='hidden lg:block'>
+			<div>
+				<p className='text-right'>Last Updated: {lastUpdated} </p>
 				<Table sortedItems={sortedItems} setSortedItems={setSortedItems} isTeam={isTeam} isPlayer={isPlayer} />
-			</div>
-			<div className='block lg:hidden'>
-				<Table sortedItems={sortedItems} setSortedItems={setSortedItems} isPlayer={isPlayer} isTeam={isTeam} />
 			</div>
 		</div>
 	);

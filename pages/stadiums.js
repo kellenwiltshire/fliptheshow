@@ -18,6 +18,7 @@ export default function Stadiums({ items }) {
 	const isPlayer = false;
 	const isTeam = true;
 	const [updatedItems, setUpdatedItems] = useState();
+	const [lastUpdated, setLastUpdated] = useState();
 
 	const zeroItems = removeZeroItems(items);
 
@@ -34,7 +35,8 @@ export default function Stadiums({ items }) {
 	});
 
 	useEffect(() => {
-		console.log('useEffect Called');
+		const date = new Date();
+		const updated = `${date.getHours()}:${date.getMinutes()}:${('0' + date.getSeconds()).slice(-2)}`;
 		if (updatedItems) {
 			const newZeroItems = removeZeroItems(updatedItems);
 			let filteredList = filterByPrice(newZeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
@@ -43,6 +45,7 @@ export default function Stadiums({ items }) {
 			filteredList = filterByText(filteredList, textFilter);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
+			setLastUpdated(updated);
 		} else {
 			let filteredList = filterByPrice(zeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
 			filteredList = filterByRarity(filteredList, rarity);
@@ -76,10 +79,8 @@ export default function Stadiums({ items }) {
 					placeholder='Search Stadiums'
 				/>
 			</div>
-			<div className='hidden lg:block'>
-				<Table sortedItems={sortedItems} setSortedItems={setSortedItems} isPlayer={isPlayer} isTeam={isTeam} />
-			</div>
-			<div className='block lg:hidden'>
+			<div>
+				<p className='text-right'>Last Updated: {lastUpdated} </p>
 				<Table sortedItems={sortedItems} setSortedItems={setSortedItems} isPlayer={isPlayer} isTeam={isTeam} />
 			</div>
 		</div>
