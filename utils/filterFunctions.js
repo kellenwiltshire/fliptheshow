@@ -35,16 +35,6 @@ export const filterByTeam = (items, team) => {
 	return filteredItems;
 };
 
-export const removeZeroItems = (items) => {
-	let zeroItems = [];
-	items.map((item) => {
-		if (item.best_buy_price > 0) {
-			zeroItems.push(item);
-		}
-	});
-	return zeroItems;
-};
-
 export const filterBySeries = (items, series) => {
 	const filteredItems = items.filter((item) => {
 		if (series === '' || series === 'Series') {

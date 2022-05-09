@@ -32,13 +32,15 @@ const recursiveGetData = async (page = 1) => {
 const getItems = async (req, res) => {
 	console.log('SWR Called');
 
-	const data = await recursiveGetData();
+	let data = await recursiveGetData();
 
 	if (data.length) {
 		for (let i = 0; i < data.length; i++) {
 			data[i].profit = Math.floor(getProfit(data[i].best_buy_price, data[i].best_sell_price));
 		}
 	}
+
+	data = removeZeroItems(data);
 
 	res.status(200).json(data);
 };

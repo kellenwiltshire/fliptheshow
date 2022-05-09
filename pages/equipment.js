@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import { NextSeo } from 'next-seo';
 import Table from '../components/Layout/Table';
-import { filterByPrice, filterByRarity, filterByTeam, removeZeroItems, filterByText } from '../utils/filterFunctions';
+import { filterByPrice, filterByRarity, filterByTeam, filterByText } from '../utils/filterFunctions';
 import useSWR from 'swr';
+import { getProfit, removeZeroItems } from '../utils/helperFunctions';
 
 export default function Equipment({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
@@ -16,13 +17,11 @@ export default function Equipment({ items }) {
 	const [textFilter, setTextFilter] = useState('');
 	const isPlayer = false;
 	const isTeam = false;
-	const [updatedItems, setUpdatedItems] = useState();
+	const [updatedItems, setUpdatedItems] = useState(items);
 	const [lastUpdated, setLastUpdated] = useState();
 
-	const zeroItems = removeZeroItems(items);
-
-	const [sortedItems, setSortedItems] = useState(zeroItems);
-	const [filteredItems, setFilteredItems] = useState(zeroItems);
+	const [sortedItems, setSortedItems] = useState(items);
+	const [filteredItems, setFilteredItems] = useState(items);
 
 	const fetcher = (url) =>
 		fetch(url)
@@ -37,8 +36,7 @@ export default function Equipment({ items }) {
 		const date = new Date();
 		const updated = `${date.getHours()}:${date.getMinutes()}:${('0' + date.getSeconds()).slice(-2)}`;
 		if (updatedItems) {
-			const newZeroItems = removeZeroItems(updatedItems);
-			let filteredList = filterByPrice(newZeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
+			let filteredList = filterByPrice(updatedItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
 			filteredList = filterByRarity(filteredList, rarity);
 			filteredList = filterByTeam(filteredList, team);
 			filteredList = filterByText(filteredList, textFilter);
@@ -46,7 +44,7 @@ export default function Equipment({ items }) {
 			setFilteredItems(filteredList);
 			setLastUpdated(updated);
 		} else {
-			let filteredList = filterByPrice(zeroItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
+			let filteredList = filterByPrice(items, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
 			filteredList = filterByRarity(filteredList, rarity);
 			filteredList = filterByTeam(filteredList, team);
 			filteredList = filterByText(filteredList, textFilter);
@@ -72,7 +70,7 @@ export default function Equipment({ items }) {
 					setTeam={setTeam}
 					setSeries={setSeries}
 					setSortedItems={setSortedItems}
-					items={zeroItems}
+					items={updatedItems}
 					filteredItems={filteredItems}
 					setTextFilter={setTextFilter}
 					placeholder='Search Equipment'
@@ -113,6 +111,8 @@ export async function getStaticProps(props) {
 			items[i].profit = Math.floor(getProfit(items[i].best_buy_price, items[i].best_sell_price));
 		}
 	}
+
+	items = removeZeroItems(items);
 
 	return {
 		props: { items },
