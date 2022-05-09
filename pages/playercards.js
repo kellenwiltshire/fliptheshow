@@ -61,8 +61,8 @@ export default function Home({ items }) {
 	return (
 		<div className='lg:w-2/3 w-full mx-auto'>
 			<NextSeo
-				title='Flip The Show'
-				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 23 on Xbox and Playstation'
+				title='Flip The Show | Players'
+				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 22 on Xbox and Playstation'
 				canonical='https://flipthe.show/playercards'
 			/>
 			<div className='mb-12 w-full flex justify-end lg:justify-center'>

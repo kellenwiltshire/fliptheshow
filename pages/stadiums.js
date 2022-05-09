@@ -57,7 +57,7 @@ export default function Stadiums({ items }) {
 		<div className='lg:w-2/3 w-full mx-auto'>
 			<NextSeo
 				title='Flip The Show | Stadiums'
-				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 23 on Xbox and Playstation'
+				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 22 on Xbox and Playstation'
 				canonical='https://flipthe.show/stadiums'
 			/>
 			<div className='mb-12 w-full flex justify-end lg:justify-center'>
