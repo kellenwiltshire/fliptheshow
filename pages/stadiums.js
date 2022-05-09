@@ -4,7 +4,7 @@ import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
 import { filterByPrice, filterByRarity, filterByTeam, filterByText } from '../utils/filterFunctions';
 import useSWR from 'swr';
-import { getProfit, removeZeroItems } from '../utils/helperFunctions';
+import { getProfit, refilterItems, removeZeroItems } from '../utils/helperFunctions';
 
 export default function Stadiums({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
@@ -34,20 +34,32 @@ export default function Stadiums({ items }) {
 
 	useEffect(() => {
 		const date = new Date();
-		const updated = `${date.getHours()}:${date.getMinutes()}:${('0' + date.getSeconds()).slice(-2)}`;
+		const updated = `${date.getHours()}:${('0' + date.getMinutes()).slice(-2)}:${('0' + date.getSeconds()).slice(-2)}`;
 		if (updatedItems) {
-			let filteredList = filterByPrice(updatedItems, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
-			filteredList = filterByRarity(filteredList, rarity);
-			filteredList = filterByTeam(filteredList, team);
-			filteredList = filterByText(filteredList, textFilter);
+			const filteredList = refilterItems(
+				updatedItems,
+				minBuyPrice,
+				minSellPrice,
+				maxBuyPrice,
+				maxSellPrice,
+				rarity,
+				team,
+				textFilter,
+			);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 			setLastUpdated(updated);
 		} else {
-			let filteredList = filterByPrice(items, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
-			filteredList = filterByRarity(filteredList, rarity);
-			filteredList = filterByTeam(filteredList, team);
-			filteredList = filterByText(filteredList, textFilter);
+			const filteredList = refilterItems(
+				updatedItems,
+				minBuyPrice,
+				minSellPrice,
+				maxBuyPrice,
+				maxSellPrice,
+				rarity,
+				team,
+				textFilter,
+			);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 		}
