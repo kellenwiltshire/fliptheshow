@@ -1,5 +1,3 @@
-//TODO rework filtering functions to minimize - Like in Puzzle
-
 export const filterByPrice = (items, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice) => {
 	const filteredItems = items.filter((item) => {
 		return (
