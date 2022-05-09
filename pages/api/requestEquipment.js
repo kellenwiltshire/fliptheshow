@@ -1,4 +1,5 @@
 import Cors from 'cors';
+import { getProfit, removeZeroItems } from '../../utils/helperFunctions';
 
 const cors = Cors({
 	methods: ['GET', 'HEAD'],
