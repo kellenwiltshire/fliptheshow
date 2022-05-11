@@ -7,6 +7,7 @@ import { getProfit, getProfitPerMin, refilterItems, removeZeroItems } from '../u
 
 //TODO rework filtering layout
 //TODO Update Pagination - Infinite Scroll?
+//TODO Keep Sort after update
 
 export default function Home({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
