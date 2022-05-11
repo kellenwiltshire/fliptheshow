@@ -3,7 +3,7 @@ import FilterForm from '../components/Filters/FilterForm';
 import { NextSeo } from 'next-seo';
 import Table from '../components/Layout/Table';
 import useSWR from 'swr';
-import { getProfit, removeZeroItems, refilterItems } from '../utils/helperFunctions';
+import { getProfit, removeZeroItems, refilterItems, getProfitPerMin } from '../utils/helperFunctions';
 
 export default function Equipment({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
@@ -122,6 +122,7 @@ export async function getStaticProps(props) {
 	if (items.length) {
 		for (let i = 0; i < items.length; i++) {
 			items[i].profit = Math.floor(getProfit(items[i].best_buy_price, items[i].best_sell_price));
+			items[i].profit_per_min = await getProfitPerMin(items[i]);
 		}
 	}
 

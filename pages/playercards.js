@@ -3,7 +3,7 @@ import { NextSeo } from 'next-seo';
 import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
 import useSWR from 'swr';
-import { getProfit, refilterItems, removeZeroItems } from '../utils/helperFunctions';
+import { getProfit, getProfitPerMin, refilterItems, removeZeroItems } from '../utils/helperFunctions';
 
 //TODO rework filtering layout
 //TODO Update Pagination - Infinite Scroll?
@@ -122,6 +122,7 @@ export async function getStaticProps() {
 	if (items.length) {
 		for (let i = 0; i < items.length; i++) {
 			items[i].profit = Math.floor(getProfit(items[i].best_buy_price, items[i].best_sell_price));
+			items[i].profit_per_min = await getProfitPerMin(items[i]);
 		}
 	}
 

@@ -53,20 +53,6 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 
 	return (
 		<div className='flex flex-col w-full justify-center'>
-			<Paginate
-				pageCount={numPages}
-				pageRangeDisplayed={1}
-				marginPagesDisplayed={1}
-				onPageChange={onPageChange}
-				forcePage={currPage}
-				previousClassName='page'
-				nextClassName='page'
-				containerClassName='pageContainerTop'
-				activeClassName='pageActive'
-				pageClassName='page'
-				breakClassName='page'
-			/>
-
 			<div className='max-w-screen overflow-auto overflow-x-scroll'>
 				<table className='table-fixed min-w-full divide-y divide-gray-200 text-left whitespace-no-wrap border-2 border-gray-100'>
 					<thead>
@@ -127,6 +113,13 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 								onClick={sortTable}
 							>
 								Profit
+							</th>
+							<th
+								id='profit_per_min'
+								className='py-3.5 pl-4 pr-3 title-font bg-gray-100 text-left text-sm font-semibold text-gray-900 sm:pl-6 cursor-pointer'
+								onClick={sortTable}
+							>
+								Profit/Minute
 							</th>
 						</tr>
 					</thead>
@@ -200,6 +193,7 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 									<td className='border-t-2 border-gray-200 px-4 py-3'>{item.best_sell_price}</td>
 
 									<td className='border-t-2 border-gray-200 px-4 py-3'>{item.profit}</td>
+									<td className='border-t-2 border-gray-200 px-4 py-3'>{item.profit_per_min}</td>
 								</tr>
 							);
 						})}

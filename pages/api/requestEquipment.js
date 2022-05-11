@@ -1,5 +1,5 @@
 import Cors from 'cors';
-import { getProfit, removeZeroItems } from '../../utils/helperFunctions';
+import { getProfit, getProfitPerMin, removeZeroItems } from '../../utils/helperFunctions';
 
 const cors = Cors({
 	methods: ['GET', 'HEAD'],
@@ -38,6 +38,7 @@ const getItems = async (req, res) => {
 	if (data.length) {
 		for (let i = 0; i < data.length; i++) {
 			data[i].profit = Math.floor(getProfit(data[i].best_buy_price, data[i].best_sell_price));
+			data[i].profit_per_min = await getProfitPerMin(data[i]);
 		}
 	}
 

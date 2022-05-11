@@ -36,3 +36,25 @@ export const refilterItems = (
 
 	return filteredList;
 };
+
+export const getProfitPerMin = async (item) => {
+	const uuid = item.item.uuid;
+
+	const request = await fetch(`https://mlb22.theshow.com/apis/listing.json?uuid=${uuid}`);
+	const response = await request.json();
+
+	const completedOrders = response.completed_orders;
+
+	const oldestOrder = completedOrders[completedOrders.length - 1];
+
+	const currDate = new Date();
+	const orderDate = new Date(oldestOrder.date);
+
+	const timeSinceOldestOrder = (currDate.getTime() - orderDate.getTime()) / 60000; //Get Time in Minutes
+
+	const salesPerMin = timeSinceOldestOrder / completedOrders.length;
+
+	const profitPerMin = parseFloat((salesPerMin * item.profit).toFixed(2));
+
+	return profitPerMin;
+};

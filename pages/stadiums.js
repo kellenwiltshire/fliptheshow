@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
 import useSWR from 'swr';
-import { getProfit, refilterItems, removeZeroItems } from '../utils/helperFunctions';
+import { getProfit, getProfitPerMin, refilterItems, removeZeroItems } from '../utils/helperFunctions';
 
 export default function Stadiums({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
@@ -21,6 +21,8 @@ export default function Stadiums({ items }) {
 
 	const [sortedItems, setSortedItems] = useState(items);
 	const [filteredItems, setFilteredItems] = useState(items);
+
+	console.log(updatedItems[0]);
 
 	const fetcher = (url) =>
 		fetch(url)
@@ -115,6 +117,7 @@ export async function getStaticProps() {
 	if (items.length) {
 		for (let i = 0; i < items.length; i++) {
 			items[i].profit = Math.floor(getProfit(items[i].best_buy_price, items[i].best_sell_price));
+			items[i].profit_per_min = await getProfitPerMin(items[i]);
 		}
 	}
 	items = removeZeroItems(items);
