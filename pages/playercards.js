@@ -4,10 +4,12 @@ import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
 import useSWR from 'swr';
 import { getProfit, getProfitPerMin, refilterItems, removeZeroItems } from '../utils/helperFunctions';
+import { sortByNumber, sortByString } from '../utils/sortingFunctions';
 
 //TODO rework filtering layout
 //TODO Update Pagination - Infinite Scroll?
 //TODO Keep Sort after update
+//TODO Component out Table parts
 
 export default function Home({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
@@ -25,6 +27,8 @@ export default function Home({ items }) {
 
 	const [sortedItems, setSortedItems] = useState(items);
 	const [filteredItems, setFilteredItems] = useState(items);
+	const [sort, setSort] = useState('');
+	const [descending, setDescending] = useState(false);
 
 	const fetcher = (url) =>
 		fetch(url)
@@ -72,6 +76,33 @@ export default function Home({ items }) {
 		}
 	}, [minSellPrice, maxSellPrice, minBuyPrice, maxBuyPrice, rarity, team, series, updatedItems, textFilter]);
 
+	const reverseTable = () => {
+		let newItems = sortedItems;
+		newItems = newItems.reverse();
+		setDescending(!descending);
+		setSortedItems([...newItems]);
+	};
+
+	const sortTable = (id) => {
+		let newItems = sortedItems;
+
+		if (id === 'listing_name' || id === 'series' || id === 'team' || id === 'rarity') {
+			newItems = sortByString(newItems, id);
+		} else {
+			newItems = sortByNumber(newItems, id);
+		}
+
+		if (descending) {
+			newItems = newItems.reverse();
+		}
+
+		setSortedItems([...newItems]);
+	};
+
+	useEffect(() => {
+		sortTable(sort);
+	}, [updatedItems]);
+
 	return (
 		<div className='lg:w-2/3 w-full mx-auto'>
 			<NextSeo
@@ -97,7 +128,16 @@ export default function Home({ items }) {
 			</div>
 			<div>
 				<p className='text-right'>Last Updated: {lastUpdated} </p>
-				<Table sortedItems={sortedItems} setSortedItems={setSortedItems} isTeam={isTeam} isPlayer={isPlayer} />
+				<Table
+					sortedItems={sortedItems}
+					setSortedItems={setSortedItems}
+					isTeam={isTeam}
+					isPlayer={isPlayer}
+					sort={sort}
+					setSort={setSort}
+					sortTable={sortTable}
+					reverseTable={reverseTable}
+				/>
 			</div>
 		</div>
 	);

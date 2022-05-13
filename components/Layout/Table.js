@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Paginate from 'react-paginate';
-import { sortByNumber, sortByString } from '../../utils/sortingFunctions';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
 
-function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
-	const [sort, setSort] = useState('');
+function Table({ sortedItems, setSortedItems, isPlayer, isTeam, sort, setSort, sortTable, reverseTable }) {
 	const [sortSwitch, setSortSwitch] = useState(false);
 	const [numPages, setNumPages] = useState(Math.round(sortedItems.length / 50));
 	const [currPage, setCurrPage] = useState(0);
@@ -27,28 +25,14 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 		numberOfPages <= 1 ? setNumPages(1) : setNumPages(numberOfPages);
 	}, [offset, sortedItems]);
 
-	const sortTable = (e) => {
+	const handleSort = (e) => {
 		e.preventDefault();
-		setSort(e.target.id);
-		let newItems = sortedItems;
-		if (
-			e.target.id === 'listing_name' ||
-			e.target.id === 'series' ||
-			e.target.id === 'team' ||
-			e.target.id === 'rarity'
-		) {
-			newItems = sortByString(newItems, e.target.id);
+		if (e.target.id === sort) {
+			reverseTable();
 		} else {
-			newItems = sortByNumber(newItems, e.target.id);
+			setSort(e.target.id);
+			sortTable(e.target.id);
 		}
-		if (sortSwitch) {
-			newItems.reverse();
-			setSortSwitch(!sortSwitch);
-		} else {
-			setSortSwitch(!sortSwitch);
-		}
-		setSortedItems(newItems);
-		setCurrItems(newItems.slice(offset, offset + 50));
 	};
 
 	return (
@@ -61,7 +45,7 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 								id='listing_name'
 								scope='col'
 								className='py-3.5 pl-4 pr-3 title-font bg-gray-100 text-left text-sm font-semibold text-gray-900 sm:pl-6 cursor-pointer'
-								onClick={sortTable}
+								onClick={handleSort}
 							>
 								Name
 							</th>
@@ -69,14 +53,14 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 							<th
 								id='rarity'
 								className='hidden px-3 py-3.5 text-left text-sm bg-gray-100 font-semibold text-gray-900 sm:table-cell cursor-pointer'
-								onClick={sortTable}
+								onClick={handleSort}
 							>
 								Rarity
 							</th>
 							<th
 								id='series'
 								className='hidden px-3 py-3.5 text-left text-sm bg-gray-100 font-semibold text-gray-900 sm:table-cell cursor-pointer'
-								onClick={sortTable}
+								onClick={handleSort}
 							>
 								Series
 							</th>
@@ -84,7 +68,7 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 								<th
 									id='team'
 									className='hidden px-3 py-3.5 text-left text-sm bg-gray-100 font-semibold text-gray-900 sm:table-cell cursor-pointer'
-									onClick={sortTable}
+									onClick={handleSort}
 								>
 									Team
 								</th>
@@ -94,7 +78,7 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 								id='best_buy_price'
 								scope='col'
 								className='py-3.5 pl-4 pr-3 title-font bg-gray-100 text-left text-sm font-semibold text-gray-900 sm:pl-6 cursor-pointer'
-								onClick={sortTable}
+								onClick={handleSort}
 							>
 								Best Buy
 							</th>
@@ -102,7 +86,7 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 							<th
 								id='best_sell_price'
 								className='py-3.5 pl-4 pr-3 title-font bg-gray-100 text-left text-sm font-semibold text-gray-900 sm:pl-6 cursor-pointer'
-								onClick={sortTable}
+								onClick={handleSort}
 							>
 								Best Sell
 							</th>
@@ -110,14 +94,14 @@ function Table({ sortedItems, setSortedItems, isPlayer, isTeam }) {
 							<th
 								id='profit'
 								className='py-3.5 pl-4 pr-3 title-font bg-gray-100 text-left text-sm font-semibold text-gray-900 sm:pl-6 cursor-pointer'
-								onClick={sortTable}
+								onClick={handleSort}
 							>
 								Profit
 							</th>
 							<th
 								id='profit_per_min'
 								className='py-3.5 pl-4 pr-3 title-font bg-gray-100 text-left text-sm font-semibold text-gray-900 sm:pl-6 cursor-pointer'
-								onClick={sortTable}
+								onClick={handleSort}
 							>
 								Profit/Minute
 							</th>
