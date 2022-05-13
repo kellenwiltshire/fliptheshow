@@ -14,8 +14,7 @@ const headings = [
 	{ name: 'Profit/Minute', id: 'profit_per_min' },
 ];
 
-function Table({ sortedItems, setSortedItems, isPlayer, isTeam, sort, setSort, sortTable, reverseTable }) {
-	const [sortSwitch, setSortSwitch] = useState(false);
+function Table({ sortedItems, isPlayer, isTeam, sort, setSort, sortTable, reverseTable }) {
 	const [numPages, setNumPages] = useState(Math.round(sortedItems.length / 50));
 	const [currPage, setCurrPage] = useState(0);
 	const [offset, setOffSet] = useState(0);
