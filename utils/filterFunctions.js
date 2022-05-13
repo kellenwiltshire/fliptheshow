@@ -1,10 +1,4 @@
-export const filterByPrice = (
-	items,
-	minBuyPrice,
-	minSellPrice,
-	maxBuyPrice,
-	maxSellPrice,
-) => {
+export const filterByPrice = (items, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice) => {
 	const filteredItems = items.filter((item) => {
 		return (
 			item.best_buy_price >= minBuyPrice &&
@@ -39,16 +33,6 @@ export const filterByTeam = (items, team) => {
 	});
 
 	return filteredItems;
-};
-
-export const removeZeroItems = (items) => {
-	let zeroItems = [];
-	items.map((item) => {
-		if (item.best_buy_price > 0) {
-			zeroItems.push(item);
-		}
-	});
-	return zeroItems;
 };
 
 export const filterBySeries = (items, series) => {

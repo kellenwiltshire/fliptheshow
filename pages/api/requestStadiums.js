@@ -1,4 +1,5 @@
 import Cors from 'cors';
+import { getProfit, getProfitPerMin, removeZeroItems } from '../../utils/helperFunctions';
 
 const cors = Cors({
 	methods: ['GET', 'HEAD'],
@@ -19,9 +20,7 @@ function runMiddleware(req, res, fn) {
 }
 
 const recursiveGetData = async (page = 1) => {
-	const res = await fetch(
-		`https://mlb22.theshow.com/apis/listings.json?type=stadium&page=${page}`,
-	);
+	const res = await fetch(`https://mlb22.theshow.com/apis/listings.json?type=stadium&page=${page}`);
 	const data = await res.json();
 	const listings = data.listings;
 	if (data.total_pages > page) {
@@ -34,7 +33,16 @@ const recursiveGetData = async (page = 1) => {
 const getItems = async (req, res) => {
 	console.log('SWR Called');
 
-	const data = await recursiveGetData();
+	let data = await recursiveGetData();
+
+	if (data.length) {
+		for (let i = 0; i < data.length; i++) {
+			data[i].profit = Math.floor(getProfit(data[i].best_buy_price, data[i].best_sell_price));
+			data[i].profit_per_min = await getProfitPerMin(data[i]);
+		}
+	}
+
+	data = removeZeroItems(data);
 
 	res.status(200).json(data);
 };

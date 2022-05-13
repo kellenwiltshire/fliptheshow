@@ -1,12 +1,12 @@
-import { NextSeo } from 'next-seo';
 import React, { useEffect, useState } from 'react';
+import { NextSeo } from 'next-seo';
 import FilterForm from '../components/Filters/FilterForm';
 import Table from '../components/Layout/Table';
 import useSWR from 'swr';
 import { getProfit, getProfitPerMin, refilterItems, removeZeroItems } from '../utils/helperFunctions';
 import { sortByNumber, sortByString } from '../utils/sortingFunctions';
 
-export default function Stadiums({ items }) {
+export default function Home({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
 	const [maxSellPrice, setMaxSellPrice] = useState(500000);
 	const [minBuyPrice, setMinBuyPrice] = useState(0);
@@ -15,7 +15,7 @@ export default function Stadiums({ items }) {
 	const [team, setTeam] = useState('');
 	const [series, setSeries] = useState('');
 	const [textFilter, setTextFilter] = useState('');
-	const isPlayer = false;
+	const isPlayer = true;
 	const isTeam = true;
 	const [updatedItems, setUpdatedItems] = useState(items);
 	const [lastUpdated, setLastUpdated] = useState();
@@ -25,16 +25,12 @@ export default function Stadiums({ items }) {
 	const [sort, setSort] = useState('');
 	const [descending, setDescending] = useState(false);
 
-	console.log(sort);
-
-	console.log(updatedItems[0]);
-
 	const fetcher = (url) =>
 		fetch(url)
 			.then((r) => r.json())
 			.then((data) => setUpdatedItems(data));
 
-	useSWR('/api/requestStadiums', fetcher, {
+	useSWR('/api/requestPlayers', fetcher, {
 		refreshInterval: 30000,
 	});
 
@@ -53,6 +49,7 @@ export default function Stadiums({ items }) {
 				rarity,
 				team,
 				textFilter,
+				series,
 			);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
@@ -67,6 +64,7 @@ export default function Stadiums({ items }) {
 				rarity,
 				team,
 				textFilter,
+				series,
 			);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
@@ -103,9 +101,9 @@ export default function Stadiums({ items }) {
 	return (
 		<div className='lg:w-2/3 w-full mx-auto'>
 			<NextSeo
-				title='Flip The Show | Stadiums'
+				title='Flip The Show | Players'
 				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 22 on Xbox and Playstation'
-				canonical='https://flipthe.show/stadiums'
+				canonical='https://flipthe.show/playercards'
 			/>
 			<div className='mb-12 w-full flex justify-end lg:justify-center'>
 				<FilterForm
@@ -120,7 +118,7 @@ export default function Stadiums({ items }) {
 					items={updatedItems}
 					filteredItems={filteredItems}
 					setTextFilter={setTextFilter}
-					placeholder='Search Stadiums'
+					placeholder='Search Players'
 				/>
 			</div>
 			<div>
@@ -128,8 +126,8 @@ export default function Stadiums({ items }) {
 				<Table
 					sortedItems={sortedItems}
 					setSortedItems={setSortedItems}
-					isPlayer={isPlayer}
 					isTeam={isTeam}
+					isPlayer={isPlayer}
 					sort={sort}
 					setSort={setSort}
 					sortTable={sortTable}
@@ -141,9 +139,10 @@ export default function Stadiums({ items }) {
 }
 
 export async function getStaticProps() {
-	console.log('Stadium Revalidate');
+	console.log('Players Revalidate');
+
 	const recursiveGetData = async (page = 1) => {
-		const res = await fetch(`https://mlb22.theshow.com/apis/listings.json?type=stadium&page=${page}`);
+		const res = await fetch(`https://mlb22.theshow.com/apis/listings.json?page=${page}`);
 		const data = await res.json();
 		const listings = data.listings;
 		if (data.total_pages > page) {
@@ -155,14 +154,16 @@ export async function getStaticProps() {
 
 	let items = [];
 	items = await recursiveGetData();
-	items = removeZeroItems(items);
+
 	if (items.length) {
 		for (let i = 0; i < items.length; i++) {
 			items[i].profit = Math.floor(getProfit(items[i].best_buy_price, items[i].best_sell_price));
 			items[i].profit_per_min = await getProfitPerMin(items[i]);
 		}
 	}
+
 	items = removeZeroItems(items);
+
 	return {
 		props: { items },
 		revalidate: 1,

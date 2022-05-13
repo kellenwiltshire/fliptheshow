@@ -2,14 +2,9 @@ import React, { useEffect, useState } from 'react';
 import FilterForm from '../components/Filters/FilterForm';
 import { NextSeo } from 'next-seo';
 import Table from '../components/Layout/Table';
-import {
-	filterByPrice,
-	filterByRarity,
-	filterByTeam,
-	removeZeroItems,
-	filterByText,
-} from '../utils/filterFunctions';
 import useSWR from 'swr';
+import { getProfit, removeZeroItems, refilterItems, getProfitPerMin } from '../utils/helperFunctions';
+import { sortByNumber, sortByString } from '../utils/sortingFunctions';
 
 export default function Equipment({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
@@ -22,12 +17,13 @@ export default function Equipment({ items }) {
 	const [textFilter, setTextFilter] = useState('');
 	const isPlayer = false;
 	const isTeam = false;
-	const [updatedItems, setUpdatedItems] = useState();
+	const [updatedItems, setUpdatedItems] = useState(items);
+	const [lastUpdated, setLastUpdated] = useState();
 
-	const zeroItems = removeZeroItems(items);
-
-	const [sortedItems, setSortedItems] = useState(zeroItems);
-	const [filteredItems, setFilteredItems] = useState(zeroItems);
+	const [sortedItems, setSortedItems] = useState(items);
+	const [filteredItems, setFilteredItems] = useState(items);
+	const [sort, setSort] = useState('');
+	const [descending, setDescending] = useState(false);
 
 	const fetcher = (url) =>
 		fetch(url)
@@ -39,55 +35,75 @@ export default function Equipment({ items }) {
 	});
 
 	useEffect(() => {
-		console.log('useEffect Called');
+		const date = new Date();
+		const updated = `${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}:${(
+			'0' + date.getSeconds()
+		).slice(-2)}`;
 		if (updatedItems) {
-			const newZeroItems = removeZeroItems(updatedItems);
-			let filteredList = filterByPrice(
-				newZeroItems,
+			const filteredList = refilterItems(
+				updatedItems,
 				minBuyPrice,
 				minSellPrice,
 				maxBuyPrice,
 				maxSellPrice,
+				rarity,
+				team,
+				textFilter,
 			);
-			filteredList = filterByRarity(filteredList, rarity);
-			filteredList = filterByTeam(filteredList, team);
-			filteredList = filterByText(filteredList, textFilter);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
+			setLastUpdated(updated);
 		} else {
-			let filteredList = filterByPrice(
-				zeroItems,
+			const filteredList = refilterItems(
+				updatedItems,
 				minBuyPrice,
 				minSellPrice,
 				maxBuyPrice,
 				maxSellPrice,
+				rarity,
+				team,
+				textFilter,
 			);
-			filteredList = filterByRarity(filteredList, rarity);
-			filteredList = filterByTeam(filteredList, team);
-			filteredList = filterByText(filteredList, textFilter);
 			setSortedItems(filteredList);
 			setFilteredItems(filteredList);
 		}
-	}, [
-		minSellPrice,
-		maxSellPrice,
-		minBuyPrice,
-		maxBuyPrice,
-		rarity,
-		team,
-		series,
-		updatedItems,
-		textFilter,
-	]);
+	}, [minSellPrice, maxSellPrice, minBuyPrice, maxBuyPrice, rarity, team, series, updatedItems, textFilter]);
+
+	const reverseTable = () => {
+		let newItems = sortedItems;
+		newItems = newItems.reverse();
+		setDescending(!descending);
+		setSortedItems([...newItems]);
+	};
+
+	const sortTable = (id) => {
+		let newItems = sortedItems;
+
+		if (id === 'listing_name' || id === 'series' || id === 'team' || id === 'rarity') {
+			newItems = sortByString(newItems, id);
+		} else {
+			newItems = sortByNumber(newItems, id);
+		}
+
+		if (descending) {
+			newItems = newItems.reverse();
+		}
+
+		setSortedItems([...newItems]);
+	};
+
+	useEffect(() => {
+		sortTable(sort);
+	}, [updatedItems]);
 
 	return (
 		<div className='lg:w-2/3 w-full mx-auto'>
 			<NextSeo
 				title='Flip The Show | Equipment'
-				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 23 on Xbox and Playstation'
+				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 22 on Xbox and Playstation'
 				canonical='https://flipthe.show/equipment'
 			/>
-			<div className='mb-24'>
+			<div className='mb-12 w-full flex justify-end lg:justify-center'>
 				<FilterForm
 					setMinBuyPrice={setMinBuyPrice}
 					setMaxBuyPrice={setMaxBuyPrice}
@@ -97,28 +113,23 @@ export default function Equipment({ items }) {
 					setTeam={setTeam}
 					setSeries={setSeries}
 					setSortedItems={setSortedItems}
-					items={zeroItems}
+					items={updatedItems}
 					filteredItems={filteredItems}
 					setTextFilter={setTextFilter}
 					placeholder='Search Equipment'
 				/>
 			</div>
-			<div className='hidden lg:block'>
+			<div>
+				<p className='text-right'>Last Updated: {lastUpdated} </p>
 				<Table
 					sortedItems={sortedItems}
 					setSortedItems={setSortedItems}
 					isPlayer={isPlayer}
 					isTeam={isTeam}
-					isSticky={true}
-				/>
-			</div>
-			<div className='block lg:hidden'>
-				<Table
-					sortedItems={sortedItems}
-					setSortedItems={setSortedItems}
-					isPlayer={isPlayer}
-					isTeam={isTeam}
-					isSticky={false}
+					sort={sort}
+					setSort={setSort}
+					sortTable={sortTable}
+					reverseTable={reverseTable}
 				/>
 			</div>
 		</div>
@@ -129,9 +140,7 @@ export async function getStaticProps(props) {
 	console.log('Equipment Revalidate');
 
 	const recursiveGetData = async (page = 1) => {
-		const res = await fetch(
-			`https://mlb22.theshow.com/apis/listings.json?type=equipment&page=${page}`,
-		);
+		const res = await fetch(`https://mlb22.theshow.com/apis/listings.json?type=equipment&page=${page}`);
 		const data = await res.json();
 		const listings = data.listings;
 		if (data.total_pages > page) {
@@ -143,6 +152,13 @@ export async function getStaticProps(props) {
 
 	let items = [];
 	items = await recursiveGetData();
+	items = removeZeroItems(items);
+	if (items.length) {
+		for (let i = 0; i < items.length; i++) {
+			items[i].profit = Math.floor(getProfit(items[i].best_buy_price, items[i].best_sell_price));
+			items[i].profit_per_min = await getProfitPerMin(items[i]);
+		}
+	}
 
 	return {
 		props: { items },

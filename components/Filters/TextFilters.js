@@ -3,13 +3,11 @@ import React from 'react';
 function TextFilters({ setValue, placeholder, defaultValue }) {
 	return (
 		<input
-			className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
+			className='rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base lg:pl-3 lg:pr-10 w-full p-2'
 			type='text'
 			placeholder={placeholder}
 			onChange={(e) => {
-				e.target.value === ''
-					? setValue(defaultValue)
-					: setValue(e.target.value);
+				e.target.value === '' ? setValue(defaultValue) : setValue(e.target.value);
 			}}
 		/>
 	);

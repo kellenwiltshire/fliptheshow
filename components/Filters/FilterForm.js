@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import TextFilters from '../Filters/TextFilters';
 import SelectFilters from '../Filters/SelectFilters';
-import {
-	rarityOptions,
-	teamOptions,
-	seriesOptions,
-} from '../../defaultOptions';
+import { rarityOptions, teamOptions, seriesOptions } from '../../defaultOptions';
 import MenuIcon from '../Icons/MenuIcon';
 
 function FilterForm({
@@ -35,64 +31,27 @@ function FilterForm({
 		setSortedItems(items);
 	};
 	return (
-		<div className=''>
-			<form
-				id='inputForm'
-				className='text-gray-600 hidden lg:flex flex-row flex-wrap h-24 bg-white mt-2'
-			>
+		<div>
+			<form id='inputForm' className='text-gray-600 hidden lg:flex flex-row flex-wrap h-24 bg-white mt-2'>
 				<div className='m-1'>
-					<input
-						id='searchPlayers'
-						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-						type='text'
-						placeholder={placeholder}
-						onChange={(e) => setTextFilter(e.target.value)}
-					/>
+					<TextFilters setValue={setTextFilter} defaultValue={placeholder} placeholder={placeholder} />
 				</div>
 				<div className='flex flex-col m-1'>
-					<TextFilters
-						setValue={setMinBuyPrice}
-						defaultValue={0}
-						placeholder='Min Best Buy Price'
-					/>
-					<TextFilters
-						setValue={setMaxBuyPrice}
-						defaultValue={500000}
-						placeholder='Max Best Buy Price'
-					/>
+					<TextFilters setValue={setMinBuyPrice} defaultValue={0} placeholder='Min Best Buy Price' />
+					<TextFilters setValue={setMaxBuyPrice} defaultValue={500000} placeholder='Max Best Buy Price' />
 				</div>
 				<div className='flex flex-col m-1'>
-					<TextFilters
-						setValue={setMinSellPrice}
-						defaultValue={0}
-						placeholder='Min Best Sell Price'
-					/>
-					<TextFilters
-						setValue={setMaxSellPrice}
-						defaultValue={500000}
-						placeholder='Max Best Sell Price'
-					/>
+					<TextFilters setValue={setMinSellPrice} defaultValue={0} placeholder='Min Best Sell Price' />
+					<TextFilters setValue={setMaxSellPrice} defaultValue={500000} placeholder='Max Best Sell Price' />
 				</div>
 				<div className='flex flex-col m-1'>
-					<SelectFilters
-						defaultValue='Rarity'
-						setValue={setRarity}
-						options={rarityOptions}
-					/>
-					<SelectFilters
-						defaultValue='Series'
-						setValue={setSeries}
-						options={seriesOptions}
-					/>
+					<SelectFilters defaultValue='Rarity' setValue={setRarity} options={rarityOptions} />
+					<SelectFilters defaultValue='Series' setValue={setSeries} options={seriesOptions} />
 				</div>
 				<div className='m-1'>
-					<SelectFilters
-						defaultValue='Team'
-						setValue={setTeam}
-						options={teamOptions}
-					/>
+					<SelectFilters defaultValue='Team' setValue={setTeam} options={teamOptions} />
 				</div>
-				<div className='m-1'>
+				<div className='m-1 w-full'>
 					<button
 						onClick={resetFilters}
 						className='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg'
@@ -116,59 +75,30 @@ function FilterForm({
 					(menuOpen ? ' flex' : ' hidden')
 				}
 			>
-				<div className='m-1'>
-					<input
-						id='searchPlayers'
-						className='bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-						type='text'
-						placeholder={placeholder}
-						onChange={(e) => setTextFilter(e.target.value)}
-					/>
+				<div className='grid grid-cols-3 gap-4 grid-rows-2'>
+					<TextFilters setValue={setTextFilter} defaultValue={placeholder} placeholder={placeholder} />
+					<div className='row-span-2 flex flex-col w-56'>
+						<TextFilters setValue={setMinBuyPrice} defaultValue={0} placeholder='Min Best Buy Price' />
+						<TextFilters setValue={setMaxBuyPrice} defaultValue={500000} placeholder='Max Best Buy Price' />
+					</div>
+					<div className='row-span-2 flex flex-col w-56'>
+						<TextFilters setValue={setMinSellPrice} defaultValue={0} placeholder='Min Best Sell Price' />
+						<TextFilters setValue={setMaxSellPrice} defaultValue={500000} placeholder='Max Best Sell Price' />
+					</div>
 				</div>
-				<div className='flex flex-col m-1'>
-					<TextFilters
-						setValue={setMinBuyPrice}
-						defaultValue={0}
-						placeholder='Min Best Buy Price'
-					/>
-					<TextFilters
-						setValue={setMaxBuyPrice}
-						defaultValue={500000}
-						placeholder='Max Best Buy Price'
-					/>
+
+				<div className='grid grid-cols-3 gap-4'>
+					<div className='flex w-56 col-span-1'>
+						<SelectFilters defaultValue='Rarity' setValue={setRarity} options={rarityOptions} />
+					</div>
+					<div className='flex  w-56 col-span-1'>
+						<SelectFilters defaultValue='Series' setValue={setSeries} options={seriesOptions} />
+					</div>
+					<div className=' w-56 col-span-1'>
+						<SelectFilters defaultValue='Team' setValue={setTeam} options={teamOptions} />
+					</div>
 				</div>
-				<div className='flex flex-col m-1'>
-					<TextFilters
-						setValue={setMinSellPrice}
-						defaultValue={0}
-						placeholder='Min Best Sell Price'
-					/>
-					<TextFilters
-						setValue={setMaxSellPrice}
-						defaultValue={500000}
-						placeholder='Max Best Sell Price'
-					/>
-				</div>
-				<div className='flex flex-col m-1 w-56'>
-					<SelectFilters
-						defaultValue='Rarity'
-						setValue={setRarity}
-						options={rarityOptions}
-					/>
-					<SelectFilters
-						defaultValue='Series'
-						setValue={setSeries}
-						options={seriesOptions}
-					/>
-				</div>
-				<div className='m-1 w-56'>
-					<SelectFilters
-						defaultValue='Team'
-						setValue={setTeam}
-						options={teamOptions}
-					/>
-				</div>
-				<div className='m-1'>
+				<div className='mt-4 w-full lg:w-auto'>
 					<button
 						onClick={resetFilters}
 						className='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg'
