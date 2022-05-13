@@ -1,7 +1,6 @@
 import React from 'react';
 import About from '../components/About';
 import AboutSite from '../components/AboutSite';
-import ContactMe from '../components/ContactMe';
 import { NextSeo } from 'next-seo';
 
 function Contact() {
