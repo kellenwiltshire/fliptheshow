@@ -46,15 +46,18 @@ export const getProfitPerMin = async (item) => {
 	const completedOrders = response.completed_orders;
 
 	const oldestOrder = completedOrders[completedOrders.length - 1];
+	if (oldestOrder) {
+		const currDate = new Date();
+		const orderDate = new Date(oldestOrder.date);
 
-	const currDate = new Date();
-	const orderDate = new Date(oldestOrder.date);
+		const timeSinceOldestOrder = (currDate.getTime() - orderDate.getTime()) / 60000; //Get Time in Minutes
 
-	const timeSinceOldestOrder = (currDate.getTime() - orderDate.getTime()) / 60000; //Get Time in Minutes
+		const salesPerMin = timeSinceOldestOrder / completedOrders.length;
 
-	const salesPerMin = timeSinceOldestOrder / completedOrders.length;
+		const profitPerMin = parseFloat((salesPerMin * item.profit).toFixed(2));
 
-	const profitPerMin = parseFloat((salesPerMin * item.profit).toFixed(2));
+		return profitPerMin;
+	}
 
-	return profitPerMin;
+	return 0;
 };
