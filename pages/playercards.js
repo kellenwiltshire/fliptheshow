@@ -8,7 +8,6 @@ import { sortByNumber, sortByString } from '../utils/sortingFunctions';
 
 //TODO rework filtering layout
 //TODO Update Pagination - Infinite Scroll?
-//TODO Keep Sort after update
 //TODO Component out Table parts
 
 export default function Home({ items }) {
