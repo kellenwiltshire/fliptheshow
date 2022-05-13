@@ -10,7 +10,7 @@ export default function player({ cardData, listingData }) {
 			<NextSeo
 				title={`Flip The Show | ${cardData.name}`}
 				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 22 on Xbox and Playstation'
-				canonical='https://flipthe.show/'
+				canonical={`https://flipthe.show/players/${cardData.uuid}`}
 			/>
 			<Card data={cardData} listingData={listingData} />
 			<div className='flex justify-center'>
@@ -22,14 +22,10 @@ export default function player({ cardData, listingData }) {
 
 export async function getServerSideProps({ query }) {
 	const uuid = query.player;
-	const res = await fetch(
-		`https://mlb22.theshow.com/apis/item.json?uuid=${uuid}`,
-	);
+	const res = await fetch(`https://mlb22.theshow.com/apis/item.json?uuid=${uuid}`);
 	const cardData = await res.json();
 
-	const nextres = await fetch(
-		`https://mlb22.theshow.com/apis/listing.json?uuid=${uuid}`,
-	);
+	const nextres = await fetch(`https://mlb22.theshow.com/apis/listing.json?uuid=${uuid}`);
 
 	const listingData = await nextres.json();
 

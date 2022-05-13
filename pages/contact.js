@@ -13,7 +13,6 @@ function Contact() {
 				canonical='https://flipthe.show/contact'
 			/>
 			<AboutSite />
-			<ContactMe />
 			<About />
 		</div>
 	);

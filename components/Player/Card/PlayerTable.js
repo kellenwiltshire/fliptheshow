@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Paginate from 'react-paginate';
 
 function PlayerTable({ listingData }) {
-	const [numPages, setNumPages] = useState(Math.round(listingData.length / 50));
+	const [numPages, setNumPages] = useState(Math.round(listingData.length / 25));
 	const [currPage, setCurrPage] = useState(0);
 	const [offset, setOffSet] = useState(0);
-	const [currItems, setCurrItems] = useState(
-		listingData.slice(offset, offset + 25),
-	);
+	const [currItems, setCurrItems] = useState(listingData.slice(offset, offset + 25));
 
 	useEffect(() => {
 		setCurrItems(listingData.slice(offset, offset + 25));
@@ -43,21 +41,15 @@ function PlayerTable({ listingData }) {
 							Date (UTC)
 						</th>
 
-						<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
-							Price
-						</th>
+						<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>Price</th>
 					</tr>
 				</thead>
 				<tbody>
 					{listingData.map((item) => {
 						return (
 							<tr key={Math.random()}>
-								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{item.date}
-								</td>
-								<td className='border-t-2 border-gray-200 px-4 py-3'>
-									{item.price}
-								</td>
+								<td className='border-t-2 border-gray-200 px-4 py-3'>{item.date}</td>
+								<td className='border-t-2 border-gray-200 px-4 py-3'>{item.price}</td>
 							</tr>
 						);
 					})}
