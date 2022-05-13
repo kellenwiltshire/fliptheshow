@@ -6,10 +6,6 @@ import useSWR from 'swr';
 import { getProfit, getProfitPerMin, refilterItems, removeZeroItems } from '../utils/helperFunctions';
 import { sortByNumber, sortByString } from '../utils/sortingFunctions';
 
-//TODO rework filtering layout
-//TODO Update Pagination - Infinite Scroll?
-//TODO Component out Table parts
-
 export default function Home({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
 	const [maxSellPrice, setMaxSellPrice] = useState(500000);

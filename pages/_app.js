@@ -5,6 +5,10 @@ import * as gtag from '../lib/gtag';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
+//TODO rework filtering layout
+//TODO Update Pagination - Infinite Scroll?
+//TODO Component out Table parts
+
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
 	useEffect(() => {
