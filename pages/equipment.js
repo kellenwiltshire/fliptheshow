@@ -156,7 +156,7 @@ export async function getStaticProps(props) {
 	if (items.length) {
 		for (let i = 0; i < items.length; i++) {
 			items[i].profit = Math.floor(getProfit(items[i].best_buy_price, items[i].best_sell_price));
-			items[i].profit_per_min = await getProfitPerMin(items[i]);
+			// items[i].profit_per_min = await getProfitPerMin(items[i]);
 		}
 	}
 

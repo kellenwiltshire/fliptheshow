@@ -11,7 +11,6 @@ const headings = [
 	{ name: 'Best Buy', id: 'best_buy_price' },
 	{ name: 'Best Sell', id: 'best_sell_price' },
 	{ name: 'Profit', id: 'profit' },
-	{ name: 'Profit/Minute', id: 'profit_per_min' },
 ];
 
 function Table({ sortedItems, isPlayer, isTeam, sort, setSort, sortTable, reverseTable }) {
