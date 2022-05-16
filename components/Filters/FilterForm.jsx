@@ -3,7 +3,7 @@ import TextFilters from './TextFilters';
 import SelectFilters from './SelectFilters';
 import { rarityOptions, teamOptions, seriesOptions } from '../../defaultOptions';
 import MenuIcon from '../Icons/MenuIcon';
-import { DefaultButton, Form, Holder, MenuButton } from './Style-FilterForm';
+import { DefaultButton, Form, Holder, MenuButton, MobileForm } from './Style-FilterForm';
 
 function FilterForm({
 	setMinBuyPrice,
@@ -59,13 +59,7 @@ function FilterForm({
 			<MenuButton type='button' onClick={() => setMenuOpen(!menuOpen)} aria-label='Menu Button'>
 				<MenuIcon />
 			</MenuButton>
-			<form
-				id='inputForm'
-				className={
-					'text-gray-600 flex lg:hidden flex-row flex-wrap justify-center bg-white mt-2' +
-					(menuOpen ? ' flex' : ' hidden')
-				}
-			>
+			<Form style={{ display: menuOpen ? 'flex' : 'hidden' }} id='inputForm'>
 				<div className='grid grid-cols-3 gap-4 grid-rows-2'>
 					<TextFilters setValue={setTextFilter} defaultValue={placeholder} placeholder={placeholder} />
 					<div className='row-span-2 flex flex-col w-56'>
@@ -97,7 +91,7 @@ function FilterForm({
 						Reset Filters
 					</button>
 				</div>
-			</form>
+			</Form>
 		</div>
 	);
 }

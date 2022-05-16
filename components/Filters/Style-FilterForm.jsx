@@ -69,3 +69,8 @@ export const MenuButton = styled.button`
 		display: none;
 	}
 `;
+
+export const MobileForm = styled.form`
+	${Form}
+	display: ${(props) => (props.menuOpen ? 'flex' : 'hidden')}
+`;
