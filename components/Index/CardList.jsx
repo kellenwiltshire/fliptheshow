@@ -1,4 +1,4 @@
-import CardLink from './CardLink';
+import CardLink from './Card';
 
 const markets = [
 	{
