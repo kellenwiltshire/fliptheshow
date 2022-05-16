@@ -44,3 +44,28 @@ export const DefaultButton = styled.button`
 		outline-offset: 2px;
 	}
 `;
+
+export const MenuButton = styled.button`
+	color: white;
+	cursor: pointer;
+	font-size: 1.25rem;
+	line-height: 1;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	border-radius: 0.25rem;
+	background-color: transparent;
+	display: block;
+	background-color: rgb(79 70 229);
+	--tw-bg-opacity: 0.75;
+	margin: 1.25rem;
+	margin-left: auto;
+
+	@media (min-width: 1024px) {
+		display: none;
+	}
+`;

@@ -3,7 +3,7 @@ import TextFilters from './TextFilters';
 import SelectFilters from './SelectFilters';
 import { rarityOptions, teamOptions, seriesOptions } from '../../defaultOptions';
 import MenuIcon from '../Icons/MenuIcon';
-import { DefaultButton, Form, Holder } from './Style-FilterForm';
+import { DefaultButton, Form, Holder, MenuButton } from './Style-FilterForm';
 
 function FilterForm({
 	setMinBuyPrice,
@@ -56,14 +56,9 @@ function FilterForm({
 					<DefaultButton onClick={resetFilters}>Reset Filters</DefaultButton>
 				</div>
 			</Form>
-			<button
-				className='text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none bg-indigo-600 p-1 bg-opacity-75 m-5 ml-auto'
-				type='button'
-				onClick={() => setMenuOpen(!menuOpen)}
-				aria-label='Menu Button'
-			>
+			<MenuButton type='button' onClick={() => setMenuOpen(!menuOpen)} aria-label='Menu Button'>
 				<MenuIcon />
-			</button>
+			</MenuButton>
 			<form
 				id='inputForm'
 				className={
