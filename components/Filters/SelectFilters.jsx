@@ -1,16 +1,31 @@
 import React from 'react';
+import styled from '@emotion/styled';
+
+const Select = styled.select`
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	font-size: 1rem;
+	line-height: 1.5rem;
+	width: 100%;
+
+	appearance: none;
+
+	@media (min-width: 1024px) {
+		padding-left: 0.75rem;
+		padding-right: 2.5rem;
+	}
+`;
 
 function SelectFilters({ setValue, options, defaultValue }) {
 	return (
-		<select
-			className='rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base lg:pl-3 lg:pr-10 w-full'
+		<Select
 			onChange={(e) => (e.target.value === { defaultValue } ? setValue('') : setValue(e.target.value))}
 			placeholder={defaultValue}
 		>
 			{options.map((item) => {
 				return <option key={item}>{item}</option>;
 			})}
-		</select>
+		</Select>
 	);
 }
 
