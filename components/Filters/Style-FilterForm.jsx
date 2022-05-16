@@ -6,11 +6,12 @@ export const Form = styled.form`
 	display: none;
 	height: 6rem;
 	margin-top: 0.5rem;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
 
 	@media (min-width: 1024px) {
 		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
 	}
 `;
 
@@ -64,6 +65,20 @@ export const MenuButton = styled.button`
 	--tw-bg-opacity: 0.75;
 	margin: 1.25rem;
 	margin-left: auto;
+
+	@media (min-width: 1024px) {
+		display: none;
+	}
+`;
+
+export const MobileForm = styled.form`
+	color: rgb(75 85 99);
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	background-color: white;
+	margin-top: 0.5rem;
 
 	@media (min-width: 1024px) {
 		display: none;

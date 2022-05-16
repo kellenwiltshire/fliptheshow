@@ -59,8 +59,8 @@ function FilterForm({
 			<MenuButton type='button' onClick={() => setMenuOpen(!menuOpen)} aria-label='Menu Button'>
 				<MenuIcon />
 			</MenuButton>
-			<Form style={{ display: menuOpen ? 'flex' : 'none' }} id='inputForm'>
-				<div className='grid grid-cols-3 gap-4 grid-rows-2'>
+			<MobileForm style={{ display: menuOpen ? ' flex' : ' none' }} id='inputForm'>
+				<div className='flex flex-col md:grid grid-cols-3 gap-4 grid-rows-2'>
 					<TextFilters setValue={setTextFilter} defaultValue={placeholder} placeholder={placeholder} />
 					<div className='row-span-2 flex flex-col w-56'>
 						<TextFilters setValue={setMinBuyPrice} defaultValue={0} placeholder='Min Best Buy Price' />
@@ -72,7 +72,7 @@ function FilterForm({
 					</div>
 				</div>
 
-				<div className='grid grid-cols-3 gap-4'>
+				<div className='flex flex-col md:grid grid-cols-3 gap-4'>
 					<div className='flex w-56 col-span-1'>
 						<SelectFilters defaultValue='Rarity' setValue={setRarity} options={rarityOptions} />
 					</div>
@@ -91,7 +91,7 @@ function FilterForm({
 						Reset Filters
 					</button>
 				</div>
-			</Form>
+			</MobileForm>
 		</div>
 	);
 }
