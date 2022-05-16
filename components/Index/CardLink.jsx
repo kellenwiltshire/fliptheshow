@@ -18,6 +18,20 @@ const Image = styled.img`
 	padding: 1rem;
 `;
 
+const TextHolder = styled.div`
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+`;
+
+const Text = styled.h3`
+	font-size: 1.125rem;
+	line-height: 1.5rem;
+	font-weight: 500;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+	text-align: center;
+`;
+
 function CardLink({ market }) {
 	return (
 		<li>
@@ -27,12 +41,9 @@ function CardLink({ market }) {
 						<ImageHolder>
 							<Image src={market.imageUrl} alt={`${market.name} Market`} />
 						</ImageHolder>
-
-						<div className='space-y-2'>
-							<div className='text-lg leading-6 font-medium space-y-1 text-center'>
-								<h3>{market.name}</h3>
-							</div>
-						</div>
+						<TextHolder>
+							<Text>{market.name}</Text>
+						</TextHolder>
 					</Card>
 				</a>
 			</Link>
