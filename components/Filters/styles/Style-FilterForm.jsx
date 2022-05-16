@@ -46,6 +46,11 @@ export const DefaultButton = styled.button`
 	}
 `;
 
+export const ButtonHolder = styled.div`
+	margin-top: 1rem;
+	width: 100%;
+`;
+
 export const MenuButton = styled.button`
 	color: white;
 	cursor: pointer;
@@ -83,4 +88,30 @@ export const MobileForm = styled.form`
 	@media (min-width: 1024px) {
 		display: none;
 	}
+`;
+
+export const MobileFormDiv = styled.div`
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 1rem;
+
+	@media (mid-width: 768px) {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		grid-template-rows: repeat(2, minmax(0, 1fr));
+	}
+`;
+
+export const TextHolder = styled.div`
+	grid-row: span 2 / span 2;
+	display: flex;
+	flex-direction: column;
+	width: 14rem;
+`;
+
+export const SelectHolder = styled.div`
+	display: flex;
+	width: 14rem;
+	grid-column: span 1 / span 1;
 `;
