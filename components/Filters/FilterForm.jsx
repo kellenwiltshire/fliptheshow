@@ -3,6 +3,7 @@ import TextFilters from './TextFilters';
 import SelectFilters from './SelectFilters';
 import { rarityOptions, teamOptions, seriesOptions } from '../../defaultOptions';
 import MenuIcon from '../Icons/MenuIcon';
+import { DefaultButton, Form, Holder } from './Style-FilterForm';
 
 function FilterForm({
 	setMinBuyPrice,
@@ -32,34 +33,29 @@ function FilterForm({
 	};
 	return (
 		<div>
-			<form id='inputForm' className='text-gray-600 hidden lg:flex flex-row flex-wrap h-24 bg-white mt-2'>
-				<div className='m-1'>
+			<Form>
+				<Holder>
 					<TextFilters setValue={setTextFilter} defaultValue={placeholder} placeholder={placeholder} />
-				</div>
-				<div className='flex flex-col m-1'>
+				</Holder>
+				<Holder>
 					<TextFilters setValue={setMinBuyPrice} defaultValue={0} placeholder='Min Best Buy Price' />
 					<TextFilters setValue={setMaxBuyPrice} defaultValue={500000} placeholder='Max Best Buy Price' />
-				</div>
-				<div className='flex flex-col m-1'>
+				</Holder>
+				<Holder>
 					<TextFilters setValue={setMinSellPrice} defaultValue={0} placeholder='Min Best Sell Price' />
 					<TextFilters setValue={setMaxSellPrice} defaultValue={500000} placeholder='Max Best Sell Price' />
-				</div>
-				<div className='flex flex-col m-1'>
+				</Holder>
+				<Holder>
 					<SelectFilters defaultValue='Rarity' setValue={setRarity} options={rarityOptions} />
 					<SelectFilters defaultValue='Series' setValue={setSeries} options={seriesOptions} />
-				</div>
-				<div className='m-1'>
+				</Holder>
+				<Holder>
 					<SelectFilters defaultValue='Team' setValue={setTeam} options={teamOptions} />
-				</div>
+				</Holder>
 				<div className='m-1 w-full'>
-					<button
-						onClick={resetFilters}
-						className='flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg'
-					>
-						Reset Filters
-					</button>
+					<DefaultButton onClick={resetFilters}>Reset Filters</DefaultButton>
 				</div>
-			</form>
+			</Form>
 			<button
 				className='text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none bg-indigo-600 p-1 bg-opacity-75 m-5 ml-auto'
 				type='button'
