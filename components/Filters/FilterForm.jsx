@@ -59,7 +59,7 @@ function FilterForm({
 			<MenuButton type='button' onClick={() => setMenuOpen(!menuOpen)} aria-label='Menu Button'>
 				<MenuIcon />
 			</MenuButton>
-			<Form style={{ display: menuOpen ? 'flex' : 'hidden' }} id='inputForm'>
+			<Form style={{ display: menuOpen ? 'flex' : 'none' }} id='inputForm'>
 				<div className='grid grid-cols-3 gap-4 grid-rows-2'>
 					<TextFilters setValue={setTextFilter} defaultValue={placeholder} placeholder={placeholder} />
 					<div className='row-span-2 flex flex-col w-56'>
