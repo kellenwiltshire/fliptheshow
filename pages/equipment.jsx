@@ -3,7 +3,7 @@ import FilterForm from '../components/Filters/FilterForm';
 import { NextSeo } from 'next-seo';
 import Table from '../components/Table/Table';
 import useSWR from 'swr';
-import { getProfit, removeZeroItems, refilterItems, getProfitPerMin } from '../utils/helperFunctions';
+import { getProfit, removeZeroItems, refilterItems } from '../utils/helperFunctions';
 import { sortByNumber, sortByString } from '../utils/sortingFunctions';
 
 export default function Equipment({ items }) {

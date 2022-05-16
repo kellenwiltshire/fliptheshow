@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import TextFilters from '../Filters/TextFilters';
-import SelectFilters from '../Filters/SelectFilters';
+import TextFilters from './TextFilters';
+import SelectFilters from './SelectFilters';
 import { rarityOptions, teamOptions, seriesOptions } from '../../defaultOptions';
 import MenuIcon from '../Icons/MenuIcon';
 
