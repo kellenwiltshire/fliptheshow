@@ -68,3 +68,29 @@ export const PlayerData = styled.p`
 	color: rgb(75 85 99);
 	margin-bottom: 0.25rem;
 `;
+
+export const BFData = styled.div`
+	display: flex;
+	flex-direction: row;
+	color: rgb(31 41 55);
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+`;
+
+export const InfoContainer = styled.span`
+	display: flex;
+	flex-direction: column;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+`;
+
+export const SellInfo = styled.div`
+	color: rgb(31 41 55);
+	display: flex;
+	flex-direction: row;
+	font-size: 1.125rem;
+	line-height: 1.75rem;
+	margin-top: 1.25rem;
+	margin-bottom: 1.25rem;
+	justify-content: center;
+`;

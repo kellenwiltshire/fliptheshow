@@ -7,6 +7,10 @@ import {
 	Team,
 	Player,
 	PlayerData,
+	BFData,
+	RankImages,
+	InfoContainer,
+	SellInfo,
 } from '../Styles/Card';
 import PitchingStats from './PitchingStats';
 import Stats from './Stats';
@@ -30,21 +34,21 @@ function Card({ data, listingData }) {
 						Overall: {data.ovr} Rarity: {data.rarity}
 					</PlayerData>
 					{data.fielding_rank_image ? (
-						<div className='text-gray-800 my-4 flex flex-row'>
-							<span className='flex flex-col mx-2'>
+						<BFData>
+							<InfoContainer>
 								Fielding
 								<img src={data.fielding_rank_image} height='25px' width='25px' />
-							</span>
-							<span className='flex flex-col mx-2'>
+							</InfoContainer>
+							<InfoContainer>
 								Batting
 								<img src={data.hit_rank_image} height='25px' width='25px' />
-							</span>
-						</div>
+							</InfoContainer>
+						</BFData>
 					) : null}
-					<div className='text-gray-800 flex flex-row text-lg my-5 justify-center'>
-						<span className='flex flex-col mx-2'>Best Buy: {listingData.best_buy_price}</span>
-						<span className='flex flex-col mx-2'>Best Sell: {listingData.best_sell_price}</span>
-					</div>
+					<SellInfo>
+						<InfoContainer>Best Buy: {listingData.best_buy_price}</InfoContainer>
+						<InfoContainer>Best Sell: {listingData.best_sell_price}</InfoContainer>
+					</SellInfo>
 					<Stats data={data} />
 					<PitchingStats data={data} />
 					<div className='flex flex-row flex-wrap justify-center'>
