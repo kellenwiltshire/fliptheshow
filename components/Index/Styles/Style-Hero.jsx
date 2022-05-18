@@ -35,7 +35,7 @@ export const ImageHolder = styled.div`
 	right: 0px;
 `;
 
-export const Image = styled.img`
+export const HeroImage = styled.img`
 	height: 100%;
 	width: 100%;
 	object-fit: cover;

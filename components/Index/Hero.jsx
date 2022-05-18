@@ -3,7 +3,7 @@ import {
 	AbsoluteDiv,
 	Container,
 	Header,
-	Image,
+	HeroImage,
 	ImageBlend,
 	ImageHolder,
 	Main,
@@ -17,7 +17,7 @@ export default function Hero() {
 			<AbsoluteDiv />
 			<Container>
 				<ImageHolder>
-					<Image src='/hero.jpg' alt='Baseball Field' />
+					<HeroImage src='/hero.jpg' alt='Baseball Field' />
 					<ImageBlend />
 				</ImageHolder>
 				<TextHolder>
