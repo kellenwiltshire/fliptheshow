@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Paginate from 'react-paginate';
+import { Table, TableContainer, TableData, TableHeader } from '../Styles/PlayerTable';
 
 function PlayerTable({ listingData }) {
 	const [numPages, setNumPages] = useState(Math.round(listingData.length / 25));
@@ -20,28 +21,25 @@ function PlayerTable({ listingData }) {
 		window.scrollTo(0, 0);
 	};
 	return (
-		<div className='flex flex-col justify-center'>
-			<table className='table-auto w-auto text-left whitespace-no-wrap border-2 border-gray-100'>
+		<TableContainer>
+			<Table>
 				<thead>
 					<tr>
-						<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>
-							Date (UTC)
-						</th>
-
-						<th className='px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100'>Price</th>
+						<TableHeader>Date (UTC)</TableHeader>
+						<TableHeader>Price</TableHeader>
 					</tr>
 				</thead>
 				<tbody>
 					{currItems.map((item) => {
 						return (
-							<tr key={Math.random()}>
-								<td className='border-t-2 border-gray-200 px-4 py-3'>{item.date}</td>
-								<td className='border-t-2 border-gray-200 px-4 py-3'>{item.price}</td>
+							<tr key={item.date}>
+								<TableData>{item.date}</TableData>
+								<TableData>{item.price}</TableData>
 							</tr>
 						);
 					})}
 				</tbody>
-			</table>
+			</Table>
 			<Paginate
 				pageCount={numPages}
 				pageRangeDisplayed={1}
@@ -55,7 +53,7 @@ function PlayerTable({ listingData }) {
 				pageClassName='page'
 				breakClassName='page'
 			/>
-		</div>
+		</TableContainer>
 	);
 }
 
