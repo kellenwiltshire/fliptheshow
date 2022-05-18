@@ -29,3 +29,24 @@ export const Stat = styled.span`
 	width: 5rem;
 	text-align: center;
 `;
+
+export const PitchesHolder = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin: 0.5rem;
+`;
+
+export const PitchInfo = styled.div`
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+`;
+
+export const PitchName = styled.p`
+	width: 100%;
+	text-decoration-line: underline;
+	text-align: center;
+`;

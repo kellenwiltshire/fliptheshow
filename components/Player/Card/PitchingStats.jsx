@@ -1,5 +1,13 @@
 import React from 'react';
-import { PitchingContainer, PitchingHeader, Stat, StatsHolder } from '../Styles/PitchingStats';
+import {
+	PitchesHolder,
+	PitchInfo,
+	PitchingContainer,
+	PitchingHeader,
+	PitchName,
+	Stat,
+	StatsHolder,
+} from '../Styles/PitchingStats';
 
 function PitchingStats({ data }) {
 	return (
@@ -33,33 +41,33 @@ function PitchingStats({ data }) {
 				<Stat>Clutch</Stat>
 				<Stat>{data.pitching_clutch}</Stat>
 			</StatsHolder>
-			<div className='flex-col flex m-2'>
-				<span className='w-full text-lg text-center'>Pitches</span>
-				<div className='w-full flex flex-row flex-wrap'>
+			<PitchesHolder>
+				<PitchingHeader>Pitches</PitchingHeader>
+				<StatsHolder>
 					{data.pitches.length
 						? data.pitches.map((pitch) => {
 								return (
-									<div key={pitch.name} className='flex-row flex-wrap justify-center flex my-2'>
-										<span className='w-full underline text-center'>{pitch.name}</span>
+									<PitchInfo key={pitch.name}>
+										<PitchName>{pitch.name}</PitchName>
 
-										<div className='flex-col flex border border-gray-200 px-2'>
+										<StatsHolder>
 											<Stat>Control</Stat>
 											<Stat>{pitch.control}</Stat>
-										</div>
-										<div className='flex-col flex border border-gray-200 px-2'>
+										</StatsHolder>
+										<StatsHolder>
 											<Stat>Movement</Stat>
 											<Stat>{pitch.movement}</Stat>
-										</div>
-										<div className='flex-col flex border border-gray-200 px-2'>
+										</StatsHolder>
+										<StatsHolder>
 											<Stat>Speed</Stat>
 											<Stat>{pitch.speed}</Stat>
-										</div>
-									</div>
+										</StatsHolder>
+									</PitchInfo>
 								);
 						  })
 						: null}
-				</div>
-			</div>
+				</StatsHolder>
+			</PitchesHolder>
 		</PitchingContainer>
 	);
 }
