@@ -1,10 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
+import { Container, NavContainer } from './Styles/Style-Navigation';
 
 function Navigation() {
 	return (
-		<div className='flex justify-center'>
-			<div className='container flex flex-wrap mt-2 flex-row justify-center'>
+		<Container>
+			<NavContainer>
 				<Link href='/'>
 					<a className='hover:text-gray-900 py-1 text-center w-full md:w-auto md:py-1 md:my-2 md:ml-2'>Flip The Show</a>
 				</Link>
@@ -32,8 +33,8 @@ function Navigation() {
 						<img src='/donate.png' alt='Donate with PayPal' width='90px' height='auto' />
 					</a>
 				</div>
-			</div>
-		</div>
+			</NavContainer>
+		</Container>
 	);
 }
 
