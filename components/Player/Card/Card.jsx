@@ -11,6 +11,7 @@ import {
 	RankImages,
 	InfoContainer,
 	SellInfo,
+	QuirkHolder,
 } from '../Styles/Card';
 import PitchingStats from './PitchingStats';
 import Stats from './Stats';
@@ -51,15 +52,15 @@ function Card({ data, listingData }) {
 					</SellInfo>
 					<Stats data={data} />
 					<PitchingStats data={data} />
-					<div className='flex flex-row flex-wrap justify-center'>
+					<QuirkHolder>
 						{data.quirks.map((item) => {
 							if (item.img) {
-								return <img key={item.name} className='w-10 h-10' src={item.img} alt={item.description} />;
+								return <img key={item.name} width={40} height={40} src={item.img} alt={item.description} />;
 							} else {
 								return;
 							}
 						})}
-					</div>
+					</QuirkHolder>
 				</DataContainer>
 			</SecondaryContainer>
 		</CardContainer>

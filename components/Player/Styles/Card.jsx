@@ -94,3 +94,10 @@ export const SellInfo = styled.div`
 	margin-bottom: 1.25rem;
 	justify-content: center;
 `;
+
+export const QuirkHolder = styled.div`
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+`;
