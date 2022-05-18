@@ -8,7 +8,6 @@ import {
 	Player,
 	PlayerData,
 	BFData,
-	RankImages,
 	InfoContainer,
 	SellInfo,
 	QuirkHolder,
