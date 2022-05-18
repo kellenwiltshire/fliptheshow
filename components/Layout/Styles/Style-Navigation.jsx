@@ -35,6 +35,7 @@ export const HomeLink = styled.a`
 	padding-bottom: 0.25rem;
 	text-align: center;
 	width: 100%;
+	cursor: pointer;
 
 	@media (min-width: 768px) {
 		width: auto;
@@ -71,6 +72,7 @@ export const Nav = styled.nav`
 
 export const NavLink = styled.a`
 	margin-right: 1.25rem;
+	cursor: pointer;
 
 	&:hover {
 		color: rgb(17 24 39);
