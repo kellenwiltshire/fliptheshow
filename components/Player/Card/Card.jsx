@@ -1,10 +1,11 @@
 import React from 'react';
+import { CardContainer } from '../Styles/Card';
 import PitchingStats from './PitchingStats';
 import Stats from './Stats';
 
 function Card({ data, listingData }) {
 	return (
-		<div className='max-w-screen flex'>
+		<CardContainer>
 			<div className='container px-5 py-24 mx-auto'>
 				<div className='lg:w-4/5 mx-auto flex flex-row flex-wrap justify-center'>
 					<img
@@ -59,7 +60,7 @@ function Card({ data, listingData }) {
 					</div>
 				</div>
 			</div>
-		</div>
+		</CardContainer>
 	);
 }
 
