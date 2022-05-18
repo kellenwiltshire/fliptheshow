@@ -36,3 +36,48 @@ export const TitleName = styled.p`
 		justify-content: flex-start;
 	}
 `;
+
+export const DeveloperText = styled.p`
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	color: rgb(107 114 128);
+	margin-top: 1rem;
+
+	@media (min-width: 640px) {
+		margin-left: 1rem;
+		padding-left: 1rem;
+		border-left-width: 2px;
+		border-color: rgb(229 231 235);
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
+		margin-top: 0px;
+	}
+`;
+
+export const DeveloperLink = styled.a`
+	color: rgb(75 85 99);
+	margin-left: 0.25rem;
+`;
+
+export const GithubHolder = styled.span`
+	display: inline-flex;
+	justify-content: center;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+
+	@media (min-width: 640px) {
+		margin-left: auto;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		justify-content: flex-start;
+	}
+`;
+
+export const DonateLink = styled.a`
+	margin-top: 0.5rem;
+
+	@media (min-width: 768px) {
+		margin-left: 2.5rem;
+		margin-top: 0px;
+	}
+`;
