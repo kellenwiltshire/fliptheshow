@@ -22,8 +22,8 @@ export default function Hero() {
 				</ImageHolder>
 				<TextHolder>
 					<Header>
-						<span class='block text-white'>Take control of the</span>
-						<span class='block text-indigo-200'>MLB The Show Market</span>
+						<span style={{ display: 'block', color: 'white' }}>Take control of the</span>
+						<span style={{ display: 'block', color: 'rgb(199 210 254)' }}>MLB The Show Market</span>
 					</Header>
 					<SubText>This site is dedicated to helping you get the most for your card in MLB The Show 22.</SubText>
 				</TextHolder>
