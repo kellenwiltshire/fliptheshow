@@ -21,19 +21,6 @@ function PlayerTable({ listingData }) {
 	};
 	return (
 		<div className='flex flex-col justify-center'>
-			<Paginate
-				pageCount={numPages}
-				pageRangeDisplayed={1}
-				marginPagesDisplayed={1}
-				onPageChange={onPageChange}
-				forcePage={currPage}
-				previousClassName='page'
-				nextClassName='page'
-				containerClassName='pageContainerTop'
-				activeClassName='pageActive'
-				pageClassName='page'
-				breakClassName='page'
-			/>
 			<table className='table-auto w-auto text-left whitespace-no-wrap border-2 border-gray-100'>
 				<thead>
 					<tr>
@@ -45,7 +32,7 @@ function PlayerTable({ listingData }) {
 					</tr>
 				</thead>
 				<tbody>
-					{listingData.map((item) => {
+					{currItems.map((item) => {
 						return (
 							<tr key={Math.random()}>
 								<td className='border-t-2 border-gray-200 px-4 py-3'>{item.date}</td>
