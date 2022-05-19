@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
+import { SROnly } from './Styles/Row';
 
 export default function Row({ item, isPlayer, isTeam }) {
 	const itemName = item.listing_name.replace('&trade;', '™').replace('&reg;', '®');
@@ -23,14 +24,14 @@ export default function Row({ item, isPlayer, isTeam }) {
 						</a>
 					</span>
 					<dl className='font-normal sm:hidden'>
-						<dt className='sr-only'>Rarity</dt>
+						<SROnly>Rarity</SROnly>
 						<dd className='mt-1 truncate text-gray-700'>{item.item.rarity}</dd>
-						<dt className='sr-only'>Series</dt>
+						<SROnly>Series</SROnly>
 						<dd className='mt-1 truncate text-gray-700'>{item.item.series}</dd>
 
 						{isTeam ? (
 							<>
-								<dt className='sr-only'>Team</dt>
+								<SROnly>Team</SROnly>
 								<dd className='mt-1 truncate text-gray-700'>{item.item.team}</dd>
 							</>
 						) : null}
@@ -45,14 +46,14 @@ export default function Row({ item, isPlayer, isTeam }) {
 						</a>
 					</span>
 					<dl className='font-normal sm:hidden'>
-						<dt className='sr-only'>Rarity</dt>
+						<SROnly>Rarity</SROnly>
 						<dd className='mt-1 truncate text-gray-700'>{item.item.rarity}</dd>
-						<dt className='sr-only'>Series</dt>
+						<SROnly>Series</SROnly>
 						<dd className='mt-1 truncate text-gray-700'>{item.item.series}</dd>
 
 						{isTeam ? (
 							<>
-								<dt className='sr-only'>Team</dt>
+								<SROnly>Team</SROnly>
 								<dd className='mt-1 truncate text-gray-700'>{item.item.team}</dd>
 							</>
 						) : null}
