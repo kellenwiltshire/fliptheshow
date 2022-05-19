@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
-import { SROnly } from './Styles/Row';
+import { MobileData, NormalData, NormalDataWithHidden, SROnly } from './Styles/Row';
 
 export default function Row({ item, isPlayer, isTeam }) {
 	const itemName = item.listing_name.replace('&trade;', '™').replace('&reg;', '®');
@@ -25,14 +25,14 @@ export default function Row({ item, isPlayer, isTeam }) {
 					</span>
 					<dl className='font-normal sm:hidden'>
 						<SROnly>Rarity</SROnly>
-						<dd className='mt-1 truncate text-gray-700'>{item.item.rarity}</dd>
+						<MobileData>{item.item.rarity}</MobileData>
 						<SROnly>Series</SROnly>
-						<dd className='mt-1 truncate text-gray-700'>{item.item.series}</dd>
+						<MobileData>{item.item.series}</MobileData>
 
 						{isTeam ? (
 							<>
 								<SROnly>Team</SROnly>
-								<dd className='mt-1 truncate text-gray-700'>{item.item.team}</dd>
+								<MobileData>{item.item.team}</MobileData>
 							</>
 						) : null}
 					</dl>
@@ -47,30 +47,30 @@ export default function Row({ item, isPlayer, isTeam }) {
 					</span>
 					<dl className='font-normal sm:hidden'>
 						<SROnly>Rarity</SROnly>
-						<dd className='mt-1 truncate text-gray-700'>{item.item.rarity}</dd>
+						<MobileData>{item.item.rarity}</MobileData>
 						<SROnly>Series</SROnly>
-						<dd className='mt-1 truncate text-gray-700'>{item.item.series}</dd>
+						<MobileData>{item.item.series}</MobileData>
 
 						{isTeam ? (
 							<>
 								<SROnly>Team</SROnly>
-								<dd className='mt-1 truncate text-gray-700'>{item.item.team}</dd>
+								<MobileData>{item.item.team}</MobileData>
 							</>
 						) : null}
 					</dl>
 				</td>
 			)}
 
-			<td className='border-t-2 border-gray-200 px-4 py-3 hidden sm:table-cell'>{item.item.rarity}</td>
-			<td className='border-t-2 border-gray-200 px-4 py-3 hidden sm:table-cell'>{item.item.series}</td>
-			{isTeam ? <td className='border-t-2 border-gray-200 px-4 py-3 hidden sm:table-cell'>{item.item.team}</td> : null}
+			<NormalDataWithHidden>{item.item.rarity}</NormalDataWithHidden>
+			<NormalDataWithHidden>{item.item.series}</NormalDataWithHidden>
+			{isTeam ? <NormalDataWithHidden>{item.item.team}</NormalDataWithHidden> : null}
 
-			<td className='border-t-2 border-gray-200 px-4 py-3'>{item.best_buy_price}</td>
+			<NormalData>{item.best_buy_price}</NormalData>
 
-			<td className='border-t-2 border-gray-200 px-4 py-3'>{item.best_sell_price}</td>
+			<NormalData>{item.best_sell_price}</NormalData>
 
-			<td className='border-t-2 border-gray-200 px-4 py-3'>{item.profit}</td>
-			{/* <td className='border-t-2 border-gray-200 px-4 py-3'>{item.profit_per_min}</td> */}
+			<NormalData>{item.profit}</NormalData>
+			{/* <NormalData>{item.profit_per_min}</NormalData> */}
 		</tr>
 	);
 }
