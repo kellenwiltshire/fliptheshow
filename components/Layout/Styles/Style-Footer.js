@@ -10,8 +10,8 @@ export const FooterStyle = styled.footer`
 	margin-left: auto;
 	margin-right: auto;
 	display: flex;
-	align-items: center;
 	flex-direction: column;
+	align-items: center;
 
 	@media (min-width: 640px) {
 		max-width: 640px;
@@ -32,7 +32,6 @@ export const FooterStyle = styled.footer`
 `;
 
 export const TitleName = styled.p`
-	display: flex;
 	font-weight: 500;
 	align-items: center;
 	justify-content: center;
@@ -57,9 +56,6 @@ export const DeveloperText = styled.p`
 		padding-left: 1rem;
 		border-left-width: 2px;
 		border-color: rgb(229 231 235);
-		padding-top: 0.5rem;
-		padding-bottom: 0.5rem;
-		margin-top: 0px;
 	}
 `;
 
