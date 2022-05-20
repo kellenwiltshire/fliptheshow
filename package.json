@@ -11,7 +11,6 @@
 	"dependencies": {
 		"@emotion/react": "^11.9.0",
 		"@emotion/styled": "^11.8.1",
-		"@formspree/react": "^2.2.5",
 		"@heroicons/react": "^1.0.6",
 		"caniuse-lite": "^1.0.30001338",
 		"cors": "^2.8.5",
@@ -25,11 +24,7 @@
 	},
 	"devDependencies": {
 		"@emotion/babel-plugin": "^11.9.2",
-		"@tailwindcss/aspect-ratio": "^0.4.0",
-		"@tailwindcss/forms": "^0.5.1",
-		"@tailwindcss/typography": "^0.5.2",
 		"autoprefixer": "^10.4.7",
-		"postcss": "^8.4.13",
-		"tailwindcss": "^3.0.24"
+		"postcss": "^8.4.13"
 	}
 }
