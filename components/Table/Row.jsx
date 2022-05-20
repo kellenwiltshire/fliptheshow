@@ -17,7 +17,7 @@ export default function Row({ item, isPlayer, isTeam }) {
 								query: { player: item.item.uuid },
 							}}
 						>
-							<a>{item.listing_name}</a>
+							<a style={{ textDecoration: 'none', color: 'black' }}>{item.listing_name}</a>
 						</Link>
 						<a href={`https://mlb22.theshow.com/items/${item.item.uuid}`} target='_blank'>
 							<ExternalLinkIcon style={{ height: '1.25rem', width: '1.25rem' }} />

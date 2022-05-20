@@ -9,7 +9,8 @@ const Input = styled.input`
 	line-height: 1.5rem;
 	width: 14rem;
 	padding: 0.5rem;
-
+	border-radius: 1rem;
+	margin: 0.25rem;
 	@media (min-width: 1024px) {
 		padding-left: 0.75rem;
 		padding-right: 2.5rem;

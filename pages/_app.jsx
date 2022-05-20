@@ -1,4 +1,3 @@
-import 'tailwindcss/tailwind.css';
 import '../styles/globals.css';
 import Layout from '../components/Layout/Layout';
 import * as gtag from '../lib/gtag';
@@ -7,8 +6,6 @@ import React, { useEffect } from 'react';
 import { normalizeStyles } from '../styles/styles';
 
 //TODO Update Pagination - Infinite Scroll?
-//TODO Component out Table parts
-//TODO Switch to Styled Components
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();

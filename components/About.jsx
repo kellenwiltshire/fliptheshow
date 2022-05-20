@@ -2,37 +2,56 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 const Container = styled.div`
+	width: 100%;
 	padding-left: 0.25rem;
 	padding-right: 0.25rem;
-
+	display: flex;
+	justify-content: center;
+	margin-top: 0.75rem;
+	margin-bottom: 0.75rem;
 	@media (min-width: 640px) {
+		max-width: 640px;
 		padding-left: 1.5rem;
 		padding-right: 1.5rem;
 	}
-
+	@media (min-width: 768px) {
+		max-width: 768px;
+	}
 	@media (min-width: 1024px) {
-		width: 75%;
-		margin-top: 2.5rem;
+		max-width: 1024px;
+	}
+	@media (min-width: 1280px) {
+		max-width: 1280px;
+	}
+	@media (min-width: 1536px) {
+		max-width: 1536px;
 	}
 `;
 
 const FlexContainer = styled.div`
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
 
 	@media (min-width: 1024px) {
-		justify-content: space-between;
+		flex-direction: row;
 	}
 `;
 
 const AboutContainer = styled.div`
-	padding: 1.75rem;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+
 	@media (min-width: 1024px) {
+		justify-content: space-between;
 		width: 50%;
-		padding: 0px;
 	}
 `;
 
@@ -61,8 +80,11 @@ const Paragraph = styled.p`
 `;
 
 const ImageContainer = styled.div`
-	width: 24rem;
-	padding: 1.25rem;
+	width: 100%;
+	@media (min-width: 640px) {
+		width: 24rem;
+		padding: 1.25rem;
+	}
 `;
 
 function About() {

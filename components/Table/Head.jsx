@@ -13,9 +13,11 @@ const TableHeader = styled.th`
 	font-weight: 600;
 	color: rgb(17 24 39);
 	cursor: pointer;
-
+	display: ${(props) =>
+		props.id === 'team' || props.id === 'rarity' || props.id === 'series' ? 'none' : 'table-cell'};
 	@media (min-width: 640px) {
 		padding-left: 1.5rem;
+		display: table-cell;
 	}
 `;
 
