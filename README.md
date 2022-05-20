@@ -4,7 +4,8 @@ Website created for flipping cards in the game MLB The Show 22
 
 ## Lessons Learned
 
-The site was designed with NextJS and TailwindCSS. The site was a good lesson on how to format tables with lots of information to look good on multiple screen sizes.
+The site was designed with NextJS and Emotion Styled Components. The site was a good lesson on how to format tables with lots of information to look good on multiple screen sizes.
+
 ## Features
 
 Users are able to sort and filter the cards that are returned from the MLB The Show API to determine what the best cards are to buy and sell for maximum profit.
@@ -15,18 +16,16 @@ Users are able to see how the cards are performing for Players, Equipment, and S
 
 ## Tech Stack
 
-**Client:** NextJS, TailwindCSS, Digital Ocean
+**Client:** NextJS, Emotion Styled Components, Digital Ocean
 
 ## Authors
 
 - [@kellenwiltshire](https://www.github.com/kellenwiltshire)
-  
+
 ## Contributing
 
 Contributions are always welcome!
-  
+
 ## Appendix
 
 https://flipthe.show
-
-  
