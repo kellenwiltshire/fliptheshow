@@ -42,3 +42,26 @@ export const NormalData = styled.td`
 	padding-top: 0.75rem;
 	padding-bottom: 0.75rem;
 `;
+
+export const NameData = styled.td`
+	border-top-width: 2px;
+	border-color: rgb(229 231 235);
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	@media (min-width: 1024px) {
+		flex-direction: row;
+	}
+`;
+
+export const NameLink = styled.span`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+`;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
-import { MobileData, NormalData, NormalDataWithHidden, SROnly } from './Styles/Row';
+import { MobileData, NormalData, NormalDataWithHidden, NameData, SROnly, NameLink } from './Styles/Row';
 
 export default function Row({ item, isPlayer, isTeam }) {
 	const itemName = item.listing_name.replace('&trade;', '™').replace('&reg;', '®');
@@ -9,8 +9,8 @@ export default function Row({ item, isPlayer, isTeam }) {
 	return (
 		<tr key={item.item.uuid}>
 			{isPlayer ? (
-				<td className='border-t-2 border-gray-200 px-4 py-3 flex flex-col lg:flex-row justify-between'>
-					<span className='flex flex-row justify-between'>
+				<NameData>
+					<NameLink>
 						<Link
 							href={{
 								pathname: '/players/[player]',
@@ -20,9 +20,9 @@ export default function Row({ item, isPlayer, isTeam }) {
 							<a>{item.listing_name}</a>
 						</Link>
 						<a href={`https://mlb22.theshow.com/items/${item.item.uuid}`} target='_blank'>
-							<ExternalLinkIcon className='h-5 w-5' />
+							<ExternalLinkIcon style={{ height: '1.25rem', width: '1.25rem' }} />
 						</a>
-					</span>
+					</NameLink>
 					<dl className='font-normal sm:hidden'>
 						<SROnly>Rarity</SROnly>
 						<MobileData>{item.item.rarity}</MobileData>
@@ -36,15 +36,15 @@ export default function Row({ item, isPlayer, isTeam }) {
 							</>
 						) : null}
 					</dl>
-				</td>
+				</NameData>
 			) : (
-				<td className='border-t-2 border-gray-200 px-4 py-3 lg:flex-row justify-between flex flex-col'>
-					<span className='flex flex-row justify-between'>
+				<NameData>
+					<NameLink>
 						{itemName}
 						<a href={`https://mlb22.theshow.com/items/${item.item.uuid}`} target='_blank'>
-							<ExternalLinkIcon className='h-5 w-5' />
+							<ExternalLinkIcon style={{ height: '1.25rem', width: '1.25rem' }} />
 						</a>
-					</span>
+					</NameLink>
 					<dl className='font-normal sm:hidden'>
 						<SROnly>Rarity</SROnly>
 						<MobileData>{item.item.rarity}</MobileData>
@@ -58,7 +58,7 @@ export default function Row({ item, isPlayer, isTeam }) {
 							</>
 						) : null}
 					</dl>
-				</td>
+				</NameData>
 			)}
 
 			<NormalDataWithHidden>{item.item.rarity}</NormalDataWithHidden>
