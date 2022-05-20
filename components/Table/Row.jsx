@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
-import { MobileData, NormalData, NormalDataWithHidden, NameData, SROnly, NameLink } from './Styles/Row';
+import { MobileData, NormalData, NormalDataWithHidden, NameData, SROnly, NameLink, SubHiddenText } from './Styles/Row';
 
 export default function Row({ item, isPlayer, isTeam }) {
 	const itemName = item.listing_name.replace('&trade;', '™').replace('&reg;', '®');
@@ -23,7 +23,7 @@ export default function Row({ item, isPlayer, isTeam }) {
 							<ExternalLinkIcon style={{ height: '1.25rem', width: '1.25rem' }} />
 						</a>
 					</NameLink>
-					<dl className='font-normal sm:hidden'>
+					<SubHiddenText>
 						<SROnly>Rarity</SROnly>
 						<MobileData>{item.item.rarity}</MobileData>
 						<SROnly>Series</SROnly>
@@ -35,7 +35,7 @@ export default function Row({ item, isPlayer, isTeam }) {
 								<MobileData>{item.item.team}</MobileData>
 							</>
 						) : null}
-					</dl>
+					</SubHiddenText>
 				</NameData>
 			) : (
 				<NameData>
@@ -45,7 +45,7 @@ export default function Row({ item, isPlayer, isTeam }) {
 							<ExternalLinkIcon style={{ height: '1.25rem', width: '1.25rem' }} />
 						</a>
 					</NameLink>
-					<dl className='font-normal sm:hidden'>
+					<SubHiddenText>
 						<SROnly>Rarity</SROnly>
 						<MobileData>{item.item.rarity}</MobileData>
 						<SROnly>Series</SROnly>
@@ -57,7 +57,7 @@ export default function Row({ item, isPlayer, isTeam }) {
 								<MobileData>{item.item.team}</MobileData>
 							</>
 						) : null}
-					</dl>
+					</SubHiddenText>
 				</NameData>
 			)}
 

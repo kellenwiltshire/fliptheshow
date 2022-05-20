@@ -65,3 +65,11 @@ export const NameLink = styled.span`
 	flex-direction: row;
 	justify-content: space-between;
 `;
+
+export const SubHiddenText = styled.dl`
+	font-weight: 400;
+
+	@media (min-width: 640px) {
+		display: none;
+	}
+`;
