@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Paginate from 'react-paginate';
 import Heading from './Head';
 import Row from './Row';
+import { Container, TableStyle } from './Styles/Table';
 
 const headings = [
 	{ name: 'Name', id: 'listing_name' },
@@ -45,30 +46,28 @@ function Table({ sortedItems, isPlayer, isTeam, sort, setSort, sortTable, revers
 	};
 
 	return (
-		<div className='flex flex-col w-full justify-center'>
-			<div className='max-w-screen overflow-auto overflow-x-scroll'>
-				<table className='table-fixed min-w-full divide-y divide-gray-200 text-left whitespace-no-wrap border-2 border-gray-100'>
-					<thead>
-						<tr>
-							{headings.map((heading) => {
-								if (!isTeam) {
-									if (heading.name === 'Team') {
-										return null;
-									}
-									return <Heading key={heading.id} name={heading.name} id={heading.id} handleSort={handleSort} />;
-								} else {
-									return <Heading key={heading.id} name={heading.name} id={heading.id} handleSort={handleSort} />;
+		<Container>
+			<TableStyle>
+				<thead>
+					<tr>
+						{headings.map((heading) => {
+							if (!isTeam) {
+								if (heading.name === 'Team') {
+									return null;
 								}
-							})}
-						</tr>
-					</thead>
-					<tbody className='divide-y divide-gray-200 bg-white'>
-						{currItems.map((item) => {
-							return <Row item={item} isPlayer={isPlayer} isTeam={isTeam} />;
+								return <Heading key={heading.id} name={heading.name} id={heading.id} handleSort={handleSort} />;
+							} else {
+								return <Heading key={heading.id} name={heading.name} id={heading.id} handleSort={handleSort} />;
+							}
 						})}
-					</tbody>
-				</table>
-			</div>
+					</tr>
+				</thead>
+				<tbody>
+					{currItems.map((item) => {
+						return <Row item={item} isPlayer={isPlayer} isTeam={isTeam} />;
+					})}
+				</tbody>
+			</TableStyle>
 
 			<Paginate
 				pageCount={numPages}
@@ -83,7 +82,7 @@ function Table({ sortedItems, isPlayer, isTeam, sort, setSort, sortTable, revers
 				pageClassName='page'
 				breakClassName='page'
 			/>
-		</div>
+		</Container>
 	);
 }
 
