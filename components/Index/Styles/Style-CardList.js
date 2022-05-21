@@ -50,6 +50,7 @@ export const Header = styled.h2`
 `;
 
 export const List = styled.ul`
+	list-style: none;
 	@media (min-width: 640px) {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));

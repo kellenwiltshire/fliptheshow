@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 
 export const FooterStyle = styled.footer`
 	color: rgb(75 85 99);
-	width: 100%;
 	padding-left: 1.25rem;
 	padding-right: 1.25rem;
 	padding-top: 2rem;
@@ -14,20 +13,7 @@ export const FooterStyle = styled.footer`
 	align-items: center;
 
 	@media (min-width: 640px) {
-		max-width: 640px;
 		flex-direction: row;
-	}
-	@media (min-width: 768px) {
-		max-width: 768px;
-	}
-	@media (min-width: 1024px) {
-		max-width: 1024px;
-	}
-	@media (min-width: 1280px) {
-		max-width: 1280px;
-	}
-	@media (min-width: 1536px) {
-		max-width: 1536px;
 	}
 `;
 

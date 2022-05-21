@@ -30,13 +30,14 @@ const Text = styled.h3`
 	margin-top: 0.5rem;
 	margin-bottom: 0.5rem;
 	text-align: center;
+	text-decoration: none;
 `;
 
 function CardLink({ market }) {
 	return (
 		<li>
 			<Link href={market.link} key={market.name}>
-				<a>
+				<a style={{ textDecoration: 'none', color: 'black' }}>
 					<Card>
 						<ImageHolder>
 							<Image src={market.imageUrl} alt={`${market.name} Market`} />

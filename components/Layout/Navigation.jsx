@@ -5,7 +5,7 @@ import { Container, DonateLink, HomeLink, Nav, NavContainer, NavLink } from './S
 function Navigation() {
 	return (
 		<Container>
-			<NavContainer>
+			<NavContainer className='container'>
 				<Link href='/'>
 					<HomeLink>Flip The Show</HomeLink>
 				</Link>

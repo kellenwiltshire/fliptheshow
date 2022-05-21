@@ -81,3 +81,8 @@
 		max-width: 1536px;
 	}
 }
+
+a {
+	text-decoration: none;
+	color: black;
+}

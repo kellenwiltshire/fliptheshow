@@ -4,7 +4,7 @@ import { DeveloperLink, DeveloperText, DonateLink, FooterStyle, GithubHolder, Ti
 
 function Footer() {
 	return (
-		<FooterStyle>
+		<FooterStyle className='container'>
 			<TitleName> Flip The Show</TitleName>
 			<DeveloperText>
 				<DeveloperLink href='https://kellenwiltshire.com' rel='noopener noreferrer' target='_blank'>

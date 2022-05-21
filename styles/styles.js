@@ -52,7 +52,7 @@ export const normalizeStyles = (
  * 2. Correct the odd "em" font sizing in all browsers.
  */
 			pre {
-				font-family: monospace, monospace; /* 1 */
+				font-family: monospace; /* 1 */
 				font-size: 1em; /* 2 */
 			}
 			/* Text-level semantics
