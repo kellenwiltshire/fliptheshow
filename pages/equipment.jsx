@@ -5,7 +5,7 @@ import Table from '../components/Table/Table';
 import useSWR from 'swr';
 import { getProfit, removeZeroItems, refilterItems } from '../utils/helperFunctions';
 import { sortByNumber, sortByString } from '../utils/sortingFunctions';
-import { Container } from '../styles/PageStyles';
+import { Container, FilterContainer } from '../styles/PageStyles';
 
 export default function Equipment({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
