@@ -4,7 +4,8 @@ export const Form = styled.form`
 	background-color: white;
 	color: rgb(75 85 99);
 	display: none;
-	height: 6rem;
+	height: auto;
+	width: 100%;
 	margin-top: 0.5rem;
 	flex-direction: row;
 	flex-wrap: wrap;
