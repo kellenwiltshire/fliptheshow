@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
+import { MobileData, NormalData, NormalDataWithHidden, NameData, SROnly, NameLink, SubHiddenText } from './Styles/Row';
 
 export default function Row({ item, isPlayer, isTeam }) {
 	const itemName = item.listing_name.replace('&trade;', '™').replace('&reg;', '®');
@@ -8,68 +9,68 @@ export default function Row({ item, isPlayer, isTeam }) {
 	return (
 		<tr key={item.item.uuid}>
 			{isPlayer ? (
-				<td className='border-t-2 border-gray-200 px-4 py-3 flex flex-col lg:flex-row justify-between'>
-					<span className='flex flex-row justify-between'>
+				<NameData>
+					<NameLink>
 						<Link
 							href={{
 								pathname: '/players/[player]',
 								query: { player: item.item.uuid },
 							}}
 						>
-							<a>{item.listing_name}</a>
+							<a style={{ textDecoration: 'none', color: 'black' }}>{item.listing_name}</a>
 						</Link>
 						<a href={`https://mlb22.theshow.com/items/${item.item.uuid}`} target='_blank'>
-							<ExternalLinkIcon className='h-5 w-5' />
+							<ExternalLinkIcon style={{ height: '1.25rem', width: '1.25rem' }} />
 						</a>
-					</span>
-					<dl className='font-normal sm:hidden'>
-						<dt className='sr-only'>Rarity</dt>
-						<dd className='mt-1 truncate text-gray-700'>{item.item.rarity}</dd>
-						<dt className='sr-only'>Series</dt>
-						<dd className='mt-1 truncate text-gray-700'>{item.item.series}</dd>
+					</NameLink>
+					<SubHiddenText>
+						<SROnly>Rarity</SROnly>
+						<MobileData>{item.item.rarity}</MobileData>
+						<SROnly>Series</SROnly>
+						<MobileData>{item.item.series}</MobileData>
 
 						{isTeam ? (
 							<>
-								<dt className='sr-only'>Team</dt>
-								<dd className='mt-1 truncate text-gray-700'>{item.item.team}</dd>
+								<SROnly>Team</SROnly>
+								<MobileData>{item.item.team}</MobileData>
 							</>
 						) : null}
-					</dl>
-				</td>
+					</SubHiddenText>
+				</NameData>
 			) : (
-				<td className='border-t-2 border-gray-200 px-4 py-3 lg:flex-row justify-between flex flex-col'>
-					<span className='flex flex-row justify-between'>
+				<NameData>
+					<NameLink>
 						{itemName}
 						<a href={`https://mlb22.theshow.com/items/${item.item.uuid}`} target='_blank'>
-							<ExternalLinkIcon className='h-5 w-5' />
+							<ExternalLinkIcon style={{ height: '1.25rem', width: '1.25rem' }} />
 						</a>
-					</span>
-					<dl className='font-normal sm:hidden'>
-						<dt className='sr-only'>Rarity</dt>
-						<dd className='mt-1 truncate text-gray-700'>{item.item.rarity}</dd>
-						<dt className='sr-only'>Series</dt>
-						<dd className='mt-1 truncate text-gray-700'>{item.item.series}</dd>
+					</NameLink>
+					<SubHiddenText>
+						<SROnly>Rarity</SROnly>
+						<MobileData>{item.item.rarity}</MobileData>
+						<SROnly>Series</SROnly>
+						<MobileData>{item.item.series}</MobileData>
 
 						{isTeam ? (
 							<>
-								<dt className='sr-only'>Team</dt>
-								<dd className='mt-1 truncate text-gray-700'>{item.item.team}</dd>
+								<SROnly>Team</SROnly>
+								<MobileData>{item.item.team}</MobileData>
 							</>
 						) : null}
-					</dl>
-				</td>
+					</SubHiddenText>
+				</NameData>
 			)}
 
-			<td className='border-t-2 border-gray-200 px-4 py-3 hidden sm:table-cell'>{item.item.rarity}</td>
-			<td className='border-t-2 border-gray-200 px-4 py-3 hidden sm:table-cell'>{item.item.series}</td>
-			{isTeam ? <td className='border-t-2 border-gray-200 px-4 py-3 hidden sm:table-cell'>{item.item.team}</td> : null}
+			<NormalDataWithHidden>{item.item.rarity}</NormalDataWithHidden>
+			<NormalDataWithHidden>{item.item.series}</NormalDataWithHidden>
+			{isTeam ? <NormalDataWithHidden>{item.item.team}</NormalDataWithHidden> : null}
 
-			<td className='border-t-2 border-gray-200 px-4 py-3'>{item.best_buy_price}</td>
+			<NormalData>{item.best_buy_price}</NormalData>
 
-			<td className='border-t-2 border-gray-200 px-4 py-3'>{item.best_sell_price}</td>
+			<NormalData>{item.best_sell_price}</NormalData>
 
-			<td className='border-t-2 border-gray-200 px-4 py-3'>{item.profit}</td>
-			{/* <td className='border-t-2 border-gray-200 px-4 py-3'>{item.profit_per_min}</td> */}
+			<NormalData>{item.profit}</NormalData>
+			{/* <NormalData>{item.profit_per_min}</NormalData> */}
 		</tr>
 	);
 }

@@ -1,6 +1,6 @@
 import { NextSeo } from 'next-seo';
 import React from 'react';
-import Cards from '../components/Index/Cards';
+import CardsList from '../components/Index/CardList';
 import Hero from '../components/Index/Hero';
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
 				canonical='https://flipthe.show/'
 			/>
 			<Hero />
-			<Cards />
+			<CardsList />
 		</div>
 	);
 }

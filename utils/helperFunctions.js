@@ -1,4 +1,4 @@
-import { filterByPrice, filterByRarity, filterByTeam, filterByText } from './filterFunctions';
+import { filterByPrice, filterByRarity, filterByTeam, filterByText, filterItems } from './filterFunctions';
 
 export const getProfit = (buyPrice = 0, sellPrice = 0) => {
 	const profit = sellPrice * 0.9 - buyPrice;
@@ -6,13 +6,7 @@ export const getProfit = (buyPrice = 0, sellPrice = 0) => {
 };
 
 export const removeZeroItems = (items) => {
-	let zeroItems = [];
-	items.map((item) => {
-		if (item.best_buy_price > 0) {
-			zeroItems.push(item);
-		}
-	});
-	return zeroItems;
+	return items.filter((item) => item.best_buy_price > 0);
 };
 
 export const refilterItems = (
@@ -24,15 +18,14 @@ export const refilterItems = (
 	rarity,
 	team,
 	textFilter,
-	series,
+	series = '',
 ) => {
 	let filteredList = filterByPrice(items, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
-	filteredList = filterByRarity(filteredList, rarity);
-	filteredList = filterByTeam(filteredList, team);
+	filteredList = filterItems(filteredList, 'rarity', rarity.toLowerCase());
+	filteredList = filterItems(filteredList, 'team', team.toLowerCase());
+	filteredList = filterItems(filteredList, 'series', series.toLowerCase());
+
 	filteredList = filterByText(filteredList, textFilter);
-	if (series) {
-		filteredList = filterBySeries(filteredList, series);
-	}
 
 	return filteredList;
 };

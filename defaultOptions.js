@@ -1,11 +1,4 @@
-const rarityOptions = [
-	'Rarity',
-	'Diamond',
-	'Gold',
-	'Silver',
-	'Bronze',
-	'Common',
-];
+const rarityOptions = ['Rarity', 'Diamond', 'Gold', 'Silver', 'Bronze', 'Common'];
 
 const seriesOptions = [
 	'Series',
@@ -35,7 +28,7 @@ const teamOptions = [
 	'White Sox',
 	'Cubs',
 	'Reds',
-	'Indians',
+	'Guardians',
 	'Rockies',
 	'Tigers',
 	'Astros',

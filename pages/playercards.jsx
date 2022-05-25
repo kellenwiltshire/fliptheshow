@@ -5,6 +5,7 @@ import Table from '../components/Table/Table';
 import useSWR from 'swr';
 import { getProfit, refilterItems, removeZeroItems } from '../utils/helperFunctions';
 import { sortByNumber, sortByString } from '../utils/sortingFunctions';
+import { Container, FilterContainer } from '../styles/PageStyles';
 
 export default function Home({ items }) {
 	const [minSellPrice, setMinSellPrice] = useState(0);
@@ -99,13 +100,13 @@ export default function Home({ items }) {
 	}, [updatedItems]);
 
 	return (
-		<div className='lg:w-2/3 w-full mx-auto'>
+		<Container>
 			<NextSeo
 				title='Flip The Show | Players'
 				description='Flip The Show is an online marketplace tool to see the real time value for Diamond Dynasty cards in MLB The Show 22 on Xbox and Playstation'
 				canonical='https://flipthe.show/playercards'
 			/>
-			<div className='mb-12 w-full flex justify-end lg:justify-center'>
+			<FilterContainer>
 				<FilterForm
 					setMinBuyPrice={setMinBuyPrice}
 					setMaxBuyPrice={setMaxBuyPrice}
@@ -120,9 +121,9 @@ export default function Home({ items }) {
 					setTextFilter={setTextFilter}
 					placeholder='Search Players'
 				/>
-			</div>
+			</FilterContainer>
 			<div>
-				<p className='text-right'>Last Updated: {lastUpdated} </p>
+				<p style={{ textAlign: 'right' }}>Last Updated: {lastUpdated} </p>
 				<Table
 					sortedItems={sortedItems}
 					setSortedItems={setSortedItems}
@@ -134,7 +135,7 @@ export default function Home({ items }) {
 					reverseTable={reverseTable}
 				/>
 			</div>
-		</div>
+		</Container>
 	);
 }
 

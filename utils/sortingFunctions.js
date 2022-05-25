@@ -1,22 +1,10 @@
 export const sortByString = (items, id) => {
 	if (id === 'rarity' || id === 'series' || id === 'team') {
-		const sortedList = items.sort((a, b) => {
-			return a.item[id].localeCompare(b.item[id]);
-		});
-
-		return sortedList;
+		return items.sort((a, b) => a.item[id].localeCompare(b.item[id]));
 	}
-	const sortedList = items.sort((a, b) => {
-		return a[id].localeCompare(b[id]);
-	});
-
-	return sortedList;
+	return items.sort((a, b) => a[id].localeCompare(b[id]));
 };
 
 export const sortByNumber = (items, id) => {
-	const sortedList = items.sort((a, b) => {
-		return a[id] - b[id];
-	});
-
-	return sortedList;
+	return items.sort((a, b) => a[id] - b[id]);
 };
