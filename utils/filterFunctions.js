@@ -1,5 +1,5 @@
 export const filterByPrice = (items, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice) => {
-	const filteredItems = items.filter((item) => {
+	return items.filter((item) => {
 		return (
 			item.best_buy_price >= minBuyPrice &&
 			item.best_buy_price <= maxBuyPrice &&
@@ -7,8 +7,6 @@ export const filterByPrice = (items, minBuyPrice, minSellPrice, maxBuyPrice, max
 			item.best_sell_price <= maxSellPrice
 		);
 	});
-
-	return filteredItems;
 };
 
 export const filterItems = (items, type, selected = '') => {
@@ -19,13 +17,9 @@ export const filterItems = (items, type, selected = '') => {
 };
 
 export const filterByText = (items, text) => {
-	if (text) {
-		const filteredItems = items.filter((item) => {
-			const name = item.listing_name.toLowerCase();
-			return name.includes(text.toLowerCase());
-		});
-		return filteredItems;
-	} else {
+	if (!text || text === '') {
 		return items;
 	}
+
+	return items.filter((item) => item.listing_name.toLowerCase().includes(text.toLowerCase()));
 };
