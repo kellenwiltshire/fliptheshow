@@ -11,6 +11,18 @@ export const filterByPrice = (items, minBuyPrice, minSellPrice, maxBuyPrice, max
 	return filteredItems;
 };
 
+export const filterItems = (items, type, selected) => {
+	if (selected === undefined || type === selected.toLowerCase()) {
+		return items;
+	}
+	const filteredItems = items.filter((item) => {
+		console.log('item: ', item.item[type]);
+		return item.item[type.toLowerCase()] === selected.toLowerCase();
+	});
+
+	return filteredItems;
+};
+
 export const filterByRarity = (items, rarity) => {
 	const filteredItems = items.filter((item) => {
 		if (rarity === '' || rarity === 'Rarity') {
