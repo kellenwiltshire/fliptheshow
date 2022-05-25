@@ -6,13 +6,7 @@ export const getProfit = (buyPrice = 0, sellPrice = 0) => {
 };
 
 export const removeZeroItems = (items) => {
-	let zeroItems = [];
-	items.map((item) => {
-		if (item.best_buy_price > 0) {
-			zeroItems.push(item);
-		}
-	});
-	return zeroItems;
+	return items.filter((item) => item.best_buy_price > 0);
 };
 
 export const refilterItems = (
