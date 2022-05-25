@@ -27,7 +27,7 @@ export const refilterItems = (
 	series,
 ) => {
 	let filteredList = filterByPrice(items, minBuyPrice, minSellPrice, maxBuyPrice, maxSellPrice);
-	filteredList = filterItems(filteredList, 'rarity', rarity);
+	filteredList = filterItems(filteredList, 'rarity', rarity.toLowerCase());
 	filteredList = filterItems(filteredList, 'team', team);
 	filteredList = filterItems(filteredList, 'series', series);
 

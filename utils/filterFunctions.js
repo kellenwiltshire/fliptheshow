@@ -12,12 +12,13 @@ export const filterByPrice = (items, minBuyPrice, minSellPrice, maxBuyPrice, max
 };
 
 export const filterItems = (items, type, selected) => {
-	if (selected === undefined || type === selected.toLowerCase()) {
+	console.log('selected: ', selected, ' type: ', type);
+	if (selected === undefined || type === selected.toLowerCase() || selected === '') {
 		return items;
 	}
 	const filteredItems = items.filter((item) => {
-		console.log('item: ', item.item[type]);
-		return item.item[type.toLowerCase()] === selected.toLowerCase();
+		console.log('item type: ', item.item[type].toLowerCase());
+		return item.item[type].toLowerCase() === selected;
 	});
 
 	return filteredItems;
