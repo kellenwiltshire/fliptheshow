@@ -11,53 +11,11 @@ export const filterByPrice = (items, minBuyPrice, minSellPrice, maxBuyPrice, max
 	return filteredItems;
 };
 
-export const filterItems = (items, type, selected) => {
-	console.log('selected: ', selected, ' type: ', type);
-	if (selected === undefined || type === selected.toLowerCase() || selected === '') {
+export const filterItems = (items, type, selected = '') => {
+	if (type === selected || selected === '') {
 		return items;
 	}
-	const filteredItems = items.filter((item) => {
-		console.log('item type: ', item.item[type].toLowerCase());
-		return item.item[type].toLowerCase() === selected;
-	});
-
-	return filteredItems;
-};
-
-export const filterByRarity = (items, rarity) => {
-	const filteredItems = items.filter((item) => {
-		if (rarity === '' || rarity === 'Rarity') {
-			return item;
-		} else {
-			return item.item.rarity === rarity;
-		}
-	});
-
-	return filteredItems;
-};
-
-export const filterByTeam = (items, team) => {
-	const filteredItems = items.filter((item) => {
-		if (team === '' || team === 'Team') {
-			return item;
-		} else {
-			return item.item.team === team;
-		}
-	});
-
-	return filteredItems;
-};
-
-export const filterBySeries = (items, series) => {
-	const filteredItems = items.filter((item) => {
-		if (series === '' || series === 'Series') {
-			return item;
-		} else {
-			return item.item.series === series;
-		}
-	});
-
-	return filteredItems;
+	return items.filter((item) => item.item[type].toLowerCase() === selected);
 };
 
 export const filterByText = (items, text) => {
