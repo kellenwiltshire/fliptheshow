@@ -42,7 +42,7 @@ function FilterForm({
 		setSortedItems(items);
 	};
 	return (
-		<div>
+		<div className='container'>
 			<Form>
 				<Holder>
 					<TextFilters setValue={setTextFilter} defaultValue={placeholder} placeholder={placeholder} />
