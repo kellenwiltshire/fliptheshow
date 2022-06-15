@@ -16,7 +16,7 @@ Users are able to see how the cards are performing for Players, Equipment, and S
 
 ## Tech Stack
 
-**Client:** NextJS, Emotion Styled Components, Digital Ocean
+**Client:** NextJS, Emotion Styled Components, Digital Ocean, Docker
 
 ## Authors
 
