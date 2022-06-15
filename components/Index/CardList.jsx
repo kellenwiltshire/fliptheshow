@@ -27,7 +27,7 @@ export default function CardsList() {
 			</TitleHolder>
 			<List role='list'>
 				{markets.map((market) => (
-					<CardLink market={market} />
+					<CardLink key={market.name} market={market} />
 				))}
 			</List>
 		</Holder>
