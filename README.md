@@ -26,6 +26,3 @@ Users are able to see how the cards are performing for Players, Equipment, and S
 
 Contributions are always welcome!
 
-## Appendix
-
-https://flipthe.show
